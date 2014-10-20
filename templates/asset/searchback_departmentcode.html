@@ -1,0 +1,83 @@
+<form id="pagerForm" action="{% url asset_searchback_departmentcode %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url asset_searchback_departmentcode %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td style="padding-right:1px;">
+					<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+					部门编码：<input type="text" name="query" value="{{ query }}" />&nbsp;&nbsp;
+					事业部：<input type="text" name="division" value="{{ division }}" />&nbsp;&nbsp;
+					部门：<input type="text" name="department" value="{{ department }}" />
+				</td>
+			</tr>
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="7%" align="center">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="15%" orderField="department_code" class="asc">部门编码</th>
+			{% else %}
+				<th width="15%" orderField="department_code" class="desc">部门编码</th>
+			{% endifequal %}
+				<th width="15%">业务群</th>
+				<th width="15%">事业部</th>
+				<th width="15%">部门</th>
+				<th width="15%">分部门</th>
+				<th width="10%" >查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for departmentcode in departmentcodes.object_list %}
+           <tr>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ departmentcode.department_code }}</td>
+           <td>{{ departmentcode.business_group }}</td>
+           <td>{{ departmentcode.division }}</td>
+           <td>{{ departmentcode.department }}</td>
+           <td>{{ departmentcode.sub_sector }}</td>
+           <td>
+				<a class="btnSelect" href="javascript:$.bringBackT({department_code:'{{ departmentcode.department_code }}-{{ departmentcode.business_group }}-{{ departmentcode.division }}-{{ departmentcode.department }}'})" title="查找带回">选择</a>														
+		   </td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ departmentcodes.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ departmentcodes.paginator.count }}" numPerPage="{{ departmentcodes.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

@@ -1,0 +1,134 @@
+<script language="Javascript" type="text/javascript">
+	/*
+	var editor = CodeMirror.fromTextArea(document.getElementById("shellcontent"), {
+		lineNumbers: true,
+        theme: "ambiance"
+	});
+	
+	var editor_result = CodeMirror.fromTextArea(document.getElementById("result"), {
+		lineNumbers: true,
+        theme: "ambiance"
+	});
+	*/
+	
+	var editor = CodeMirror.fromTextArea(document.getElementById("simple_shellcontent"), {
+		lineNumbers: true,
+        theme: "ambiance"
+	});
+	
+	var editor_result = CodeMirror.fromTextArea(document.getElementById("simple_result"), {
+		lineNumbers: true,
+        theme: "ambiance"
+	});
+	
+	/*
+	var editor = CodeMirror.fromTextArea(document.getElementById("shellcontent"), {
+		lineNumbers: true,
+		mode: "text/html",
+		tabMode: "indent",
+		width: '100%',
+		height: '100%',
+		autoMatchParens: true,
+		textWrapping: true,
+        theme: "ambiance"
+	});
+	
+	var editor_result = CodeMirror.fromTextArea(document.getElementById("result"), {
+		mode: "text/x-yaml",
+		lineNumbers: true,
+        theme: "ambiance"
+	});
+	*/
+	
+	
+	function subForm(){
+		var global_rel = "simple_shell";
+	    var global_url = "{% url djangosalt_simple_shell %}";
+		//获取pagerForm参数
+		var $panel = $("#" + global_rel)
+		var $pagerForm = $("#pagerForm", $panel);
+		var target = $("#simple_target").val();
+		var shellcontent = editor.getValue();
+		if(target == "") {
+  			alertMsg.info('目标主机不能为空！');
+  			return false;
+  		}
+  		if(shellcontent == "") {
+  			alertMsg.info('执行脚本不能为空！');
+  			return false;
+  		}
+		$panel.ajaxUrl({
+			type:"POST", url:global_url, data:{"target":target, "shellcontent":shellcontent}, callback:function(resultdata){
+				navTab._loadUrlCallback($panel);
+				document.getElementById('simple_shellresult').style.display="block"; // display:none;
+				editor_result.setValue(resultdata['result']);
+			}
+		});
+	}
+	
+	function removeAll() {
+  		$("#simple_target").val(""); //清空
+  		$("#simple_in_ip").val("");
+  		editor.setValue("");
+  		return false;
+  	}
+	
+</script>
+
+
+<div class="page">
+	<div class="pageContent">
+	<form id="pagerForm" rel="simple_shell" method="post" action="{% url djangosalt_simple_shell %}" class="pageForm required-validate" 
+		onsubmit="return navTabSearch(this);">
+		<input type="hidden" name="navTabId" value="djangosalt_simple_shell"/>
+		<div style="display:block; overflow:auto; padding:0px; position:relative;" layoutH="0">
+		
+		  <div class="content">
+			  <!--右边开始-->
+			  <div class="main_right">
+				  <!--one-->
+				  <div class="rightcon_title">目标主机</div>
+				  <div class="rightcon_mid">
+				      <p class="pheight1">
+				      	<label class="label5">目标主机：</label>
+				      	<input size="30" id="simple_in_ip" name="org.in_ip" type="hidden" />
+				      	<input type="text" class="style5" name="org.saltid" id="simple_target" value="{{ target }}" readonly="readonly" /><span class="tips"></span>
+					  	<a class="btnLook" href="{% url djangosalt_searchback %}" target="dialog" mask="true" width="700" height="500" title="查找带回" lookupGroup="org">查找带回</a>
+				      </p>
+				  </div>
+				  <div class="rightcon_bottom"></div>
+				  <!--one-->
+				  <!--two-->
+				  <div class="rightcon_title">脚本编辑器</div>
+				  <div class="rightcon_mid">
+					   <div style="margin-left:0px;">
+					       <textarea style="width:600px;height:400px;" class="textarea1" cols="5" id="simple_shellcontent" name="shellcontent" >{{ shellcontent }}</textarea>
+					   </div>
+				  </div>
+				  <div class="rightcon_bottom"></div>
+				  <div>
+				  	<input type="button" class="enter specibut" id="scriptconfirm" value="确认执行" onclick="javascript: subForm();" />
+				  	<input type="button" class="enter specibut" id="scriptconfirm" value="清空重输" onclick="javascript: removeAll();" />
+				  </div>
+				  <!--two-->
+				  
+				  <!--three-->
+				  <div id="simple_shellresult" style="display:none;">
+				  <div class="rightcon_title">脚本执行结果</div>
+				  <div class="rightcon_mid">
+					   <div style="margin-left:0px;">
+					       <textarea style="width:600px;height:400px;" class="textarea1" cols="5" id="simple_result" name="result">{{ result }}</textarea>
+					   </div>
+				  </div>
+				  <div class="rightcon_bottom"></div>
+				  </div>
+				  <!--three-->
+			  </div>
+		  <!--右边结束-->
+		  </div>
+		  
+		</div>
+	</form>
+	</div>
+</div>
+

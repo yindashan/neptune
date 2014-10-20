@@ -1,0 +1,24 @@
+<style type="text/css">
+.bs{border:1px #B8D0D6 solid}
+</style>
+<div class="page">
+	<div class="pageContent" >
+	
+	<form method="post" action="{% url schedule_log schedule.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="scheduleindex"/>		
+		<div class="pageFormContent" layoutH="58" id="schedulelog">	
+			
+			<p style="color:red; margin-left:40px; font-size:180%">
+				<br />
+				此上线计划没有执行日志！
+			</p>			
+		
+		</div>				
+		<div class="formBar">
+			<ul>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	</div>
+</div>

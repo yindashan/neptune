@@ -1,0 +1,91 @@
+<div class="page">
+	<div class="pageContent">
+	{% load static %}
+	<form method="post" action="{% url applyresource_apply %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="applyresourceindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>事业部：</label>
+				<input type="text" class="required" size="30" name="division" value="" />
+			</div>
+			<div class="unit">
+				<label>部门：</label>
+				<input type="text" class="required" size="30"  name="department" value="" />
+			</div>
+			
+			<div class="unit">
+				<label>申请时间：</label>
+				<input type="text" name="apply_time" class="required date" size="30" format="yyyy-MM-dd" readonly="true" yearstart="-10" yearend="20" />
+				<a class="inputDateButton" href="javascript:;">选择</a>
+				<span class="info">yyyy-MM-dd</span>
+			</div>
+
+            <div class="unit">
+				<label>业务说明：</label>
+				<textarea class="required" name="business_description" rows="3" cols="27"></textarea>
+			</div>			
+			
+			<div class="unit">
+				<label>附件：</label>
+				<input name="file" type="file" size="26" />				
+			</div>								
+			
+			<div class="unit">
+				<label>开始使用时间：</label>
+				<input type="text" name="start_time" class="required date" size="30" format="yyyy-MM-dd" readonly="true" yearstart="-10" yearend="20" />
+				<a class="inputDateButton" href="javascript:;">选择</a>
+				<span class="info">yyyy-MM-dd</span>
+			</div>
+			<div class="unit">
+				<label>归还资源时间：</label>
+				<input type="text" name="end_time" class="required date" size="30" format="yyyy-MM-dd" readonly="true" yearstart="-10" yearend="20" />
+				<a class="inputDateButton" href="javascript:;">选择</a>
+				<span class="info">yyyy-MM-dd</span>
+			</div>	
+								
+			<div class="unit">
+				<label>CPU需求：</label>
+				<input type="text" class="required digits" size="30"  name="cpu_num" value="" /><span class="info">&nbsp;(单位：核)</span>
+			</div>
+			<div class="unit">
+				<label>存储需求：</label>
+				<input type="text" class="required digits" size="30"  name="disk_num" value="" /><span class="info">&nbsp;(单位：GB)</span>
+			</div>
+			<div class="unit">
+				<label>内存需求：</label>
+				<input type="text" class="required digits" size="30"  name="memory_num" value="" /><span class="info">&nbsp;(单位：GB)</span>
+			</div>			
+			<div class="unit">
+				<label>网络资源类型：</label>
+				<select name="net_type" class="required combox">
+					{% for key,value in net_type_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+			</div>
+
+			<div class="unit">
+				<label>操作系统：</label>
+				<select name="os_type" class="required combox">
+					{% for key,value in os_type_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+			</div>			
+
+			<div class="unit">
+				<label>特别设置，必须软件包等：</label>
+				<textarea name="other_soft" rows="3" cols="27" ></textarea>
+			</div>					
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

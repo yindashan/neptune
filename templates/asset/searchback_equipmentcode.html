@@ -1,0 +1,75 @@
+<form id="pagerForm" action="{% url asset_searchback_equipmentcode %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url asset_searchback_equipmentcode %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+				设备编码：<input type="text" name="query" value="{{ query }}" />
+			</li>	  
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="7%" align="center">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="15%" orderField="equipment_code" class="asc">设备编码</th>
+			{% else %}
+				<th width="15%" orderField="equipment_code" class="desc">设备编码</th>
+			{% endifequal %}
+				<th width="15%">一级名称</th>
+				<th width="15%">二级名称</th>
+				<th width="10%" >查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for equipmentcode in equipmentcodes.object_list %}
+           <tr>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ equipmentcode.equipment_code }}</td>
+           <td>{{ equipmentcode.class_name }}</td>
+           <td>{{ equipmentcode.subclass_name }}</td>
+           <td>
+				<a class="btnSelect" href="javascript:$.bringBackT({equipment_code:'{{ equipmentcode.equipment_code }}-{{ equipmentcode.class_name }}-{{ equipmentcode.subclass_name }}', class_name:'{{ equipmentcode.class_name }}'})" title="查找带回">选择</a>
+		   </td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ equipmentcodes.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ equipmentcodes.paginator.count }}" numPerPage="{{ equipmentcodes.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

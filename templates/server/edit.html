@@ -1,0 +1,111 @@
+<script type="text/javascript">
+  	function removeAll() {
+  		$("#softid").val(""); //清空
+  		$("#soft_name").val("");
+  		$("#version").val("");
+  		return false;
+  	}
+  	
+  	function showOrHidden(flag) {
+  		if(flag == '1' ) {
+        	document.getElementById('agent').style.display="block" ;
+  		} else if(flag == '0') {
+        	document.getElementById('agent').style.display="none" ;
+  		}
+	}
+	
+</script>
+
+
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url server_edit server.id %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="serverindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<dl class="nowrap">
+				<dt>机房编号：</dt>
+				<dd>
+					<input size="30" name="org.virtual_flag" type="hidden" value="{{ server.virtual_flag }}" readonly="readonly" />
+					<input size="30" id="nocid" name="org.nocid" type="text" value="{{ server.nocid }}" />
+					<a class="btnLook" href="{% url server_searchback %}" target="dialogsearch" mask="true" width="700" height="500" title="查找带回" lookupGroupapi="org">查找带回</a>
+					<span class="info">(通过API从CMDB中获取信息)</span>
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>机房名称：</label>
+				<input type="text" class="required" size="30"  name="org.nocname" value="{{ server.nocname }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>资产编号：</label>
+				<input type="text" class="required" size="30"  name="org.elementid" value="{{ server.elementid }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>内网IP：</label>
+				<input type="text" class="required" size="30"  name="org.in_ip" value="{{ server.in_ip }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>外网IP：</label>
+				<input type="text" class="" size="30"  name="org.out_ip" value="{{ server.out_ip }}" />
+			</div>
+			<div class="unit">
+				<label>管理帐号：</label>
+				<input type="text" class="" size="30"  name="org.manage_account" value="{{ server.manage_account }}" />
+			</div>
+			<div class="unit">
+				<label>管理密码：</label>
+				<input type="text" class="" size="30"  name="org.manage_password" value="{{ server.manage_password }}" />
+			</div>
+			<div class="unit">
+				<label>管理端口：</label>
+				<input type="text" class="digits" size="30"  name="org.manage_port" value="{{ server.manage_port }}" />
+			</div>
+			<div class="unit">
+				<label>SaltID：</label>
+				<input type="text" class="required" size="30"  name="saltid" value="{{ server.saltid }}" />
+			</div>
+			<div class="unit">
+				<label>服务名称：</label>
+				<input type="text" size="30"  name="service_name" value="{{ server.service_name }}" />
+			</div>
+			
+			<dl class="nowrap">
+				<dt>基础应用：</dt>
+				<dd>
+					<input size="30" id="softid" name="org.softid" type="hidden" value="{{ softid_list|join:',' }}" />
+					<input size="30" id="soft_name" name="org.soft_name" type="text" readonly="readonly" value="{{ server.softforms.all|join:',' }}" />
+					<input size="30" id="version" name="org.version" type="hidden" value="{{ version_list|join:',' }}"  />
+					<a class="btnLook" href="{% url server_searchback_softform %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(选择基础应用)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					<span class="button"><span class="buttonContent"><button onclick="javascript: removeAll();" type="button">清空应用</button></span></span>
+				</dd>
+			</dl>
+			
+			<div class="unit">
+				<label>是否需要代理：</label>
+				 <input type="radio" name="agent_flag" value="0" {% ifequal server.agent_flag 0 %} checked="checked" {% endifequal %} onclick="javascript: showOrHidden('0');" /> 不需要&nbsp;&nbsp;&nbsp;
+             	 <input type="radio" name="agent_flag" value="1" {% ifequal server.agent_flag 1 %} checked="checked" {% endifequal %} onclick="javascript: showOrHidden('1');" /> 需要
+			</div>
+			
+			<dl class="nowrap" id="agent" {% ifequal server.agent_flag 0 %} style="display:none;" {% endifequal %}>
+				<dt>代理设置：</dt>
+				<dd>
+					<input size="30" id="agent_in_ip" name="org.agent_in_ip" type="hidden" value="{{ server.agent_server.in_ip }}" />
+					<input size="30" id="agent_saltid" name="org.agent_saltid" type="text" value="{{ server.agent_server.saltid }}" />
+					<a class="btnLook" href="{% url server_searchback_agent %}" target="dialog" mask="true" width="700" height="500" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(代理设置)</span>
+				</dd>
+			</dl>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

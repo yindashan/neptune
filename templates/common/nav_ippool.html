@@ -1,0 +1,31 @@
+<div class="accordion" fillSpace="sidebar">
+	<div class="accordionHeader">
+		<h2><span>Folder</span>系统管理</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree treeFolder expand">
+			<li><a>常用操作</a>
+				<ul>
+				
+					{% for authority in request.session.authority_list_button %}
+						{% ifequal 'equipmentadd' authority %}
+							<li><a class="add" href="{% url equipment_add %}" target="dialog" mask="true" width="800" height="600" title="添加服务器" rel="addequipment"><span>添加服务器</span></a></li>
+						{% endifequal %}
+						{% ifequal 'rackadd' authority %}
+							<li><a class="add" href="{% url rack_add %}" target="dialog" mask="true" width="800" height="600" title="添加机架" rel="addrack"><span>添加机架</span></a></li>
+						{% endifequal %}
+						{% ifequal 'applyresourceapply' authority %}
+							<li><a class="add" href="{% url applyresource_apply %}" target="dialog" mask="true" width="800" height="670" title="申请服务器资源" rel="applyresource"><span>申请服务器资源</span></a></li>
+						{% endifequal %}
+					{% endfor %}
+				</ul>
+			</li>
+			
+			<li><a>地址池管理</a>
+				<ul>
+					<li><a href="javascript:void(0);" rel="ip_pool">地址池管理</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>

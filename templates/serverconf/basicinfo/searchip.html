@@ -1,0 +1,78 @@
+<form id="pagerForm" action="/serverconf/searchip/{{ arg }}/" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="ipAddress" value=""/>
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="/serverconf/searchip/{{ arg }}/" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+				IP地址：<input type="text" name="query" value="{{ query }}" />
+			</li>
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="8%" align="center">序号</th>
+				<th orderfield="ipAddress">IP地址</th>
+				<th orderfield="status">使用状态</th>
+				<th width="80" >查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for ip in ips %}
+           <tr>
+           
+		   <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ ip.ipAddress }}</td>
+           <td>
+           		{% for key,value in ip_status_dict.items %}
+					{% ifequal ip.status key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>        
+           <td>	
+           		{% ifequal ip.status 0 %}
+					<a class="btnSelect" href="javascript:$.bringBackT({ipaddress:'{{ ip.ipAddress }}'})" title="查找带回">选择</a>
+				{% endifequal %}	
+														
+		   </td>   
+		 
+           </tr>  
+           {% endfor %}
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ ips.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ ips.paginator.count }}" numPerPage="{{ ips.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

@@ -1,0 +1,24 @@
+<div class="page">
+	<div class="pageContent">
+		<form method="post" action="{% url equipment_uploadfile %}" enctype="multipart/form-data" class="pageForm required-validate" onsubmit="return iframeCallback(this, dialogAjaxDone)">
+		{% csrf_token %}
+		{% load static %}
+		<div class="pageFormContent" layoutH="56">
+			<div class="nowrap">
+				<label>请下载文件模板：</label>
+				<div><a class="button" href="{% get_static_prefix %}template/equipment_list.xlsx" target="dwzExport" ><span>文件模板</span></a></div>
+			</div>
+			<div class="unit">
+				<label>请选择上传文件：</label>
+				<input name="file" type="file" />				
+			</div>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+		</form>
+	</div>
+</div>

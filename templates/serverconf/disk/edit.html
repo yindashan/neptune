@@ -1,0 +1,51 @@
+<div class="page">
+	<div class="pageContent">
+	{% load static %}
+	<form method="post" action="{% url serverconf_edit_disk disk.id %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogTabAjaxDone)">
+		<input type="hidden" name="navTabId" value="jbsxBox_disk"/>
+		<div class="pageFormContent" layoutH="58">
+			<dl class="nowrap">
+				<dt>设备：</dt>
+				<dd>
+					<input name="org.sequence" type="hidden" readonly="readonly" />
+					<input class="required" size="30" name="org.elementid" type="text" readonly="readonly"  value="{{ disk.equipment }}" />
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>Disk编号：</label>
+				<input type="text" class="" size="30"  name="diskid" value="{{ disk.diskid }}" />
+			</div>
+			<div class="unit">
+				<label>制造商：</label>
+				<input type="text" class="" size="30"  name="manufacture" value="{{ disk.manufacture }}" />
+			</div>
+			<div class="unit">
+				<label>接口类型：</label>
+				<input type="text" class="" size="30"  name="disk_type" value="{{ disk.disk_type }}" />
+			</div>
+			<div class="unit">
+				<label>型号：</label>
+				<input type="text" class="" size="30"  name="model" value="{{ disk.model }}" />
+			</div>
+			<div class="unit">
+				<label>单盘容量：</label>
+				<input type="text" class="required digits" size="30"  name="size" value="{{ disk.size }}" />
+			</div>
+			<div class="unit">
+				<label>数量：</label>
+				<input type="text" class="required digits" size="30"  name="count" value="{{ disk.count }}" />
+			</div>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

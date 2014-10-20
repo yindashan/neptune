@@ -1,0 +1,128 @@
+<script language="Javascript" type="text/javascript">
+	
+	var editor_result = CodeMirror.fromTextArea(document.getElementById("salt_result"), {
+		lineNumbers: true,
+        theme: "ambiance"
+	});
+	
+	// 这个是监听全局的回车键，不适合
+	/*
+	document.onkeydown = function(e) {
+	    var ev = document.all ? window.event : e;
+	    if(ev.keyCode==13) {
+	        subForm();
+	    }
+	}
+	*/
+	
+	$(document).ready(function(){
+	 	$("#salt_target").keydown(function(event){
+	 		if(event.keyCode==13){
+	 			$("#salt_func").focus();
+	 		}
+		});
+	 	$("#salt_func").keydown(function(event){
+	 		if(event.keyCode==13){
+	 			subForm();
+	 		}
+	 	});
+	 	$("#salt_argument").keydown(function(event){
+	 		if(event.keyCode==13){
+	 			subForm();
+	 		}
+	 	});
+	});
+	
+	
+	function subForm(){
+		var global_rel = "salt_shell";
+	    var global_url = "{% url djangosalt_salt_shell %}";
+		//获取pagerForm参数
+		var $panel = $("#" + global_rel)
+		var $pagerForm = $("#pagerForm", $panel);
+		var target = $("#salt_target").val();
+		var func = $("#salt_func").val();
+  		var argument = $("#salt_argument").val();
+  		
+  		if(target == "") {
+  			alertMsg.info('目标主机不能为空！');
+  			return false;
+  		}
+  		if(func == "") {
+  			alertMsg.info('执行函数不能为空！');
+  			return false;
+  		}
+  		
+		$panel.ajaxUrl({
+			type:"POST", url:global_url, data:{"target":target, "func":func, "argument":argument}, callback:function(resultdata){
+				navTab._loadUrlCallback($panel);
+				//document.getElementById('salt_shellresult').style.display="block";
+				editor_result.setValue(resultdata['result']);
+			}
+		});
+	}
+	
+	function removeAll() {
+  		$("#salt_in_ip").val(""); //清空
+  		$("#salt_target").val(""); //清空
+  		$("#salt_func").val("");
+  		$("#salt_argument").val("");
+  		return false;
+  	}
+	
+</script>
+
+
+<div class="page">
+	<div class="pageContent">
+	<form id="pagerForm" rel="salt_shell" method="post" action="{% url djangosalt_salt_shell %}" class="pageForm required-validate" 
+		onsubmit="return navTabSearch(this);">
+		<input type="hidden" name="navTabId" value="djangosalt_salt_shell"/>
+		<div style="display:block; overflow:auto; padding:0px; position:relative;" layoutH="0">
+		
+		  <div class="content">
+			  <!--右边开始-->
+			  <div class="main_right">
+				  <!--one-->
+				  <div class="rightcon_title">执行脚本</div>
+				  <div class="rightcon_mid">
+				      <p class="pheight1">
+				      	<label class="label5">目标主机：</label>
+				      	<input size="30" id="salt_in_ip" name="org.in_ip" type="hidden" />
+				      	<input type="text" class="style5" name="org.saltid" id="salt_target" value="{{ target }}" readonly="readonly" /><span class="tips"></span>
+					  	<a class="btnLook" href="{% url djangosalt_searchback %}" target="dialog" mask="true" width="700" height="500" title="查找带回" lookupGroup="org">查找带回</a>
+				      </p>
+				  </div>
+				  <div class="rightcon_mid">
+				      <p class="pheight1"><label class="label5">执行函数：</label><input type="text" class="style5" name="func" id="salt_func" value="{{ func }}" /><span class="tips"></span></p>
+				  </div>
+				  <div class="rightcon_mid">
+				      <p class="pheight1"><label class="label5">执行参数：</label><input type="text" class="style5" name="argument" id="salt_argument" value="{{ argument }}" /><span class="tips"></span></p>
+				  </div>
+				  <div class="rightcon_mid">
+				  	  <input type="button" style="margin-left:120px;" class="enter specibut" id="scriptconfirm" value="确认执行" onclick="javascript: subForm();" />
+				  	  <input type="button" style="margin-left:10px;" class="enter specibut" id="scriptreset" value="清空重输" onclick="javascript: removeAll();" />
+				  </div>
+				  <div class="rightcon_bottom"></div>
+				  <!--one-->
+				  
+				  <!--three-->
+				  <div id="salt_shellresult">
+				  <div class="rightcon_title">执行结果</div>
+				  <div class="rightcon_mid">
+					   <div style="margin-left:0px;">
+					       <textarea style="width:600px;height:400px;" class="textarea1" cols="5" id="salt_result" name="result">{{ result }}</textarea>
+					   </div>
+				  </div>
+				  <div class="rightcon_bottom"></div>
+				  </div>
+				  <!--three-->
+			  </div>
+		  <!--右边结束-->
+		  </div>
+		  
+		</div>
+	</form>
+	</div>
+</div>
+

@@ -1,0 +1,106 @@
+<script type="text/javascript">
+	//加载ajax请求
+	$.ajax({
+  		async:false,
+  		cache:false,
+  		type:"post",
+  		dataType:"text", //String,json都是请求失败
+  		url:"{% url authority_get_modules_db %}", //恳求的action路径
+  		error:function() { //请求失败处理惩罚函数
+   			//alert("请求失败");
+  		},
+  		success:function(data) { //恳求成功后处理惩罚函数。
+  			//alert("请求成功");
+   			//alert(data);
+   		var arr = data.split("::");
+     	var childStr = "<option value='-1'>=请选择=</option>";
+     	//var childStr = "";
+        if(arr.length>1){
+            for(var i=1;i<arr.length;i=i+2){
+                childStr += "<option value='" + arr[i] + "'>" + arr[i+1] + "</option>";
+            }
+        }
+        $("#module_name").html(childStr);
+        return;
+  		}
+ 	});
+ 	
+ 	function getModuleFields() {
+ 		var module_type = $("#module_name").val();
+ 		url_str = "/authority/get_modulefields/" + module_type + "/";
+ 		$.ajax({
+	  		async:false,
+	  		cache:false,
+	  		type:"post",
+	  		dataType:"text", //String,json都是请求失败
+	  		//url:"{% url authority_get_modules_db %}", //恳求的action路径
+	  		//url:"/authority/get_buttons/equipment/",
+	  		url:url_str, //恳求的action路径
+	  		error:function() { //请求失败处理惩罚函数
+	   			//alert("请求失败");
+	  		},
+	  		success:function(data) { //恳求成功后处理惩罚函数。
+	  			//alert("请求成功");
+	   			//alert(data);
+	   		var arr = data.split("::");
+	     	//var buttonStr = "<option value='-1'>=请选择=</option>";
+	     	var buttonStr = "";
+	        if(arr.length>1){
+	            for(var i=1;i<arr.length;i=i+2){
+	                buttonStr += "<option value='" + arr[i] + "'>" + arr[i+1] + "</option>";
+	            }
+	        }
+	        var $ref = $("#modulefield_name");
+	        var $refCombox = $ref.parents("div.combox:first");
+			$ref.html(buttonStr).insertAfter($refCombox);
+			$refCombox.remove();
+			$ref.trigger("refChange").trigger("change").combox();
+	  		}
+	 	});
+ 	}
+
+</script>
+
+
+
+<div class="page">
+	<div class="pageContent">
+	{% load static %}
+	<form method="post" action="{% url authority_add_modulefield %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="modulefieldindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>关联模块：</label>
+				<select class="combox" class="required" id="module_name" name="module_name" onchange="javascript: getModuleFields();" >
+					<option value='-1'>=请选择=</option>
+				</select>
+			</div>
+			<div class="unit">
+				<label>模块字段名称：</label>
+				<select class="combox" class="required" id="modulefield_name" name="modulefield_name" >
+					<option value='-1'>=请选择=</option>
+				</select>
+			</div>
+			<!-- 
+			<div class="unit">
+				<label>模块字段类型：</label>
+				<input type="text" class="required" size="30"  name="modulefield_type" value="" />
+			</div>
+			 -->
+			<div class="unit">
+				<label>模块字段顺序：</label>
+				<input type="text" class="required digits" size="30"  name="order" value="" />
+			</div>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

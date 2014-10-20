@@ -1,0 +1,62 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#parent_organization_name").autocomplete("{% url organization_autocomplete %}", {
+		minChars: 0,
+		//width: 180,
+		max: 10,
+		//autoFill: true,
+		matchContains: true,
+		//multiple: true,
+		//multipleSeparator: ",",
+		scroll: true,
+		scrollHeight: 300
+	}).result(function(event, data, formatted){
+		//$.ajaxSettings.global = true;
+	});
+	
+	$("#parent_organization_name").focus(function(){
+		$.ajaxSettings.global = false;
+	});
+	$("#parent_organization_name").blur(function(){
+		$.ajaxSettings.global = true;
+	});
+});
+</script>
+
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url organization_edit organization.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="organizationindex"/>
+		<div class="pageFormContent" layoutH="58">
+
+			<div class="unit">
+				<label>组织机构名称：</label>
+				<input type="text" class="required" size="30"  name="organization_name" value="{{ organization.organization_name }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>组织机构描述：</label>
+				<input type="text" size="30" name="organization_desc" value="{{ organization.organization_desc }}" />
+			</div>
+			<div class="unit">
+				<label>组织机构级别：</label>
+				<input type="text" class="required" size="30" name="level" value="{{ organization.level }}" />
+			</div>
+            <dl class="nowrap">
+				<dt>父级组织机构：</dt>
+				<dd>
+					<input size="30" id="parent_organization_name" name="org.parent_organization_name" type="text" value="{{ organization.parent_organization.organization_name }}" />
+					<a class="btnLook" href="{% url organization_searchback %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(指定父级组织机构)</span>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	</div>
+</div>

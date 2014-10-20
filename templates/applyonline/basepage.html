@@ -1,0 +1,148 @@
+<form id="pagerForm" action="{% url applyonline_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="work_id" value=""/>
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url applyonline_index %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						申请单号：<input type="text" name="applyid" value="{{ applyid }}" />&nbsp;&nbsp;
+						申请单状态：
+					</td>
+					<td style="padding-left:1px;">
+						<select name="status" class="required combox" >
+						{% if status > -1 %}
+							<option value="all" {% ifequal status "all" %} selected="selected" {% endifequal %}>全部</option>
+							{% for key,value in applyonline_status_dict.items %}
+								{% ifequal status key %}
+									<option value="{{ key }}" selected="selected">{{ value }}</option>
+								{% else %}
+									<option value="{{ key }}">{{ value }}</option>
+								{% endifequal %}
+							{% endfor %}
+						{% else %}
+							<option value="all" selected="selected">全部</option>
+							{% for key,value in applyonline_status_dict.items %}
+								<option value="{{ key }}">{{ value }}</option>
+							{% endfor %}
+						{% endif %}
+						</select>
+					</td>
+					<td>
+						申请时间：
+						<input type="text" size="9" value="{{ dateStart }}" readonly="readonly" class="date" name="dateStart" />
+						<span class="limit">-</span>
+						<input type="text" size="9" value="{{ dateEnd }}" readonly="readonly" class="date" name="dateEnd" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+			{% ifcontain 'applyonlineadd' request.session.authority_list_button %}
+				<li><a class="add" href="{% url applyonline_add %}" target="dialog" mask="true" width="800" height="600" title="添加" rel="addapplyonline"><span>添加</span></a></li>
+			{% endifcontain %}
+			{% ifcontain 'applyonlinedelete' request.session.authority_list_button %}
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url applyonline_selecteddelete %}" class="delete"><span>批量删除</span></a></li>             
+            {% endifcontain %}
+			</ul>
+		</div>
+
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+			<tr>
+				<th width="3%" >
+				<input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="3%" >序号</th>
+				<th width="10%">申请单号</th>
+				<th width="8%">服务名称</th>
+				<th width="8%">服务域名</th>
+				<th width="4%">版本号</th>
+				<th width="8%">申请人</th>
+				<th width="8%">申请时间</th>
+				<th width="4%">优先级</th>
+				<th width="8%">计划上线时间</th>
+				<th width="5%">状态</th>
+				<th width="12%">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'applyonlineselect' request.session.authority_list_button %}
+		   {% for applyonline in applyonlines.object_list %}
+           <tr target="sid_group" rel="{{ applyonline.id }}">
+           <td><input name="ids" value="{{ applyonline.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ applyonline.applyid }}</td>
+           <td>{{ applyonline.service_name }}</td>
+           <td>{{ applyonline.service_domainname }}</td>
+           <td>{{ applyonline.version }}</td>
+           <td>{{ applyonline.apply_user }}</td>
+           <td>{{ applyonline.apply_time|date:"Y-m-d" }}</td>
+           <td>{{ applyonline.priority }}</td>
+           <td>{{ applyonline.online_time|date:"Y-m-d" }}</td>
+           <td>
+           		{% for key,value in applyonline_status_dict.items %}
+					{% ifequal applyonline.status key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>
+              	<a class="btnselect" href="{% url applyonline_detail applyonline.id %}" target="dialog" mask="true"  width="800" height="600" rel="detailapplyonline" title="详情"><span>详情</span></a>
+           	{% ifcontain 'applyonlineedit' request.session.authority_list_button %}
+                <a class="btnedit" href="{% url applyonline_edit applyonline.id %}" target="dialog" mask="true"  width="800" height="600" rel="editapplyonline" title="编辑"><span>编辑</span></a>
+           	{% endifcontain %}
+           	{% ifcontain 'applyonlinedelete' request.session.authority_list_button %}
+	            <a class="btndelete" href="{% url applyonline_delete applyonline.id %}" target="ajaxTodo"  rel="deleteapplyonline" title="您确定要删除该项吗？"><span>删除</span></a>
+           	{% endifcontain %}
+           	{% ifcontain 'applyonlinedeploy' request.session.authority_list_button %}
+           		{% ifequal applyonline.status 0 %}
+	            <a class="btndeploysuccess" href="{% url applyonline_deploy_success applyonline.id %}" target="dialog" mask="true"  width="800" height="600" rel="deploy_success_applyonline" title="部署成功"><span>部署成功</span></a>
+	            <a class="btndeployfailure" href="{% url applyonline_deploy_failure applyonline.id %}" target="dialog" mask="true"  width="800" height="600" rel="deploy_failure_applyonline" title="部署失败"><span>部署失败</span></a>
+	            {% endifequal %}
+           	{% endifcontain %}
+           	{% ifcontain 'applyonlinevalidate' request.session.authority_list_button %}
+           		{% ifequal applyonline.status 1 %}
+	            <a class="btnvalidatesuccess" href="{% url applyonline_validate_success applyonline.id %}" target="dialog" mask="true"  width="800" height="600" rel="validate_success_applyonline" title="验证成功"><span>验证成功</span></a>
+	            <a class="btnvalidatefailure" href="{% url applyonline_validate_failure applyonline.id %}" target="dialog" mask="true"  width="800" height="600" rel="validate_failure_applyonline" title="验证失败"><span>验证失败</span></a>
+	            {% endifequal %}
+           	{% endifcontain %}
+           </td>
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ applyonlines.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ applyonlines.paginator.count }}" numPerPage="{{ applyonlines.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>
+

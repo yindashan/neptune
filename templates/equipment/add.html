@@ -1,0 +1,131 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#rackid").autocomplete("{% url rack_autocomplete %}", {
+		minChars: 0,
+		//width: 180,
+		max: 10,
+		//autoFill: true,
+		matchContains: true,
+		//multiple: true,
+		//multipleSeparator: ",",
+		scroll: true,
+		scrollHeight: 300
+	}).result(function(event, data, formatted){
+		//$.ajaxSettings.global = true;
+	});
+	
+	$("#rackid").focus(function(){
+		$.ajaxSettings.global = false;
+	});
+	$("#rackid").blur(function(){
+		$.ajaxSettings.global = true;
+	});
+	
+	
+	$("#parent_organization_name").autocomplete("{% url organization_autocomplete %}", {
+		minChars: 0,
+		//width: 180,
+		max: 10,
+		//autoFill: true,
+		matchContains: true,
+		//multiple: true,
+		//multipleSeparator: ",",
+		scroll: true,
+		scrollHeight: 300
+	}).result(function(event, data, formatted){
+		//$.ajaxSettings.global = true;
+	});
+	
+	$("#parent_organization_name").focus(function(){
+		$.ajaxSettings.global = false;
+	});
+	$("#parent_organization_name").blur(function(){
+		$.ajaxSettings.global = true;
+	});
+});
+</script>
+
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url equipment_add %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="equipmentindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<dl class="nowrap">
+				<dt>机架：</dt>
+				<dd>
+					<input size="30" name="org.left_space" type="hidden" readonly="readonly" />
+					<input size="30" id="rackid" name="org.rackid" type="text" />
+					<a class="btnLook" href="{% url equipment_searchback %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(查询关联的机架)</span>
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>资产编号：</label>
+				<input type="text" class="required" size="30"  name="elementid" value="" />
+			</div>
+			<div class="unit">
+				<label>设备类型：</label>
+				<input type="text" class="" size="30"  name="element_type" value="" />
+			</div>
+			<div class="unit">
+				<label>制造商：</label>
+				<input type="text" size="30"  name="manufacture" value="" />
+			</div>
+			<div class="unit">
+				<label>设备型号：</label>
+				<input type="text" class="" size="30"  name="element_model" value="" />
+			</div>
+			<div class="unit">
+				<label>设备序列号：</label>
+				<input type="text" class="required" size="30"  name="sequence" value="" />
+			</div>
+			<div class="unit">
+				<label>售后编号：</label>
+				<input type="text" size="30"  name="service_no" value="" />
+			</div>
+			<div class="unit">
+				<label>采购时间：</label>
+				<input type="text" name="buy_time" class="required date" size="30" format="yyyy-MM-dd" readonly="true" yearstart="-10" yearend="20" />
+				<a class="inputDateButton" href="javascript:;">选择</a>
+				<span class="info">yyyy-MM-dd</span>
+			</div>
+			<div class="unit">
+				<label>保修期限：</label>
+				<input type="text" name="deadline" class="required date" size="30" format="yyyy-MM-dd" readonly="true" yearstart="-10" yearend="20" />
+				<a class="inputDateButton" href="javascript:;">选择</a>
+				<span class="info">yyyy-MM-dd</span>
+			</div>
+			<div class="unit">
+				<label>设备状态：</label>
+				<select name="status" class="required combox" >
+					{% for key,value in equipment_status_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="unit">
+				<label>设备高度：</label>
+				<input type="text" class="required digits" size="30"  name="height" value="" /><span class="info">&nbsp;(单位:U)</span>
+			</div>
+			<dl class="nowrap">
+				<dt>使用部门：</dt>
+				<dd>
+					<input size="30" id="parent_organization_name" name="org.parent_organization_name" type="text" />
+					<a class="btnLook" href="{% url organization_searchback %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(指定所属组织机构)</span>
+				</dd>
+			</dl>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

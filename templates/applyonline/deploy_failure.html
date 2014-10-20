@@ -1,0 +1,19 @@
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url applyonline_deploy_failure applyonline.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="applyonlineindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>部署失败原因：</label>
+				<textarea name="applyonline_desc" rows="5" cols="57" ></textarea>
+			</div>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	</div>
+</div>

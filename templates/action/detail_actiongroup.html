@@ -1,0 +1,52 @@
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url actiongroup_detail actiongroup.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="actiongroupindex"/>		
+		<div class="pageFormContent" layoutH="58">
+			
+			<div class="unit">
+				<label>名称：</label>
+				<input type="text" size="30" name="name" value="{{ actiongroup.name }}" readonly="readonly" />
+			</div>
+
+			<div class="unit">
+				<label>说明：</label>
+				<textarea name="desc" rows="10" cols="57" readonly="true">{{ actiongroup.desc }}</textarea>
+			</div>
+				
+			<div class="unit">
+				<label>执行操作：</label>
+				<table class="table" width="100%" layoutH="116">
+					<thead>
+					<tr>
+						<th width="5%">次序</th>
+						<th width="15%">操作类型</th>
+						<th width="20%">操作名称</th>
+						<th width="50%">执行操作</th>					
+					</tr>
+					</thead>
+					
+					<tbody>	
+											
+					    {% for actionorder in actionorders %}
+						<tr>
+						<td>{{ actionorder.order }}</td>
+						<td>{{ actionorder.action.action_type }}</td>
+						<td>{{ actionorder.action.name }}</td>
+						<td>{{ actionorder.action.action_cmd }}</td>
+			           	</tr>
+			            {% endfor %}
+					</tbody>
+				</table>				
+			</div>	
+				
+		</div>				
+		<div class="formBar">
+			<ul>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	</div>
+</div>

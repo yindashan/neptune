@@ -1,0 +1,120 @@
+<form id="pagerForm" action="{% url applyresource_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="work_id" value=""/>
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url applyresource_index %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						部门：<input type="text" name="query" value="{{ query }}" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+			{% ifcontain 'applyresourceapply' request.session.authority_list_button %}
+				<li><a class="add" href="{% url applyresource_apply %}" target="dialog" mask="true" width="800" height="600" title="申请服务器资源" rel="addreource"><span>申请服务器资源</span></a></li>
+			{% endifcontain %}
+			</ul>
+		</div>
+
+		<table class="table" width="102%" layoutH="116">
+			<thead>
+			<tr>
+				<th width="3%" >							
+				<input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="3%" >序号</th>
+				<th width="16%">工单编号</th>
+				<th width="8%">流程状态</th>
+				<th width="12%">事业部</th>
+				<th width="12%">部门</th>
+				<th width="8%">申请时间</th>
+				<th width="7%">CPU（核）</th>
+				<th width="7%">存储（GB）</th>
+				<th width="6%">网络类型</th>
+				<th width="8%">申请人</th>
+				<th width="12%">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'applyresourceselect' request.session.authority_list_button %}
+		   {% for resource in apply_resources.object_list %}
+           <tr target="sid_group" rel="{{ resource.id }}">
+           <td><input name="ids" value="{{ resource.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ resource.work_id }}</td>
+           <td>
+           		{% for key,value in flow_state_dict.items %}
+					{% ifequal resource.flow_state key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>{{ resource.division }}</td>
+           <td>{{ resource.department }}</td>
+           <td>{{ resource.apply_time|date:"Y-m-d" }}</td>
+           <td>{{ resource.cpu_num }}</td>
+           <td>{{ resource.disk_num }}</td>
+           <td>
+           		{% for key,value in net_type_dict.items %}
+					{% ifequal resource.net_type key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>{{ resource.applicant }}</td>  
+           <td>
+           	{% ifcontain 'applyresourcedetail' request.session.authority_list_button %}
+              	<a class="btndetail" href="{% url applyresource_detail resource.id %}" target="dialog" mask="true"  width="800" height="600" rel="detailresource" title="详情"><span>详情</span></a>
+           	{% endifcontain %}
+            {% ifequal resource.flow_state 0 %}  	
+              	<a class="btndistribute" href="{% url applyresource_createvirtualmachine resource.id %}" target="dialog" mask="true"  width="800" height="600" rel="createvirtualmachineresource" title="分配虚拟机"><span>分配虚拟机</span></a>
+           	{% endifequal %}
+            {% ifequal resource.flow_state 29 %}  	
+              	<a class="btndistribute" href="{% url applyresource_createvirtualmachine resource.id %}" target="dialog" mask="true"  width="800" height="600" rel="createvirtualmachineresource" title="分配虚拟机"><span>分配虚拟机</span></a>
+           	{% endifequal %}	           	
+<!--           	
+				{% ifequal resource.flow_state 3 %}
+					<a class="delete" href="{% url applyresource_delete resource.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+				{% endifequal %}
+-->				
+           </td>     
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ apply_resources.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ apply_resources.paginator.count }}" numPerPage="{{ apply_resources.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>
+

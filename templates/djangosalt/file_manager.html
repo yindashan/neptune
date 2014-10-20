@@ -1,0 +1,113 @@
+<script language="Javascript" type="text/javascript">
+	
+	var editor = CodeMirror.fromTextArea(document.getElementById("file_content"), {
+		lineNumbers: true,
+        theme: "ambiance"
+	});
+	
+	var editor_result = CodeMirror.fromTextArea(document.getElementById("file_result"), {
+		lineNumbers: true,
+        theme: "ambiance"
+	});
+	
+	function subForm(){
+		var global_rel = "file_manager";
+	    var global_url = "{% url djangosalt_file_manager %}";
+		//获取pagerForm参数
+		var $panel = $("#" + global_rel)
+		var $pagerForm = $("#pagerForm", $panel);
+		var target = $("#file_target").val();
+		var pathname = $("#file_pathname").val();
+		var filecontent = editor.getValue();
+		if(target == "") {
+  			alertMsg.info('目标主机不能为空！');
+  			return false;
+  		}
+		if(pathname == "") {
+  			alertMsg.info('文件保存路径不能为空！');
+  			return false;
+  		}
+  		if(filecontent == "") {
+  			alertMsg.info('配置文件内容不能为空！');
+  			return false;
+  		}
+		$panel.ajaxUrl({
+			type:"POST", url:global_url, data:{"target":target, "pathname":pathname, "filecontent":filecontent}, callback:function(resultdata){
+				navTab._loadUrlCallback($panel);
+				document.getElementById('file_manager_result').style.display="block";
+				editor_result.setValue(resultdata['result']);
+			}
+		});
+	}
+	
+	function removeAll() {
+  		$("#file_target").val(""); //清空
+  		$("#file_pathname").val("");
+  		$("#file_in_ip").val("");
+  		editor.setValue("");
+  		return false;
+  	}
+	
+</script>
+
+
+<div class="page">
+	<div class="pageContent">
+	<form id="pagerForm" rel="file_manager" method="post" action="{% url djangosalt_file_manager %}" class="pageForm required-validate" 
+		onsubmit="return navTabSearch(this);">
+		<input type="hidden" name="navTabId" value="djangosalt_file_manager"/>
+		<div style="display:block; overflow:auto; padding:0px; position:relative;" layoutH="0">
+		
+		  <div class="content">
+			  <!--右边开始-->
+			  <div class="main_right">
+				  <!--one-->
+				  <div class="rightcon_title">目标主机</div>
+				  <div class="rightcon_mid">
+				      <p class="pheight1">
+				      	<label class="label5">目标主机：</label>
+				      	<input size="30" id="file_in_ip" name="org.in_ip" type="hidden" />
+				      	<input type="text" class="style5" name="org.saltid" id="file_target" value="{{ target }}" readonly="readonly" /><span class="tips"></span>
+				      	<a class="btnLook" href="{% url djangosalt_searchback %}" target="dialog" mask="true" width="700" height="500" title="查找带回" lookupGroup="org">查找带回</a>
+				      </p>
+				  </div>
+				  <div class="rightcon_mid">
+				      <p class="pheight1"><label class="label5">文件保存路径：</label><input type="text" class="style5" name="file_pathname" id="file_pathname" value="{{ file_pathname }}" /><span class="tips"></span></p>
+				      <p class="light pheight">输入脚本保存在服务器上的位置和名称，请输入绝对路径和名称，比如："/var/www/html/httpd.conf"。</p>
+				  </div>
+				  <div class="rightcon_bottom"></div>
+				  <!--one-->
+				  <!--two-->
+				  <div class="rightcon_title">配置文件编辑器</div>
+				  <div class="rightcon_mid">
+					   <div style="margin-left:0px;">
+					       <textarea style="width:600px;height:400px;" class="textarea1" cols="5" id="file_content" name="file_content" >{{ file_content }}</textarea>
+					   </div>
+				  </div>
+				  <div class="rightcon_bottom"></div>
+				  <div>
+				  	<input type="button" class="enter specibut" id="scriptconfirm" value="确认执行" onclick="javascript: subForm();" />
+				  	<input type="button" class="enter specibut" id="scriptconfirm" value="清空重输" onclick="javascript: removeAll();" />
+				  </div>
+				  <!--two-->
+				  
+				  <!--three-->
+				  <div id="file_manager_result" style="display:none;">
+				  <div class="rightcon_title">执行结果</div>
+				  <div class="rightcon_mid">
+					   <div style="margin-left:0px;">
+					       <textarea style="width:600px;height:400px;" class="textarea1" cols="5" id="file_result" name="result">{{ result }}</textarea>
+					   </div>
+				  </div>
+				  <div class="rightcon_bottom"></div>
+				  </div>
+				  <!--three-->
+			  </div>
+		  <!--右边结束-->
+		  </div>
+		  
+		</div>
+	</form>
+	</div>
+</div>
+

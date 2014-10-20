@@ -1,0 +1,127 @@
+<div class="page">
+	<div class="pageContent">
+	{% load static %}
+	<form method="post" action="{% url applyresource_createvirtualmachine apply_resource.id%}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="applyresourceindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>工单编号：</label>
+				<input type="text" size="30" name="division" value="{{ apply_resource.work_id }}" readonly="readonly" />
+			</div>
+			
+			<div class="unit">
+				<label>流程状态：</label>
+           		{% for key,value in flow_state_dict.items %}
+					{% ifequal apply_resource.flow_state key %}
+						<input type="text" size="30"  name="flow_state" value={{ value }} readonly="readonly" />
+					{% endifequal %}
+				{% endfor %}
+			</div>
+			<div class="unit">
+				<label>事业部：</label>
+				<input type="text" size="30" name="division" value="{{ apply_resource.division }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>部门：</label>
+				<input type="text" size="30"  name="department" value="{{ apply_resource.department }}" readonly="readonly" />
+			</div>
+			
+			<div class="unit">
+				<label>申请时间：</label>
+				<input type="text" name="apply_time" class="date" size="30" format="yyyy-MM-dd" readonly="true" value='{{ apply_resource.apply_time|date:"Y-m-d" }}' yearstart="-10" yearend="20"/>
+			</div>
+
+            <div class="unit">
+				<label>业务说明：</label>
+				<textarea name="business_description" rows="3" cols="27" readonly="readonly" >{{ apply_resource.business_description }}</textarea>
+			</div>			
+			
+			<div class="unit">
+				<label>附件：</label>
+				<input name="file" size="30" value="导出附件" readonly="readonly" />				
+			</div>								
+			
+			<div class="unit">
+				<label>开始使用时间：</label>
+				<input type="text" name="start_time" class="date" size="30" format="yyyy-MM-dd" readonly="true" value="{{ apply_resource.start_time|date:"Y-m-d" }}" yearstart="-10" yearend="20" />
+				<a class="inputDateButton" href="javascript:;">选择</a>
+				<span class="info">yyyy-MM-dd</span>
+			</div>
+
+			<div class="unit">
+				<label>归还资源时间：</label>
+				<input type="text" name="end_time" class="date" size="30" format="yyyy-MM-dd" readonly="true" value="{{ apply_resource.end_time|date:"Y-m-d" }}" yearstart="-10" yearend="20" />
+				<a class="inputDateButton" href="javascript:;">选择</a>
+				<span class="info">yyyy-MM-dd</span>
+			</div>	
+								
+			<div class="unit">
+				<label>CPU需求：</label>
+				<input type="text" class="digits" size="30"  name="cpu_num" value="{{ apply_resource.cpu_num }}" /><span class="info">&nbsp;(单位：核)</span>
+			</div>
+			<div class="unit">
+				<label>存储需求：</label>
+				<input type="text" class="digits" size="30"  name="disk_num" value="{{ apply_resource.disk_num }}" /><span class="info">&nbsp;(单位：GB)</span>
+			</div>
+			<div class="unit">
+				<label>内存需求：</label>
+				<input type="text" class="digits" size="30"  name="memory_num" value="{{ apply_resource.memory_num }}" /><span class="info">&nbsp;(单位：GB)</span>
+			</div>			
+			<div class="unit">
+				<label>网络资源类型：</label>
+				<select name="net_type" class="required combox">
+	           		{% for key,value in net_type_dict.items %}
+						{% ifequal apply_resource.net_type key %}
+							<option value="{{ key }}" selected="selected">{{ value }}</option>
+						{% else %}
+							<option value="{{ key }}">{{ value }}</option>
+						{% endifequal %}
+					{% endfor %}
+				</select>
+			</div>
+
+			<div class="unit">
+				<label>操作系统：</label>
+				<select name="os_type" class="required combox">
+					{% for key,value in os_type_dict.items %}
+						{% ifequal apply_resource.os_type key %}
+							<option value="{{ key }}" selected="selected">{{ value }}</option>
+						{% else %}
+							<option value="{{ key }}">{{ value }}</option>
+						{% endifequal %}
+					{% endfor %}
+				</select>
+			</div>			
+
+			<div class="unit">
+				<label>特别设置，必须软件包等：</label>
+				<textarea name="other_soft" rows="2" cols="27" readonly="readonly" >{{ apply_resource.other_soft }}</textarea>
+			</div>	
+			<div class="unit">
+				<label>申请人：</label>
+				<input type="text"size="30"  name="applicant" value="{{ apply_resource.applicant }}" readonly="readonly" />
+			</div>		
+			<div class="unit">
+				<label>事业部负责人：</label>
+				<input type="text"size="30"  name="division_leader" value="{{ apply_resource.division_leader_views }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>资源管理部门负责人：</label>
+				<input type="text"size="30"  name="resource_management_description" value="{{ apply_resource.resource_management_views }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>实施人员：</label>
+				<input type="text"size="30"  name="implementer" value="{{ apply_resource.implementer }}" readonly="readonly" />
+			</div>			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">确定</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>			
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

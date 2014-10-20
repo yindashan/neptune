@@ -1,0 +1,173 @@
+<script type="text/javascript">
+	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+  	
+	function navTabAjaxDone(json) {
+		dialogAjaxDone(json);
+		if (json.statusCode == DWZ.statusCode.ok){
+			var $panel = $("#jbsxBox_virtualmachine")
+			var $pagerForm = $("#pagerForm", $panel);
+			var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+			var url = "{% url serverconf_search_test 9 %}";
+			$panel.ajaxUrl({
+				type:"POST", url:url, data:args, callback:function(){
+					navTab._loadUrlCallback($panel);
+				}
+			});
+		}
+	}
+	function dialogTabAjaxDone(json) {
+		dialogAjaxDone(json);
+		if (json.statusCode == DWZ.statusCode.ok){
+			var $panel = $("#jbsxBox_virtualmachine")
+			var $pagerForm = $("#pagerForm", $panel);
+			var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+			var url = "{% url serverconf_search_test 9 %}";
+			$panel.ajaxUrl({
+				type:"POST", url:url, data:args, callback:function(){
+					navTab._loadUrlCallback($panel);
+				}
+			});
+		}
+	}
+</script>
+
+<form id="pagerForm" onsubmit="return divSearch(this, 'jbsxBox_virtualmachine');" action="{% url serverconf_search_test 9 %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="nocid" value=""/>
+</form>
+
+
+<div class="pageHeader" style="border:1px #B8D0D6 solid">
+	<form rel="pagerForm" onsubmit="return divSearch(this, 'jbsxBox_virtualmachine');" action="{% url serverconf_search_test 9 %}" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+					内网IP：<input type="text" name="query" value="{{ query }}" />
+				</td>
+				<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+
+<div class="pageContent" style="border-left:1px #B8D0D6 solid;border-right:1px #B8D0D6 solid">
+<div class="panelBar">
+		<ul class="toolBar">
+		{% for authority in request.session.authority_list_button %}
+			{% ifequal 'virtualmachineadd' authority %}
+			<li><a class="add" href="{% url serverconf_add_virtualmachine %}" target="dialog" mask="true" width="800" height="600" title="添加" rel="addreource"><span>新增</span></a></li>
+			{% endifequal %}
+			{% ifequal 'virtualmachinedelete' authority %}
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url serverconf_selecteddelete_virtualmachine %}" class="delete"><span>批量删除</span></a></li>             
+			{% endifequal %}
+			{% ifequal 'virtualmachineimport' authority %}
+			<li class="line">line</li>
+           	<li><a class="icon" href="{% url serverconf_uploadfilevirtual %}" target="dialog" mask="true" width="500" height="300" title="导入csv文件" rel="uploadfileresource"><span>导入CSV文件</span></a></li>                         
+			{% endifequal %}
+		{% endfor %}
+		</ul>
+	</div>
+	<table class="table" width="105%" layoutH="260" rel="jbsxBox_virtualmachine">
+		<thead>
+			<tr>
+				<th width="3%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="3%">序号</th>
+				<th width="7%">资产编号</th>
+				<th width="5%">OS类型</th>
+				<th width="5%">OS位数</th>
+				<th width="5%">OS版本</th>
+				<th width="5%">CPU(核)</th>
+				<th width="5%">内存(GB)</th>
+				<th width="5%">硬盘(GB)</th>
+			{% for authority in request.session.authority_list_modulefield %}
+			{% ifequal 'virtualmachinemanage_account' authority %}
+				<th width="6%">管理账户</th>
+	        {% endifequal %}
+			{% ifequal 'virtualmachinemanage_password' authority %}
+				<th width="6%">管理密码</th>
+	        {% endifequal %}
+			{% ifequal 'virtualmachinemanage_port' authority %}
+				<th width="5%">管理端口</th>
+	        {% endifequal %}
+			{% endfor %}
+				<th width="9%">内网IP</th>
+				<th width="9%">外网IP</th>
+				<th width="7%">使用部门</th>
+				<th width="12%">操作</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+		{% ifcontain 'virtualmachineselect' request.session.authority_list_button %}
+		   {% for virtualmachine in virtualmachines.object_list %}
+           <tr target="sid_group" rel="{{ virtualmachine.id }}">
+           <td><input name="ids" value="{{ virtualmachine.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td><a href="{% url equipment_relate_serverconf_link_equipment virtualmachine.equipment.id %}" target="navTab" rel="equipmentindex" title="设备管理" >{{ virtualmachine.equipment.elementid }}</a></td>
+           <td>{{ virtualmachine.os_type }}</td>
+           <td>
+           	{% if virtualmachine.os_byte %}
+		   		{{ virtualmachine.os_byte }}
+		   	{% endif %}
+           </td>
+           <td>{{ virtualmachine.os_version }}</td>
+           <td>{{ virtualmachine.cpu }}</td>
+           <td>{{ virtualmachine.memory }}</td>
+           <td>{{ virtualmachine.disk }}</td>
+        {% for authority in request.session.authority_list_modulefield %}
+		{% ifequal 'virtualmachinemanage_account' authority %}
+           <td>{{ virtualmachine.manage_account }}</td>
+        {% endifequal %}
+		{% ifequal 'virtualmachinemanage_password' authority %}
+           <td>{{ virtualmachine.manage_password }}</td>
+        {% endifequal %}
+		{% ifequal 'virtualmachinemanage_port' authority %}
+		   <td>
+		   	{% if virtualmachine.manage_port %}
+		   		{{ virtualmachine.manage_port }}
+		   	{% endif %}
+		   </td>
+        {% endifequal %}
+		{% endfor %}
+           <td>{{ virtualmachine.in_ip }}</td>
+           <td>{{ virtualmachine.out_ip }}</td>
+           <td>{{ virtualmachine.department }}</td>
+           <td>
+           {% for authority in request.session.authority_list_button %}
+	           {% ifequal 'virtualmachineedit' authority %}
+	              <a class="btnedit" href="{% url serverconf_edit_virtualmachine virtualmachine.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+	           {% endifequal %}
+	           {% ifequal 'virtualmachinedelete' authority %}
+	              <a class="btndelete" href="{% url serverconf_delete_virtualmachine virtualmachine.id %}" callback="dialogTabAjaxDone" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+	           {% endifequal %}
+           {% endfor %}
+              <a class="btnselect" href="{% url log_changerecord 5,virtualmachine.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="查看变更记录"><span>查看</span></a>
+           </td>
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+		</tbody>
+		
+	</table>
+	
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value}, 'jbsxBox_virtualmachine')">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ virtualmachines.paginator.count }}条</span>
+		</div>
+		<div class="pagination" rel="jbsxBox_virtualmachine" targetType="navTab" totalCount="{{ virtualmachines.paginator.count }}" numPerPage="{{ virtualmachines.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+

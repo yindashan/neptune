@@ -1,0 +1,84 @@
+<form id="pagerForm" action="{% url server_searchback_softform %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url server_searchback_softform %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+				应用名称：<input type="text" name="query" value="{{ query }}" />
+			</li>	  
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" multLookup="orgId" warn="请选择应用">选择带回</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="7%"><input type="checkbox" class="checkboxCtrl" group="orgId" /></th>
+				<th width="7%" align="center">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="15%" orderField="soft_name" class="asc">应用名称</th>
+			{% else %}
+				<th width="15%" orderField="soft_name" class="desc">应用名称</th>
+			{% endifequal %}
+				<th width="15%">应用类型</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="10%" orderField="version" class="asc">版本</th>
+			{% else %}
+				<th width="10%" orderField="version" class="desc">版本</th>
+			{% endifequal %}
+				<th width="10%">OS</th>
+				<th width="10%">OS位数</th>
+				<th width="10%">OS版本</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for softform in softforms.object_list %}
+           <tr>
+           <td><input type="checkbox" name="orgId" value="{softid:'{{ softform.id }}', soft_name:'{{ softform.soft_name }}', version:'{{ softform.version }}'}"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ softform.soft_name }}</td>
+           <td>{{ softform.soft_type }}</td>
+           <td>{{ softform.version }}</td>
+           <td>{{ softform.os }}</td>
+           <td>{{ softform.os_byte }}</td>
+           <td>{{ softform.os_version }}</td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ softforms.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ softforms.paginator.count }}" numPerPage="{{ softforms.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

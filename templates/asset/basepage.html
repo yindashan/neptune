@@ -1,0 +1,318 @@
+<form id="pagerForm" action="{% url asset_index_asset %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+  	
+	$(document).ready(function() {
+		$('#tableall').columnManager({
+			listTargetID: 'targetall',
+			onClass: 'advon',
+			offClass: 'advoff',
+			hideInList: [1,2],
+			saveState: true,
+			colsHidden: [5,6,8,9,18,19,21,22,23,24,25,27]
+		});
+		
+		//create the clickmenu from the target
+		$('#ulSelectColumn').clickMenu({
+			onClick: function(){
+				//获取隐藏的列数
+				var obj = $("#tableall tr>th:hidden");
+				//alert(obj.length);
+				if(obj.length > 11) {
+					$("#tableall").attr("style","width:100%;");
+				} else if(obj.length > 5) {
+					$("#tableall").attr("style","width:130%;");
+				} else {
+					$("#tableall").attr("style","width:160%;");
+				}
+				
+			}
+		});
+		
+		//获取隐藏的列数
+		var obj = $("#tableall tr>th:hidden");
+		//alert(obj.length);
+		if(obj.length > 11) {
+			$("#tableall").attr("style","width:100%;");
+		} else if(obj.length > 5) {
+			$("#tableall").attr("style","width:130%;");
+		} else {
+			$("#tableall").attr("style","width:160%;");
+		}
+	
+	});
+	
+	
+</script>
+{% load static %}
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url asset_index_asset %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td style="padding-right:1px;">
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						资产编号：<input type="text" size="10" name="elementid" value="{{ elementid }}" />&nbsp;&nbsp;
+						<input type="hidden" size="10" name="old_elementid" value="{{ old_elementid }}" />
+						<input type="hidden" size="10" name="service_code" value="{{ service_code }}" />
+						<input type="hidden" size="10" name="specification" value="{{ specification }}" />
+						<input type="hidden" size="10" name="brand" value="{{ brand }}" />
+						<input type="hidden" size="10" name="model" value="{{ model }}" />
+						<input type="hidden" size="10" name="num_min" value="{{ num_min }}" />
+						<input type="hidden" size="10" name="num_max" value="{{ num_max }}" />
+						<input type="hidden" size="10" name="unit_price_min" value="{{ unit_price_min }}" />
+						<input type="hidden" size="10" name="unit_price_max" value="{{ unit_price_max }}" />
+						<input type="hidden" size="10" name="in_storage_no" value="{{ in_storage_no }}" />
+						<input type="hidden" size="10" name="out_storage_no" value="{{ out_storage_no }}" />
+						<input type="hidden" size="10" class="date" name="dateStart_deadline" value="{{ dateStart_deadline }}" />
+						<input type="hidden" size="10" class="date" name="dateEnd_deadline" value="{{ dateEnd_deadline }}" />
+						<input type="hidden" size="10" name="username" value="{{ username }}" />
+						<input type="hidden" size="10" name="apply_no" value="{{ apply_no }}" />
+						<input type="hidden" size="10" name="org1.equipment_code" value="{{ equipment_code }}" />
+						<input type="hidden" size="10" name="org2.company_code" value="{{ company_code }}" />
+						<input type="hidden" size="10" name="org3.department_code" value="{{ department_code }}" />
+						对账标识
+					</td>
+					<td style="padding-left:1px;">
+						<select name="reconcile_flag" class="required combox" >
+						{% if reconcile_flag > -1 %}
+							<option value="all" {% ifequal reconcile_flag "all" %} selected="selected" {% endifequal %}>全部</option>
+							{% for key,value in reconcile_flag_dict.items %}
+								{% ifequal reconcile_flag key %}
+									<option value="{{ key }}" selected="selected">{{ value }}</option>
+								{% else %}
+									<option value="{{ key }}">{{ value }}</option>
+								{% endifequal %}
+							{% endfor %}
+						{% else %}
+							<option value="all" selected="selected">全部</option>
+							{% for key,value in reconcile_flag_dict.items %}
+								<option value="{{ key }}">{{ value }}</option>
+							{% endfor %}
+						{% endif %}
+						</select>
+					</td>
+					<td>
+						购入日期：
+						<input type="text" size="9" value="{{ dateStart }}" readonly="readonly" class="date" name="dateStart" />
+						<span class="limit">-</span>
+						<input type="text" size="9" value="{{ dateEnd }}" readonly="readonly" class="date" name="dateEnd" />&nbsp;&nbsp;
+						领取日期：
+						<input type="text" size="9" value="{{ dateStart2 }}" readonly="readonly" class="date" name="dateStart2" />
+						<span class="limit">-</span>
+						<input type="text" size="9" value="{{ dateEnd2 }}" readonly="readonly" class="date" name="dateEnd2" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+					<td><a class="button" href="{% url asset_advancedsearch_asset %}" target="dialogadvanced" mask="true" width="800" height="600" title="高级检索框" rel="advancedsearch"><span>高级检索</span></a></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+			{% ifcontain 'assetadd' request.session.authority_list_button %}
+				<li><a class="add" href="{% url asset_add_asset %}" target="dialog" mask="true" width="800" height="600" title="添加固定资产" rel="addreource"><span>新增</span></a></li>
+			{% endifcontain %}
+			{% ifcontain 'assetdelete' request.session.authority_list_button %}
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url asset_selecteddelete_asset %}" class="delete"><span>批量删除</span></a></li>             
+			{% endifcontain %}
+                <li class="line">line</li>
+			{% ifcontain 'assetimport' request.session.authority_list_button %}
+           	  	<li><a class="icon" href="{% url asset_uploadfile %}" target="dialog" mask="true" width="500" height="300" title="导入Excel文件" rel="uploadfileresource"><span>导入Excel文件</span></a></li>
+			{% endifcontain %}
+			{% ifcontain 'assetexport' request.session.authority_list_button %}
+                <li><a class="icon" href="{% url asset_downloadfile %}" target="dwzExport" targetType="navTab" title="确定要导出这些记录吗？"><span>导出Excel文件</span></a></li>
+			{% endifcontain %}
+			</ul>
+		</div>
+		<!-- <div class="tabsMore">more</div> -->
+		
+
+		<table id="tableall" class="list" width="100%" layoutH="94">
+			<thead>
+			<tr>
+				<th>
+					<div id="thSelectColumn">
+						<ul id="ulSelectColumn">
+							<li>
+								<img src="{% get_static_prefix %}js/columnmanager/selectcol.png" alt="select columns" title="select columns" />
+								<ul id="targetall"></ul>
+							</li>
+						</ul>
+					</div>
+				</th>
+				<th><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th>序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="elementid" class="asc">资产编号</th>
+			{% else %}
+				<th orderField="elementid" class="desc">资产编号</th>
+			{% endifequal %}
+				<th>原资产编号</th>
+				<th>服务代码</th>
+				<th>品牌</th>
+				<th>型号</th>
+				<th>规格</th>
+				<th>数量</th>
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="unit_price" class="asc">单价&nbsp;&nbsp;&nbsp;</th>
+			{% else %}
+				<th orderField="unit_price" class="desc">单价&nbsp;&nbsp;&nbsp;</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="sum_price" class="asc">总金额&nbsp;&nbsp;&nbsp;</th>
+			{% else %}
+				<th orderField="sum_price" class="desc">总金额&nbsp;&nbsp;&nbsp;</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="purchase_date" class="asc">购入日期</th>
+			{% else %}
+				<th orderField="purchase_date" class="desc">购入日期</th>
+			{% endifequal %}
+				<th>入库单号</th>
+				<th>领取日期</th>
+				<th>出库单号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="deadline" class="asc">保修期限</th>
+			{% else %}
+				<th orderField="deadline" class="desc">保修期限</th>
+			{% endifequal %}
+				<th>使用人</th>
+				<th>申请单号</th>
+				<th>对帐标识</th>
+				<th>部门备注</th>
+				<th>资产备注</th>
+				<th>设备类型</th>
+				<th>资产归属</th>
+				<th>使用部门</th>
+				<th>最后修改人</th>
+				<th>最后修改时间</th>
+				<th>操作	</th>
+			</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'assetselect' request.session.authority_list_button %}
+		   {% for asset in assets.object_list %}
+           <tr target="sid_group" rel="{{ asset.id }}">
+           <td>-</td>
+           <td><input name="ids" value="{{ asset.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ asset.elementid }}</td>
+           <td>{{ asset.old_elementid }}</td>
+           <td>{{ asset.service_code }}</td>
+           <td>{{ asset.brand }}</td>
+           <td>{{ asset.model }}</td>
+           <td>{{ asset.specification }}</td>
+           <td>
+           	{% if asset.num %}
+           		{{ asset.num }}
+           	{% endif %}
+           </td>
+           <td>
+           	{% if asset.unit_price %}
+           		{{ asset.unit_price }}
+           	{% endif %}
+           </td>
+           <td>
+           	{% if asset.sum_price %}
+           		{{ asset.sum_price }}
+           	{% endif %}
+           </td>
+           <td>{{ asset.purchase_date|date:"Y-m-d" }}</td>
+           <td>{{ asset.in_storage_no }}</td>
+           <td>{{ asset.draw_date|date:"Y-m-d" }}</td>
+           <td>{{ asset.out_storage_no }}</td>
+           <td>{{ asset.deadline|date:"Y-m-d" }}</td>
+           <td>{{ asset.username }}</td>
+           <td>{{ asset.apply_no }}</td>
+           <td>
+           		{% for key,value in reconcile_flag_dict.items %}
+					{% ifequal asset.reconcile_flag key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>{{ asset.department_desc }}</td>
+           <td>{{ asset.asset_desc }}</td>
+           <td>{{ asset.equipmentcode.subclass_name }}</td>
+           <td>{{ asset.companycode.company_name }}</td>
+           <td>{{ asset.departmentcode.business_group}}-{{ asset.departmentcode.division }}-{{ asset.departmentcode.department }}-{{ asset.departmentcode.sub_sector }}</td>
+           <td>{{ asset.end_edit_username }}</td>
+           <td>{{ asset.end_edit_date|date:"Y-m-d" }}</td>
+           <td>
+           {% ifcontain 'assetedit' request.session.authority_list_button %}
+              <a class="btnedit" href="{% url asset_edit_asset asset.id %}" target="dialogedit" mask="true"  width="800" height="600" rel="edit" title="编辑"><span>编辑</span></a>
+           {% endifcontain %}
+           
+           {% ifcontain 'assetdamage' request.session.authority_list_button %}
+              <a class="btndamage" href="{% url asset_asset_damage asset.id %}" target="ajaxTodo" rel="damage" title="您确定要执行报损操作吗？"><span>报损</span></a>
+              {% ifequal asset.equipmentcode.equipment_code '040301' %}
+              <a class="btndamagepart" href="{% url asset_asset_damagepart asset.id %}" target="dialog" mask="true"  width="400" height="250" rel="damage" title="分开报损"><span>分开报损</span></a>
+              {% endifequal %}
+           {% endifcontain %}
+           
+           {% ifcontain asset.departmentcode.department_code asset_departmentcodes %}
+	           {% ifcontain 'assetlend' request.session.authority_list_button %}
+	              <a class="btndeploysuccess" href="{% url asset_asset_lend asset.id %}" target="dialog" mask="true"  width="800" height="600" rel="lend" title="借用"><span>借用</span></a>
+	           {% endifcontain %}
+	           {% ifcontain 'assetdistribute' request.session.authority_list_button %}
+	              <a class="btndistributelend" href="{% url asset_asset_distribute asset.id %}" target="dialog" mask="true"  width="800" height="600" rel="distribute" title="调配"><span>调配</span></a>
+	           {% endifcontain %}
+           {% endifcontain %}
+           
+           {% ifnotcontain asset.departmentcode.department_code asset_departmentcodes %}
+	           {% ifcontain 'assettransfer' request.session.authority_list_button %}
+	              <a class="btntransfer" href="{% url asset_asset_transfer asset.id %}" target="dialog" mask="true"  width="800" height="600" rel="transfer" title="转移"><span>转移</span></a>
+	           {% endifcontain %}
+	           {% ifcontain 'assetwithdraw' request.session.authority_list_button %}
+	              <a class="btndeployfailure" href="{% url asset_asset_withdraw asset.id %}" target="dialog" mask="true"  width="800" height="600" rel="withdraw" title="退库"><span>退库</span></a>
+	              {% ifequal asset.equipmentcode.equipment_code '040301' %}
+	              <a class="btnwithdrawpart" href="{% url asset_asset_withdrawpart asset.id %}" target="dialog" mask="true"  width="800" height="600" rel="damage" title="分开退库"><span>分开退库</span></a>
+	              {% endifequal %}
+	           {% endifcontain %}
+           {% endifnotcontain %}
+           
+           {% ifcontain 'assetdelete' request.session.authority_list_button %}
+              <a class="btndelete" href="{% url asset_delete_asset asset.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+           {% endifcontain %}
+           
+           {% ifcontain 'assetunlock' request.session.authority_list_button %}
+           	  {% ifequal asset.edit_status 1 %}
+              <a class="btnunlock" href="{% url asset_asset_unlock asset.id %}" target="ajaxTodo" rel="unlock" title="您确定要执行解锁操作吗？"><span>解锁</span></a>
+              {% endifequal %}
+           {% endifcontain %}
+           </td>
+           
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ assets.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ assets.paginator.count }}" numPerPage="{{ assets.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>
+

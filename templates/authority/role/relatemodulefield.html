@@ -1,0 +1,74 @@
+<form id="pagerForm" action="{% url authority_relate_role_modulefield id %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="nocid" value=""/>
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<label>角色名称：</label>
+				<input type="text" name="role_name" value="{{ role.role_name }}" />
+			</li>
+			<li>
+				<label>角色描述：</label>
+				<input type="text" name="role_desc" value="{{ role.role_desc }}" />
+			</li>
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>模块字段主键</th>
+				<th>模块字段名称</th>
+				<th>模块字段种类</th>
+				<th>关联模块</th>
+				<th>关联字段</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for modulefield in modulefields %}
+           <tr>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ modulefield.id }}</td>
+           <td>{{ modulefield.modulefield_name }}</td>
+           <td>{{ modulefield.kind }}</td>
+           <td>{{ modulefield.module.module_name }}</td>
+           <td>{{ modulefield.field.field_name }}</td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ modulefields.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ modulefields.paginator.count }}" numPerPage="{{ modulefields.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

@@ -1,0 +1,272 @@
+<script type="text/javascript">
+	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+  	
+  	//批量删除成功后调用的回调函数(dwz框架自动指定)
+	function navTabAjaxDone(json) {
+		dialogAjaxDone(json);
+		if (json.statusCode == DWZ.statusCode.ok){
+			//获取pagerForm参数
+			var $panel = $("#jbsxBox_basicinfo")
+			var $pagerForm = $("#pagerForm", $panel);
+			var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+			var url = "{% url serverconf_search_test 8 %}";
+			//$panel.loadUrl(url, args, function(){navTab._loadUrlCallback($panel);});
+			$panel.ajaxUrl({
+				type:"POST", url:url, data:args, callback:function(){
+					navTab._loadUrlCallback($panel);
+				}
+			});
+		}
+	}
+  	
+	function dialogTabAjaxDone(json) {
+		dialogAjaxDone(json);
+		if (json.statusCode == DWZ.statusCode.ok){
+			//获取pagerForm参数
+			var $panel = $("#jbsxBox_basicinfo")
+			var $pagerForm = $("#pagerForm", $panel);
+			var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+			var url = "{% url serverconf_search_test 8 %}";
+			//$panel.loadUrl(url, args, function(){navTab._loadUrlCallback($panel);});
+			$panel.ajaxUrl({
+				type:"POST", url:url, data:args, callback:function(){
+					navTab._loadUrlCallback($panel);
+				}
+			});
+		}
+	}
+	
+	$(document).ready(function() {
+		$("#in_ip").autocomplete("{% url serverconf_autocomplete %}", {
+			minChars: 0, //Default: 1，如果设为0，在输入框内双击或者删除输入框内内容时显示列表
+			//width: 180,  //指定下拉框的宽度.Default: input元素的宽度,最后设为默认，否则FF和360浏览器之间显示宽度不一致
+			max: 10,  //autoComplete下拉显示项目的个数.Default: 10
+			//autoFill: true, //自动填充
+			matchContains: true, //是否contains匹配
+			//multiple: true, //是否允许输入多个值
+			//multipleSeparator: ",", //多个值之间用什么间隔
+			scroll: true,  //当结果集大于默认高度时是否使用卷轴显示 Default: true 
+			scrollHeight: 300  //自动完成提示的卷轴高度用像素大小表示  Default: 180  //最后一行代码后面不能有逗号(,)
+			/*
+			formatItem: function(data, i, max) {//格式化列表中的条目 row:条目对象,i:当前条目数,max:总条目数
+				return i + "/" + max + ":" + data;
+	        },
+	        formatMatch: function(data, i, max) {//配合formatItem使用，作用在于，由于使用了formatItem，所以条目中的内容有所改变，而我们要匹配的是原始的数据，所以用formatMatch做一个调整，使之匹配原始数据
+				return data;
+	        },
+	        formatResult: function(data) {//定义最终返回的数据，比如我们还是要返回原始数据，而不是formatItem过的数据
+				return data;
+			}
+			*/
+		}).result(function(event, data, formatted){
+			//alert(data); data为选中的数据
+			//$.ajaxSettings.global = true; //恢复dwz全局ajax动画
+		});
+		
+		$("#in_ip").focus(function(){
+			$.ajaxSettings.global = false; //取消dwz全局ajax动画
+		});
+		$("#in_ip").blur(function(){
+			$.ajaxSettings.global = true; //恢复dwz全局ajax动画
+		});
+		
+	});
+</script>
+
+<form id="pagerForm" onsubmit="return divSearch(this, 'jbsxBox_basicinfo');" action="{% url serverconf_search_test 8 %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+
+<div class="pageHeader" style="border:1px #B8D0D6 solid">
+	<form rel="pagerForm" onsubmit="return divSearch(this, 'jbsxBox_basicinfo');" action="{% url serverconf_search_test 8 %}" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+					内网IP：<input type="text" size="15" id="in_ip" name="query" value="{{ query }}" />&nbsp;&nbsp;&nbsp;
+					OS类型：<input type="text" size="5" name="os_type" value="{{ os_type }}" />&nbsp;&nbsp;&nbsp;
+					OS位数：<input type="text" size="5" name="os_byte" value="{{ os_byte }}" />&nbsp;&nbsp;&nbsp;
+					CPU：<input type="text" size="5" name="left_cpu" value="{{ left_cpu }}" />&nbsp;&nbsp;&nbsp;
+					内存：<input type="text" size="5" name="left_memory" value="{{ left_memory }}" />&nbsp;&nbsp;&nbsp;
+					硬盘：<input type="text" size="5" name="left_disk" value="{{ left_disk }}" />
+				</td>
+				<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				<!-- 
+				<td><a class="button" href="{% url serverconf_advancedsearch_basicinfo %}" target="dialog" mask="true" width="550" height="350" title="查询框"><span>高级检索</span></a></td>
+				 -->
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+
+<div class="pageContent" style="border-left:1px #B8D0D6 solid;border-right:1px #B8D0D6 solid">
+<div class="panelBar">
+		<ul class="toolBar">
+		{% for authority in request.session.authority_list_button %}
+			{% ifequal 'serverconfadd' authority %}
+			<li><a class="add" href="{% url serverconf_add_basicinfo %}" target="dialog" mask="true" width="800" height="600" title="添加" rel="addreource"><span>新增</span></a></li>
+			{% endifequal %}
+			{% ifequal 'serverconfdelete' authority %}
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url serverconf_selecteddelete_basicinfo %}" class="delete"><span>批量删除</span></a></li>
+			{% endifequal %}
+			{% ifequal 'serverconfimport' authority %}
+            <li class="line">line</li>
+           	<li><a class="icon" href="{% url serverconf_uploadfileserver %}" target="dialog" mask="true" width="500" height="300" title="导入csv文件" rel="uploadfileresource"><span>导入CSV文件</span></a></li>                         
+			<li><a class="icon" href="{% url serverconf_downloadfileserver %}" target="dwzExport" targetType="navTab" title="确定要导出这些记录吗？"><span>导出CSV文件</span></a></li>
+			{% endifequal %}
+		{% endfor %}
+		<!-- 
+			<li><a class="add" href="{% url serverconf_add_basicinfo %}" target="dialog" mask="true" width="800" height="600" title="添加" rel="addreource"><span>新增</span></a></li>
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url serverconf_selecteddelete_basicinfo %}" class="delete"><span>批量删除</span></a></li>
+            <li class="line">line</li>
+           	<li><a class="icon" href="{% url serverconf_uploadfileserver %}" target="dialog" mask="true" width="500" height="300" title="导入csv文件" rel="uploadfileresource"><span>导入CSV文件</span></a></li>                         
+           	 -->
+		</ul>
+	</div>
+	<table class="table" width="106%" layoutH="260" rel="jbsxBox_basicinfo">
+		<thead>
+			<tr>
+				<th width="3%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="3%">序号</th>
+				<th width="8%">资产编号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="6%" orderField="os_type" class="asc">OS类型</th>
+			{% else %}
+				<th width="6%" orderField="os_type" class="desc">OS类型</th>
+			{% endifequal %}
+				<th width="5%">OS位数</th>
+				<th width="5%">OS版本</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="9%" orderField="left_cpu" class="asc">可用CPU(核)</th>
+			{% else %}
+				<th width="9%" orderField="left_cpu" class="desc">可用CPU(核)</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="9%" orderField="left_memory" class="asc">可用内存(GB)</th>
+			{% else %}
+				<th width="9%" orderField="left_memory" class="desc">可用内存(GB)</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="9%" orderField="left_disk" class="asc">可用硬盘(GB)</th>
+			{% else %}
+				<th width="9%" orderField="left_disk" class="desc">可用硬盘(GB)</th>
+			{% endifequal %}
+			{% for authority in request.session.authority_list_modulefield %}
+			{% ifequal 'serverconfmanage_account' authority %}
+				<th width="6%">管理账户</th>
+	        {% endifequal %}
+			{% ifequal 'serverconfmanage_password' authority %}
+				<th width="6%">管理密码</th>
+	        {% endifequal %}
+			{% ifequal 'serverconfmanage_ip' authority %}
+				<th width="6%">管理IP</th>
+	        {% endifequal %}
+			{% ifequal 'serverconfmanage_port' authority %}
+				<th width="5%">管理端口</th>
+	        {% endifequal %}
+			{% endfor %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="9%" orderField="in_ip" class="asc">内网IP</th>
+			{% else %}
+				<th width="9%" orderField="in_ip" class="desc">内网IP</th>
+			{% endifequal %}
+				<th width="7%">外网IP</th>
+				<th width="7%">操作</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+		{% ifcontain 'serverconfselect' request.session.authority_list_button %}
+		   {% for basicinfo in basicinfos.object_list %}
+           <tr target="sid_group" rel="{{ basicinfo.id }}">
+           <td><input name="ids" value="{{ basicinfo.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td><a href="{% url equipment_relate_serverconf_link_equipment basicinfo.equipment.id %}" target="navTab" rel="equipmentindex" title="设备管理" >{{ basicinfo.equipment.elementid }}</a></td>
+           <td>{{ basicinfo.os_type }}</td>
+           <td>
+            {% if basicinfo.os_byte %}
+           		{{ basicinfo.os_byte }}
+           	{% endif %}
+           </td>
+           <td>{{ basicinfo.os_version }}</td>
+           <td>
+           	{% if basicinfo.left_cpu < 0 %}
+           		{{ 0 }}
+           	{% else %}
+            	{{ basicinfo.left_cpu }}
+           	{% endif %}
+           </td>
+           <td>
+            {% if basicinfo.left_memory < 0 %}
+           		{{ 0 }}
+           	{% else %}
+            	{{ basicinfo.left_memory }}
+           	{% endif %}
+           </td>
+           <td>
+           	{% if basicinfo.left_disk < 0 %}
+           		{{ 0 }}
+           	{% else %}
+            	{{ basicinfo.left_disk }}
+           	{% endif %}
+           </td>
+        {% for authority in request.session.authority_list_modulefield %}
+		{% ifequal 'serverconfmanage_account' authority %}
+           <td>{{ basicinfo.manage_account }}</td>
+        {% endifequal %}
+		{% ifequal 'serverconfmanage_password' authority %}
+           <td>{{ basicinfo.manage_password }}</td>
+        {% endifequal %}
+		{% ifequal 'serverconfmanage_ip' authority %}
+           <td>{{ basicinfo.manage_ip }}</td>
+        {% endifequal %}
+		{% ifequal 'serverconfmanage_port' authority %}
+           <td>
+           	{% if basicinfo.manage_port %}
+           		{{ basicinfo.manage_port }}
+           	{% endif %}
+           </td>
+        {% endifequal %}
+		{% endfor %}
+           <td>{{ basicinfo.in_ip }}</td>
+           <td>{{ basicinfo.out_ip }}</td>
+           <td>
+           {% for authority in request.session.authority_list_button %}
+	           {% ifequal 'serverconfedit' authority %}
+	              <a class="btnedit" href="{% url serverconf_edit_basicinfo basicinfo.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+	           {% endifequal %}
+	           {% ifequal 'serverconfdelete' authority %}
+	              <a class="btndelete" href="{% url serverconf_delete_basicinfo basicinfo.id %}" callback="dialogTabAjaxDone" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+	           {% endifequal %}
+           {% endfor %}
+           </td>
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+		</tbody>
+		
+	</table>
+	
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value}, 'jbsxBox_basicinfo')">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ basicinfos.paginator.count }}条</span>
+		</div>
+		<div class="pagination" rel="jbsxBox_basicinfo" targetType="navTab" totalCount="{{ basicinfos.paginator.count }}" numPerPage="{{ basicinfos.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+

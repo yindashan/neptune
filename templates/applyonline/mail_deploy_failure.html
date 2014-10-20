@@ -1,0 +1,93 @@
+<div class="page">
+	<div class="pageContent">
+		<div class="panelBar">
+			{{ email }}
+		</div>
+	</div>
+</div>
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url applyonline_detail applyonline.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="applyonlineindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>申请单号：</label>
+				<input type="text" class="" size="30" name="applyid" value="{{ applyonline.applyid }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>服务名称：</label>
+				<input type="text" class="" size="30"  name="service_name" value="{{ applyonline.service_name }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>服务域名：</label>
+				<input type="text" class="" size="30" name="service_domainname" value="{{ applyonline.service_domainname }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>版本号：</label>
+				<input type="text" class="" size="30" name="version" value="{{ applyonline.version }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>申请人：</label>
+				<input type="text" class="" size="30" name="apply_user" value="{{ applyonline.apply_user }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>更新文件名：</label>
+				<input type="text" class="" size="30" name="file_name" value="{{ applyonline.file_name }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>更新文件下载链接：</label>
+				<input type="text" class="" size="30" name="file_url" value="{{ applyonline.file_url }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>相关研发人员：</label>
+				<input type="text" class="" size="30" name="develop_user" value="{{ applyonline.develop_user }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>相关测试人员：</label>
+				<input type="text" class="" size="30" name="test_user" value="{{ applyonline.test_user }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>相关运维人员：</label>
+				<input type="text" class="" size="30" name="operate_user" value="{{ applyonline.operate_user }}" readonly="readonly" />
+			</div>
+			
+			<div class="unit">
+				<label>申请单状态：</label>
+				<input type="text" size="30"  name="status" value="部署失败" readonly="readonly" />
+			</div>
+			
+			<div class="unit">
+				<label>部署步骤：</label>
+				<textarea name="deploy_step" rows="5" cols="57" readonly="readonly" >{{ applyonline.deploy_step }}</textarea>
+			</div>
+			<div class="unit">
+				<label>回滚方案：</label>
+				<textarea name="backup_method" rows="5" cols="57" readonly="readonly" >{{ applyonline.backup_method }}</textarea>
+			</div>
+			<div class="unit">
+				<label>更新验证：</label>
+				<textarea name="update_check" rows="5" cols="57" readonly="readonly" >{{ applyonline.update_check }}</textarea>
+			</div>
+			<div class="unit">
+				<label>服务上线失败原因：</label>
+				<textarea name="applyonline_desc" rows="5" cols="57" readonly="readonly" >{{ applyonline.applyonline_desc }}</textarea>
+			</div>
+		</div>
+	</form>
+	
+	</div>
+</div>
+<div class="page">
+	<div class="pageContent">
+		<div class="panelBar">
+			CMDB系统地址：10.2.134.3
+		</div>
+		<div class="panelBar">
+			登录用户名为公司邮箱用户名
+		</div>
+		<div class="panelBar">
+			登录密码为公司邮箱密码
+		</div>
+	</div>
+</div>
+

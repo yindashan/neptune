@@ -1,0 +1,217 @@
+<form id="pagerForm" action="{% url equipment_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url equipment_index %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td style="padding-right:1px;">
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						机房编号：<input type="text" size="10" name="nocid" value="{{ nocid }}" />&nbsp;&nbsp;
+						<input type="hidden" size="10" name="rackid" value="{{ rackid }}" />
+						资产编号：<input type="text" size="10" name="query" value="{{ query }}" />&nbsp;&nbsp;
+						制造商：<input type="text" size="10" name="manufacture" value="{{ manufacture }}" />&nbsp;&nbsp;
+						设备型号：<input type="text" size="10" name="element_model" value="{{ element_model }}" />&nbsp;&nbsp;
+						设备状态：
+					</td>
+					<td style="padding-left:1px;">
+						<select name="status" class="required combox" >
+						{% if status > -1 %}
+							<option value="all" {% ifequal status "all" %} selected="selected" {% endifequal %}>全部</option>
+							{% for key,value in equipment_status_dict.items %}
+								{% ifequal status key %}
+									<option value="{{ key }}" selected="selected">{{ value }}</option>
+								{% else %}
+									<option value="{{ key }}">{{ value }}</option>
+								{% endifequal %}
+							{% endfor %}
+						{% else %}
+							<option value="all" selected="selected">全部</option>
+							{% for key,value in equipment_status_dict.items %}
+								<option value="{{ key }}">{{ value }}</option>
+							{% endfor %}
+						{% endif %}
+						</select>
+					</td>
+					<td>
+						日期范围：
+						<input type="text" size="9" value="{{ dateStart }}" readonly="readonly" class="date" name="dateStart" />
+						<span class="limit">-</span>
+						<input type="text" size="9" value="{{ dateEnd }}" readonly="readonly" class="date" name="dateEnd" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+			{% for authority in request.session.authority_list_button %}
+				{% ifequal 'equipmentadd' authority %}
+				<li><a class="add" href="{% url equipment_add %}" target="dialog" mask="true" width="800" height="600" title="添加设备" rel="addreource"><span>新增</span></a></li>
+				{% endifequal %}
+				{% ifequal 'equipmentdelete' authority %}
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url equipment_selecteddelete %}" class="delete"><span>批量删除</span></a></li>             
+				{% endifequal %}
+            {% endfor %}
+            <li class="line">line</li>
+           	<li><a class="icon" href="{% url equipment_uploadfile %}" target="dialog" mask="true" width="500" height="300" title="导入csv文件" rel="uploadfileresource"><span>导入CSV文件</span></a></li>
+            <li><a class="icon" href="{% url equipment_downloadfile %}" target="dwzExport" targetType="navTab" title="确定要导出这些记录吗？"><span>导出CSV文件</span></a></li>				
+            
+			</ul>
+		</div>
+
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+			<tr>
+				<th width="2%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="3%">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="8%" orderField="rack__nocinfo__nocid" class="asc">机房编号</th>
+			{% else %}
+				<th width="8%" orderField="rack__nocinfo__nocid" class="desc">机房编号</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="8%" orderField="rack__rackid" class="asc">机架编号</th>
+			{% else %}
+				<th width="8%" orderField="rack__rackid" class="desc">机架编号</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="8%" orderField="elementid" class="asc">资产编号</th>
+			{% else %}
+				<th width="8%" orderField="elementid" class="desc">资产编号</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="6%" orderField="element_type" class="asc">设备类型</th>
+			{% else %}
+				<th width="6%" orderField="element_type" class="desc">设备类型</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="6%" orderField="manufacture" class="asc">制造商</th>
+			{% else %}
+				<th width="6%" orderField="manufacture" class="desc">制造商</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="6%" orderField="element_model" class="asc">设备型号</th>
+			{% else %}
+				<th width="6%" orderField="element_model" class="desc">设备型号</th>
+			{% endifequal %}
+			{% for authority in request.session.authority_list_modulefield %}
+			{% ifequal 'equipmentsequence' authority %}
+				{% ifequal orderDirection 'asc' %}
+					<th width="6%" orderField="sequence" class="asc">序列号</th>
+				{% else %}
+					<th width="6%" orderField="sequence" class="desc">序列号</th>
+				{% endifequal %}
+	        {% endifequal %}
+			{% ifequal 'equipmentservice_no' authority %}
+				<th width="5%">售后编号</th>
+	        {% endifequal %}
+			{% ifequal 'equipmentbuy_time' authority %}
+				{% ifequal orderDirection 'asc' %}
+					<th width="8%" orderField="buy_time" class="asc">采购时间</th>
+				{% else %}
+					<th width="8%" orderField="buy_time" class="desc">采购时间</th>
+				{% endifequal %}
+	        {% endifequal %}
+			{% ifequal 'equipmentdeadline' authority %}
+				{% ifequal orderDirection 'asc' %}
+					<th width="8%" orderField="deadline" class="asc">保修期限</th>
+				{% else %}
+					<th width="8%" orderField="deadline" class="desc">保修期限</th>
+				{% endifequal %}
+	        {% endifequal %}
+			{% endfor %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="4%" orderField="status" class="asc">状态</th>
+			{% else %}
+				<th width="4%" orderField="status" class="desc">状态</th>
+			{% endifequal %}
+				<th width="5%">高度(U)</th>
+				<th width="7%">使用部门</th>
+				<th width="10%">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'equipmentselect' request.session.authority_list_button %}
+		   {% for equipment in equipments.object_list %}
+           <tr target="sid_group" rel="{{ equipment.id }}">
+           <td><input name="ids" value="{{ equipment.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td><a href="{% url nocinfo_relate_equipment_link_nocinfo equipment.rack.nocinfo.id %}" target="navTab" rel="nocinfoindex" title="机房管理" >{{ equipment.rack.nocinfo.nocid }}</a></td>
+           <td><a href="{% url rack_relate_equipment_link_rack equipment.rack.id %}" target="navTab" rel="rackindex" title="机架管理" >{{ equipment.rack.rackid }}</a></td>
+           <td><a href="{% url serverconf_relate equipment.id %}" target="navTab" rel="serverconfindex" title="服务器配置管理" >{{ equipment.elementid }}</a></td>
+           <td>{{ equipment.element_type }}</td>
+           <td>{{ equipment.manufacture }}</td>
+           <td>{{ equipment.element_model }}</td>
+        {% for authority in request.session.authority_list_modulefield %}
+		{% ifequal 'equipmentsequence' authority %}
+           <td>{{ equipment.sequence }}</td>
+        {% endifequal %}
+		{% ifequal 'equipmentservice_no' authority %}
+           <td>{{ equipment.service_no }}</td>
+        {% endifequal %}
+		{% ifequal 'equipmentbuy_time' authority %}
+           <td>{{ equipment.buy_time|date:"Y-m-d" }}</td>
+        {% endifequal %}
+		{% ifequal 'equipmentdeadline' authority %}
+           <td>{{ equipment.deadline|date:"Y-m-d" }}</td>
+        {% endifequal %}
+		{% endfor %}
+           <td>
+           		{% for key,value in equipment_status_dict.items %}
+					{% ifequal equipment.status key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>{{ equipment.height }}</td>
+           <td>{{ equipment.department }}</td>
+           <td>
+           {% for authority in request.session.authority_list_button %}
+	           {% ifequal 'equipmentedit' authority %}
+	              <a class="btnedit" href="{% url equipment_edit equipment.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+	           {% endifequal %}
+	           {% ifequal 'equipmentdelete' authority %}
+	              <a class="btndelete" href="{% url equipment_delete equipment.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+	           {% endifequal %}
+           {% endfor %}
+              <a class="btnlink" href="{% url serverconf_relate equipment.id %}" target="navTab"  rel="serverconfindex" title="服务器配置管理"><span>关联</span></a>
+              <a class="btnselect" href="{% url log_changerecord 4,equipment.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="查看变更记录"><span>查看</span></a>
+           </td>
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ equipments.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ equipments.paginator.count }}" numPerPage="{{ equipments.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>
+

@@ -1,0 +1,100 @@
+<form id="pagerForm" action="{% url authority_index_module %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="nocid" value=""/>
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+  	
+  	function navTabAjaxDone(json) {
+		dialogAjaxDone(json);
+		if (json.statusCode == DWZ.statusCode.ok){
+			var $panel = navTab.getCurrentPanel();
+			var $pagerForm = $("#pagerForm", $panel);
+			var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+			var url = "{% url authority_index_module %}";
+			$panel.ajaxUrl({
+				type:"POST", url:url, data:args, callback:function(){
+					navTab._loadUrlCallback($panel);
+				}
+			});
+		}
+	}
+  	
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url authority_index_module %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						模块名称：<input type="text" name="query" value="{{ query }}" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+				<li><a class="add" href="{% url authority_add_module %}" target="dialog" mask="true" width="800" height="600" title="添加" rel="addreource"><span>新增</span></a></li>
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url authority_selecteddelete_module %}" class="delete"><span>批量删除</span></a></li>             
+			</ul>
+		</div>
+
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+			<tr>
+				<th width="3%">				
+				<input type="checkbox" group="ids" class="checkboxCtrl">				
+				</th>
+				<th width="3%">序号</th>
+				<th width="8%">模块主键</th>
+				<th width="8%">模块名称</th>
+				<th width="8%">模块类型</th>
+				<th width="8%">模块顺序</th>
+				<th width="12%">模块描述</th>
+				<th width="10%">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+		   {% for module in modules.object_list %}
+           <tr target="sid_group" rel="{{ module.id }}">
+           <td><input name="ids" value="{{ module.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ module.id }}</td>
+           <td>{{ module.module_name }}</td>
+           <td>{{ module.module_type }}</td>
+           <td>{{ module.order }}</td>
+           <td>{{ module.module_desc }}</td>
+           <td>
+              <a class="btnedit" href="{% url authority_edit_module module.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+              <a class="btndelete" href="{% url authority_delete_module module.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+           </td>
+           </tr>
+           {% endfor %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ modules.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ modules.paginator.count }}" numPerPage="{{ modules.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>
+

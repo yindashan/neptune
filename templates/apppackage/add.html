@@ -1,0 +1,74 @@
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+  	
+  	function ChangeDownType(obj) {
+  		// onchange="ChangeDownType({down_type:this.value})"
+  		down_type = obj["down_type"];
+  		if(down_type == 3) {
+  			document.getElementById('package_down_path').style.display="none";
+  			document.getElementById('package_file').style.display="block";
+  		} else {
+  			document.getElementById('package_down_path').style.display="block";
+  			document.getElementById('package_file').style.display="none";
+  		}
+  		
+  	}
+	
+</script>
+
+<div class="page">
+	<div class="pageContent">
+	
+	<form id="pageForm" method="post" action="{% url apppackage_add %}" enctype="multipart/form-data" class="pageForm required-validate" onsubmit="return iframeCallback(this, dialogAjaxDone)">{% csrf_token %}
+		<input type="hidden" name="navTabId" value="apppackageindex"/>
+		<div class="pageFormContent" layoutH="58">
+			
+			<div class="unit">
+				<label>文件获取方式：</label>
+				<select name="down_type" class="required combox" onchange="ChangeDownType({down_type:this.value})" >
+					{% for key,value in down_type_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			
+			<div id="package_down_path" class="unit">
+				<label>文件获取链接：</label>
+				<input type="text" class="" size="30" name="down_path" value="" />
+				<span class="info">(例如:http://10.2.161.14/src/tomcat6.0.20-zhijian.tar.gz)</span>
+			</div>
+			<div id="package_file" class="unit" style="display:none">
+				<label>请选择上传文件：</label>
+				<input name="file" type="file" />
+			</div>
+			
+            <div class="unit">
+				<label>用户名：</label>
+				<input type="text" size="30" name="username" value="" />
+			</div>
+            <div class="unit">
+				<label>密码：</label>
+				<input type="text" size="30" name="password" value="" />
+			</div>
+			<div class="unit">
+				<label>文件保存路径：</label>
+				<input type="text" class="required" size="30" name="package_path" value="" />
+				<span class="info">(请输入绝对路径,最后带上/，例如："/var/www/html/"。)</span>
+			</div>
+			<div class="unit">
+				<label>说明：</label>
+				<input type="text" size="30" name="desc" value="" />
+			</div>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

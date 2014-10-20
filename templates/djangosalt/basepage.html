@@ -1,0 +1,94 @@
+<form id="pagerForm" action="{% url djangosalt_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		//self.location="/"
+  	}
+  	
+  	function test() {
+  	
+  		//var args = $("#pagerForm").serialize();
+  		//var args = document.getElementById("pagerForm").serialize();
+  		//alert(args);
+  		target = $("#target").val();
+  		func = $("#func").val();
+  		argument = $("#argument").val();
+  		alert(target);
+  		alert(func);
+  		alert(argument);
+  		
+  	
+		//加载ajax请求
+		$.ajax({
+	   		async:false,
+	   		cache:false,
+	   		type:"post",
+	   		dataType:"text", //String,json都是请求失败
+	   		//data:{"target":"*", "func":"test.ping"},
+	   		data:{"target":target, "func":func, "argument":argument},
+	   		//url:"{% url djangosalt_testping 'minion01' %}", //恳求的action路径
+	   		url:"{% url djangosalt_postping %}", //恳求的action路径
+	   		//url:"/authority/get_roles/admin/", //恳求的action路径
+	   		//url:url_str, //恳求的action路径
+	   		error:function() { //请求失败处理惩罚函数
+	    		alert("请求失败");
+	   		},
+	   		success:function(data) { //恳求成功后处理惩罚函数。
+	   			alert("请求成功");
+	    		alert(data);
+	    		//格式化Json字符串
+            	document.getElementById("result").value = data;
+	    		// console.log(data); // 火狐在后台打印的日志。 
+	    		/*
+	    		var arr = data.split("::");
+		     	var childStr = "<option value='-1'>=请选择=</option>";
+		     	var childStr = "";
+		        if(arr.length>1){
+		            for(var i=1;i<arr.length;i=i+2){
+		                childStr += "<option value='" + arr[i] + "'>" + arr[i+1] + "</option>";
+		            }
+		        }
+		        $("#rolename").html(childStr);
+		        */
+		        return;
+	   		}
+	  	});
+  	}
+  	
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form id="pagerForm" rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url djangosalt_postping %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td style="padding-right:1px;">
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						目标主机：<input type="text" size="30" id="target" name="target" value="" />&nbsp;&nbsp;&nbsp;
+						执行函数：<input type="text" size="30" id="func" name="func" value="" />&nbsp;&nbsp;&nbsp;
+						参数：<input type="text" size="30" id="argument" name="argument" value="" />&nbsp;&nbsp;&nbsp;
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="javascript: test(); ">执行</button></div></div></td>
+					<td><a class="add" href="{% url djangosalt_testpostping %}" target="dialog" mask="true" width="800" height="600" title="testpostping" rel="testpostping"><span>测试</span></a></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageFormContent" layoutH="58">
+		<div class="unit">
+			<label>返回结果：</label>
+			<textarea id="result" name="result" style="background-color:#EFF3F4; font-size:12px; font-color:#78F0F2;" readonly="readonly" rows="16" cols="160" ></textarea>
+		</div>
+		
+	</div>
+	
+</div>
+

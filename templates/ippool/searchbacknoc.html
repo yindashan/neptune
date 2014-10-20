@@ -1,0 +1,77 @@
+<form id="pagerForm" action="{% url ips_searchbacknoc %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="ipaddress" value=""/>
+</form>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url ips_searchbackschnoc %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<label>机房编号：</label>
+				<input type="text" name="q" />
+			</li>	  
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="12%">机房编号</th>
+				<th width="12%">机房名称</th>
+				<th width="10%">机房状态</th>
+				<th width="20%">机房地址</th>
+				<th width="10%">机房联系人</th>
+				<th width="10%">联系方式</th>
+				<th width="16%">备注</th>
+				<th width="10%" >查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for nocinfo in nocs.object_list %}	
+		   <tr>
+		   <td>{{ nocinfo.nocid }}</td>
+           <td>{{ nocinfo.nocname }}</td>
+           <td>
+           		{% ifequal nocinfo.status 0 %}
+					备用
+				{% endifequal %}
+				
+           		{% ifequal nocinfo.status 1 %}
+					使用
+				{% endifequal %}
+				
+           		{% ifequal nocinfo.status 2 %}
+					报废
+				{% endifequal %}
+           </td>
+           <td>{{ nocinfo.address }}</td>
+           <td>{{ nocinfo.noc_username }}</td>
+           <td>{{ nocinfo.phone }}</td>
+           <td>{{ nocinfo.desc }}</td>
+		   <td>
+				<a class="btnSelect" href="javascript:$.bringBack({nocid:'{{ nocinfo.nocid }}'})" title="查找带回">选择</a>
+		   </td>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>共{{ nocs.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ nocs.paginator.count }}" numPerPage="{{ nocs.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+	</div>
+</div>
+</div>

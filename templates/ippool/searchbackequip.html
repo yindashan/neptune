@@ -1,0 +1,91 @@
+<form id="pagerForm" action="{% url ips_searchbackequip %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="ipaddress" value=""/>
+</form>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url ips_searchbackschequip %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<label>服务器编号：</label>
+				<input type="text" name="q" />
+			</li>	  
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="12%">服务器编号</th>
+				<th width="10%">制造商</th>
+				<th width="10%">设备型号</th>
+				<th width="12%">设备序列号</th>
+				<th width="8%">使用状态</th>
+				<th width="16%">使用部门</th>
+				<th width="10%">采购时间</th>
+				<th width="10%">保修期限</th>
+				<th width="12%" >查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for equip in equipments.object_list %}	
+		   <tr>
+		   <td>{{ equip.elementid }}</td>
+           <td>{{ equip.manufacture }}</td>
+           <td>{{ equip.element_model }}</td>
+           <td>{{ equip.sequence }}</td>     
+           <td>“0”为备用，“1”为使用，“2”为报废，“3”为报修，“4”为修理，“5”为闲置。
+           		{% ifequal equip.status 0 %}
+					备用
+				{% endifequal %}
+				
+           		{% ifequal equip.status 1 %}
+					使用
+				{% endifequal %}
+				
+           		{% ifequal equip.status 2 %}
+					报废
+				{% endifequal %}
+				
+           		{% ifequal equip.status 3 %}
+					报修
+				{% endifequal %}
+				
+           		{% ifequal equip.status 4 %}
+					修理
+				{% endifequal %}
+				
+           		{% ifequal equip.status 5 %}
+					闲置
+				{% endifequal %}
+           </td>
+           <td>{{ equip.department}}
+           <td>{{ equip.buy_time }}</td>
+           <td>{{ equip.deadline }}</td>
+		   <td>
+				<a class="btnSelect" href="javascript:$.bringBack({elementid:'{{ equip.elementid }}'})" title="查找带回">选择</a>
+		   </td>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>共{{ equipments.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ equipments.paginator.count }}" numPerPage="{{ equipments.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+	</div>
+</div>
+</div>

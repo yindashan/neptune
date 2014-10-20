@@ -1,0 +1,41 @@
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url softform_edit softform.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="softformindex"/>
+		<div class="pageFormContent" layoutH="58">
+
+			<div class="unit">
+				<label>软件类型：</label>
+				<input type="text" size="30" name="soft_type" value="{{ softform.soft_type }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>软件包名称：</label>
+				<input type="text" size="30" name="soft_name" value="{{ softform.soft_name }}" readonly="readonly"/>
+			</div>
+            <div class="unit">
+				<label>版本：</label>
+				<input type="text" size="30" name="version" value="{{ softform.version }}" />
+			</div>
+            <div class="unit">
+				<label>操作系统：</label>
+				<input type="text" size="30" name="os" value="{{ softform.os }}" />
+			</div>
+			<div class="unit">
+				<label>操作系统位数：</label>
+				<input type="text" size="30" name="os_byte" value="{{ softform.os_byte }}" />
+			</div>
+			<div class="unit">
+				<label>操作系统版本：</label>
+				<input type="text" size="30" name="os_version" value="{{ softform.os_version }}" />
+			</div>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	</div>
+</div>

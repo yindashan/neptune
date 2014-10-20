@@ -1,0 +1,152 @@
+<script type="text/javascript">
+  	$(document).ready(function() {
+		$("#parent_organization_name").autocomplete("{% url organization_autocomplete %}", {
+			minChars: 0, //Default: 1，如果设为0，在输入框内双击或者删除输入框内内容时显示列表
+			//width: 180,  //指定下拉框的宽度.Default: input元素的宽度,最后设为默认，否则FF和360浏览器之间显示宽度不一致
+			max: 10,  //autoComplete下拉显示项目的个数.Default: 10
+			//autoFill: true, //自动填充
+			matchContains: true, //是否contains匹配
+			//multiple: true, //是否允许输入多个值
+			//multipleSeparator: ",", //多个值之间用什么间隔
+			scroll: true,  //当结果集大于默认高度时是否使用卷轴显示 Default: true 
+			scrollHeight: 300  //自动完成提示的卷轴高度用像素大小表示  Default: 180  //最后一行代码后面不能有逗号(,)
+			/*
+			formatItem: function(data, i, max) {//格式化列表中的条目 row:条目对象,i:当前条目数,max:总条目数
+				return i + "/" + max + ":" + data;
+	        },
+	        formatMatch: function(data, i, max) {//配合formatItem使用，作用在于，由于使用了formatItem，所以条目中的内容有所改变，而我们要匹配的是原始的数据，所以用formatMatch做一个调整，使之匹配原始数据
+				return data;
+	        },
+	        formatResult: function(data) {//定义最终返回的数据，比如我们还是要返回原始数据，而不是formatItem过的数据
+				return data;
+			}
+			*/
+		}).result(function(event, data, formatted){
+			//alert(data); data为选中的数据
+			//$.ajaxSettings.global = true; //恢复dwz全局ajax动画
+		});
+		
+		$("#parent_organization_name").focus(function(){
+			$.ajaxSettings.global = false; //取消dwz全局ajax动画
+		});
+		$("#parent_organization_name").blur(function(){
+			$.ajaxSettings.global = true; //恢复dwz全局ajax动画
+		});
+		
+	});
+</script>
+
+<div class="page">
+	<div class="pageContent">
+	{% load static %}
+	<form method="post" action="{% url serverconf_edit_virtualmachine virtualmachine.id %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogTabAjaxDone)">
+		<input type="hidden" name="navTabId" value="jbsxBox_virtualmachine"/>
+		<div class="pageFormContent" layoutH="58">
+			<dl class="nowrap">
+				<dt>设备：</dt>
+				<dd>
+					<input id="serverid" class="required" size="30" name="org.elementid" type="text" readonly="readonly"  value="{{ virtualmachine.equipment }}" />
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>虚拟机编号：</label>
+				<input type="text" class="" size="30"  name="virtualmachineid" value="{{ virtualmachine.virtualmachineid }}" />
+			</div>
+			<div class="unit">
+				<label>操作系统类型：</label>
+				<input type="text" class="" size="30"  name="os_type" value="{{ virtualmachine.os_type }}" />
+			</div>
+			<div class="unit">
+				<label>操作系统位数：</label>
+				<input type="text" class="digits" size="30"  name="os_byte" {% if virtualmachine.os_byte %} value="{{ virtualmachine.os_byte }}" {% endif %} />
+			</div>
+			<div class="unit">
+				<label>操作系统版本：</label>
+				<input type="text" class="" size="30"  name="os_version" value="{{ virtualmachine.os_version }}" />
+			</div>
+			<div class="unit">
+				<label>CPU：</label>
+				<input type="text" class="required" size="30"  name="cpu" value="{{ virtualmachine.cpu }}" />
+			</div>
+			<div class="unit">
+				<label>内存：</label>
+				<input type="text" class="required" size="30"  name="memory" value="{{ virtualmachine.memory }}" />
+			</div>
+			<div class="unit">
+				<label>硬盘：</label>
+				<input type="text" class="required" size="30"  name="disk" value="{{ virtualmachine.disk }}" />
+			</div>
+			<!-- 
+			<div class="unit">
+				<label>管理方式：</label>
+				<input type="text" class="required" size="30"  name="manage_way" value="{{ virtualmachine.manage_way }}" />
+			</div>
+			 -->
+			<div class="unit">
+				<label>管理账户：</label>
+				<input type="text" class="" size="30"  name="manage_account" value="{{ virtualmachine.manage_account }}" />
+			</div>
+			<div class="unit">
+				<label>管理密码：</label>
+				<input type="text" class="alphanumeric" size="30"  name="manage_password" value="{{ virtualmachine.manage_password }}" />
+			</div>
+			<!-- 
+			<dl class="nowrap">
+				<dt>管理IP：</dt>
+				<dd>
+					<input name="org_0.ipaddress" type="hidden" readonly="readonly" />
+					<input size="30" name="org_0.ipaddress" type="text" readonly="readonly" value="{{ virtualmachine.manage_ip }}" lookupGroup="org_0" />
+                    <a class="btnLook" href="/serverconf/searchip/{{ virtualmachine.equipment }}:0/" warn="请选择设备" target="dialog" mask="true" width="400" height="600" title="查找带回" lookupGroup="org_0">查找带回</a>		
+					<span class="info">(查询IP地址)</span>
+				</dd>
+			</dl>			
+			 -->
+			<div class="unit">
+				<label>管理端口：</label>
+				<input type="text" class="digits" size="30"  name="manage_port" {% if virtualmachine.manage_port %} value="{{ virtualmachine.manage_port }}" {% endif %} />
+			</div>
+			<div class="unit">
+				<label>SNMP端口：</label>
+				<input type="text" class="digits" size="30"  name="snmp_port" {% if virtualmachine.snmp_port %} value="{{ virtualmachine.snmp_port }}" {% endif %} />
+			</div>
+			<dl class="nowrap">
+				<dt>内网IP：</dt>
+				<dd>
+					<input name="org_1.ipaddress" type="hidden" readonly="readonly" />
+					<input size="30" name="org_1.ipaddress" type="text" readonly="readonly" value="{{ virtualmachine.in_ip }}" lookupGroup="org_1" />
+                    <a class="btnLook" href="/serverconf/searchip/{{ virtualmachine.equipment }}:0/" warn="请选择设备" target="dialog" mask="true" width="650" height="400" title="查找带回" lookupGroup="org_1">查找带回</a>		
+					<span class="info">(查询IP地址)</span>
+				</dd>
+			</dl>
+			
+			<dl class="nowrap">
+				<dt>外网IP：</dt>
+				<dd>
+					<input name="org_2.ipaddress" type="hidden" readonly="readonly" />
+					<input size="30" name="org_2.ipaddress" type="text" readonly="readonly" value="{{ virtualmachine.out_ip }}" lookupGroup="org_2" />
+                    <a class="btnLook" href="/serverconf/searchip/{{ virtualmachine.equipment }}:1/" warn="请选择设备" target="dialog" mask="true" width="650" height="400" title="查找带回" lookupGroup="org_2">查找带回</a>		
+					<span class="info">(查询IP地址)</span>
+				</dd>
+			</dl>
+			
+			<dl class="nowrap">
+				<dt>使用部门：</dt>
+				<dd>
+					<input size="30" id="parent_organization_name" name="org.parent_organization_name" type="text" value="{{ virtualmachine.department }}"/>
+					<a class="btnLook" href="{% url organization_searchback %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(指定所属组织机构)</span>
+				</dd>
+			</dl>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

@@ -1,0 +1,447 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<title>运维自动化系统</title>
+{% load static %}
+<link href="{% get_static_prefix %}js/dwz/themes/default/style.css" rel="stylesheet" type="text/css" />
+<link href="{% get_static_prefix %}js/dwz/themes/css/core.css" rel="stylesheet" type="text/css" />
+<link href="{% get_static_prefix %}js/dwz/themes/css/print.css" rel="stylesheet" type="text/css" />
+<link href="{% get_static_prefix %}js/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" />
+<!--[if IE]>
+<link href="{% get_static_prefix %}js/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<style type="text/css">
+	#header{height:85px}
+	#leftside, #container, #splitBar, #splitBarProxy{top:90px}
+</style>
+
+<script src="{% get_static_prefix %}js/dwz/javascripts/speedup.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/jquery-1.7.1.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/jquery.cookie.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/jquery.validate.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/jquery.bgiframe.js" type="text/javascript"></script>
+
+<script src="{% get_static_prefix %}js/dwz/xheditor/xheditor-1.1.12-zh-cn.min.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/uploadify/scripts/swfobject.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/uploadify/scripts/jquery.uploadify.v2.1.0.js" type="text/javascript"></script>
+
+
+
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.core.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.util.date.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.validate.method.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.regional.zh.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.barDrag.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.drag.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.tree.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.accordion.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.ui.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.theme.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.switchEnv.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.alertMsg.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.contextmenu.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.navTab.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.tab.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.resize.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.dialog.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.dialogDrag.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.sortDrag.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.cssTable.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.stable.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.taskBar.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.ajax.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.pagination.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.database.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.datepicker.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.effects.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.panel.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.checkbox.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.history.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.combox.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.print.js" type="text/javascript"></script>
+<!--
+<script src="bin/dwz.min.js" type="text/javascript"></script>
+-->
+<script src="{% get_static_prefix %}js/dwz/javascripts/dwz.regional.zh.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="{% get_static_prefix %}js/My97DatePicker/WdatePicker.js" defer="defer"></script>
+
+<script type="text/javascript" src="{% get_static_prefix %}js/autocomplete/jquery.autocomplete.js"></script>
+<link rel="stylesheet" type="text/css" href="{% get_static_prefix %}js/autocomplete/jquery.autocomplete.css" />
+
+<script type="text/javascript" src="{% get_static_prefix %}js/columnmanager/jquery.clickmenu.js"></script>
+<script type="text/javascript" src="{% get_static_prefix %}js/columnmanager/jquery.columnmanager.js"></script>
+<link rel="stylesheet" type="text/css" href="{% get_static_prefix %}js/columnmanager/clickmenu.css" />
+
+<link rel="stylesheet" type="text/css" href="{% get_static_prefix %}js/osapub/css/css.css" />
+<link rel="stylesheet" href="{% get_static_prefix %}js/osapub/CodeMirror/lib/codemirror.css">
+<script src="{% get_static_prefix %}js/osapub/CodeMirror/lib/codemirror.js"></script>
+<script src="{% get_static_prefix %}js/osapub/CodeMirror/mode/shell/shell.js"></script>
+<link rel="stylesheet" href="{% get_static_prefix %}js/osapub/CodeMirror/theme/ambiance.css">
+
+<script type="text/javascript">
+
+//标识dwz是否初始化
+dwzinit = true;
+
+function fleshVerify(){
+	//重载验证码
+	$('#verifyImg').attr("src", '__APP__/Public/verify/'+new Date().getTime());
+}
+function dialogAjaxMenu(json){
+	dialogAjaxDone(json);
+	if (json.statusCode == DWZ.statusCode.ok){
+		//$("#sidebar").loadUrl("__APP__/Public/menu");
+	}
+}
+function navTabAjaxMenu(json){
+	navTabAjaxDone(json);
+	if (json.statusCode == DWZ.statusCode.ok){
+		//$("#sidebar").loadUrl("__APP__/Public/menu");
+	}
+}
+$(function(){
+	DWZ.init("{% get_static_prefix %}js/dwz/dwz.frag.xml", {
+		loginUrl:"login_dialog.html", loginTitle:"登录",	// 弹出登录对话框
+//		loginUrl:"login.html",	// 跳到登录页面
+		statusCode:{ok:200, error:300, timeout:301, info:302, warn:303}, //【可选】
+		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderDirection"}, //【可选】
+		debug:false,	// 调试模式 【true|false】
+		callback:function(){
+			initEnv();
+			$("#themeList").theme({themeBase:"{% get_static_prefix %}js/dwz/themes"}); // themeBase 相对于index页面的主题base路径
+			//$("#sidebar").loadUrl("__APP__/Public/menu");
+                        //initUI();
+		}
+	});
+	
+	
+	//加载主页
+	$("#jbsxBox_main").loadUrl("{% url common_main %}");
+	
+	//禁止退格键 作用于Firefox、Opera 
+    document.onkeypress = banBackSpace;
+    //禁止退格键 作用于IE、Chrome
+    document.onkeydown = banBackSpace;
+	
+});
+
+
+//处理键盘事件 禁止后退键（Backspace）密码或单行、多行文本框除外 
+function banBackSpace(e) {
+	//alert(event.keyCode)
+    var ev = e || window.event; //获取event对象   
+    var obj = ev.target || ev.srcElement; //获取事件源     
+    var t = obj.type || obj.getAttribute('type'); //获取事件源类型     
+    //获取作为判断条件的事件类型 
+    var vReadOnly = obj.readOnly;
+    var vDisabled = obj.disabled;
+    //处理undefined值情况 
+    vReadOnly = (vReadOnly == undefined) ? false : vReadOnly;
+    vDisabled = (vDisabled == undefined) ? true : vDisabled;
+    //当敲Backspace键时，事件源类型为密码或单行、多行文本的，  
+    //并且readOnly属性为true或disabled属性为true的，则退格键失效  
+    var flag1 = ev.keyCode == 8 && (t == "password" || t == "text" || t == "textarea") && (vReadOnly == true || vDisabled == true);
+    //当敲Backspace键时，事件源类型非密码或单行、多行文本的，则退格键失效    
+    var flag2 = ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea";
+    //当按回车键时把$.ajaxSettings.global值设为true
+    //alert(ev.keyCode);
+    if(ev.keyCode == 13) {
+    	$.ajaxSettings.global = true;
+    }
+    //判断    
+    if(flag2 || flag1) {
+		event.returnValue = false;//这里如果写 return false 无法实现效果 
+    }
+}
+
+
+
+
+//清理浏览器内存,只对IE起效，FF不需要
+if ($.browser.msie) {
+	window.setInterval("CollectGarbage();", 10000);
+}
+
+
+//新加处理ajax提交表单的处理方式
+jQuery(document).ajaxSend(function(event, xhr, settings) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function sameOrigin(url) {
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+});
+
+
+</script>
+</head>
+
+
+
+
+
+
+
+
+<body scroll="no">
+	<div id="layout">
+		<div id="header">
+			<div class="headerNav">
+				<!-- <a class="logo" href="{$Think.config.bbsurl}">Logo</a> -->
+				<ul class="nav">
+				    {% if user.is_authenticated %}
+	                    <li><a href="javascript:void(0);">角色: 
+	                    		{{ user.role_set.all|join:',' }}
+						</a></li>
+	                    <li><a href="javascript:void(0);">用户名: {{user.username}}</a></li>
+						<li><a href="{% url accounts_logout %}">退出</a></li>
+                    {% else %}
+                        <li><a href="{% url accounts_login %}">登录</a> </li>
+                    {% endif %}
+
+				</ul>
+				<ul class="themeList" id="themeList">
+					<li theme="default"><div class="selected">蓝色</div></li>
+					<li theme="green"><div>绿色</div></li>
+				</ul>
+			</div>
+			
+			<div id="navMenu">
+				<ul>
+					<li class="selected"><a href="{% url common_index %}"><span>首页</span></a></li>
+				{% ifsplitcontain 'asset,assetdamage,assetrecover,assetchange,assetaccount,equipmentcode' request.session.authority_list_module %}
+					<!-- <li><a href="{% url common_resource %}"><span>资产管理</span></a></li> -->
+				{% endifsplitcontain %}
+				{% ifcontain 'account' request.session.authority_list_module %}
+					<li><a href="{% url common_user %}"><span>帐号管理</span></a></li>
+				{% endifcontain %}
+				{% ifcontain 'authority' request.session.authority_list_module %}
+					<li><a href="{% url common_authority %}"><span>权限管理</span></a></li>
+				{% endifcontain %}
+				{% ifcontain 'log' request.session.authority_list_module %}
+					<li><a href="{% url common_log %}"><span>日志管理</span></a></li>
+				{% endifcontain %}
+					
+				</ul>
+			</div>
+			
+		</div>
+
+		<div id="leftside">
+			<div id="sidebar_s">
+				<div class="collapse">
+					<div class="toggleCollapse"><div></div></div>
+				</div>
+			</div>
+			<div id="sidebar">
+				<div class="toggleCollapse"><h2>主菜单</h2><div>收缩</div></div>
+
+				<div class="accordion" fillSpace="sidebar">
+					<div class="accordionHeader">
+						<h2><span>Folder</span>系统管理</h2>
+					</div>
+					<div class="accordionContent">
+						<ul class="tree treeFolder expand">
+						
+							{% ifsplitcontain 'saltshell,simpleshell,compoundshell,filemanager,packagemanager' request.session.authority_list_module %}
+							<li><a>Salt管理</a>
+								<ul>
+									{% ifcontain 'saltshell' request.session.authority_list_module %}
+									<li><a href="{% url djangosalt_salt_shell %}" target="navTab"  rel="djangosalt_salt_shell" title="Salt脚本执行" >Salt脚本执行</a></li>
+									{% endifcontain %}
+									{% ifcontain 'simpleshell' request.session.authority_list_module %}
+									<li><a href="{% url djangosalt_simple_shell %}" target="navTab"  rel="djangosalt_simple_shell" title="简单脚本执行" >简单脚本执行</a></li>
+									{% endifcontain %}
+									{% ifcontain 'compoundshell' request.session.authority_list_module %}
+									<li><a href="{% url djangosalt_compound_shell %}" target="navTab"  rel="djangosalt_compound_shell" title="复杂脚本执行" >复杂脚本执行</a></li>
+									{% endifcontain %}
+									{% ifcontain 'filemanager' request.session.authority_list_module %}
+									<li><a href="{% url djangosalt_file_manager %}" target="navTab"  rel="djangosalt_file_manager" title="配置文件管理" >配置文件管理</a></li>
+									{% endifcontain %}
+									{% ifcontain 'packagemanager' request.session.authority_list_module %}
+									<li><a href="{% url djangosalt_package_manager %}" target="navTab"  rel="djangosalt_package_manager" title="软件包管理" >软件包管理</a></li>
+									{% endifcontain %}
+								</ul>
+							</li>
+							{% endifsplitcontain %}
+							
+							{% ifcontain 'server' request.session.authority_list_module %}
+							<li><a>服务器管理</a>
+								<ul>
+									<li><a href="{% url server_index %}" target="navTab" rel="serverindex" title="服务器管理" >服务器管理</a></li>
+								</ul>
+							</li>
+							{% endifcontain %}
+							
+							{% ifcontain 'softform' request.session.authority_list_module %}
+							<li><a>基础应用模板管理</a>
+								<ul>
+									<li><a href="{% url softform_index %}" target="navTab" rel="softformindex" title="基础应用模板管理" >基础应用模板管理</a></li>
+								</ul>
+							</li>
+							{% endifcontain %}
+							
+							{% ifcontain 'apppackage' request.session.authority_list_module %}
+							<li><a>应用软件包管理</a>
+								<ul>
+									<li><a href="{% url apppackage_index %}" target="navTab" rel="apppackageindex" title="应用软件包管理" >应用软件包管理</a></li>
+								</ul>
+							</li>
+							{% endifcontain %}
+							
+							{% ifsplitcontain 'action,actiongroup' request.session.authority_list_module %}
+							<li><a>操作流程管理</a>
+								<ul>
+									{% ifcontain 'action' request.session.authority_list_module %}
+									<li><a href="{% url action_index %}" target="navTab" rel="actionindex" title="操作模板管理" >操作模板管理</a></li>
+									{% endifcontain %}
+									{% ifcontain 'actiongroup' request.session.authority_list_module %}
+									<li><a href="{% url actiongroup_index %}" target="navTab" rel="actiongroupindex" title="操作组管理" >操作组管理</a></li>
+									{% endifcontain %}
+								</ul>
+							</li>
+							{% endifsplitcontain %}
+						
+							{% ifsplitcontain 'schedule,applyonline' request.session.authority_list_module %}
+							<li><a>上线计划管理</a>
+								<ul>
+									{% ifcontain 'schedule' request.session.authority_list_module %}
+									<li><a href="{% url schedule_index %}" target="navTab"  rel="scheduleindex" title="上线计划管理" >上线计划管理</a></li>
+									{% endifcontain %}
+									{% ifcontain 'applyonline' request.session.authority_list_module %}
+									<li><a href="{% url applyonline_index %}" target="navTab"  rel="applyonlineindex" title="服务上线申请" >服务上线申请</a></li>
+									{% endifcontain %}
+								</ul>
+							</li>
+							{% endifsplitcontain %}
+							
+							{% ifcontain 'organization' request.session.authority_list_module %}
+							<li><a>组织结构管理</a>
+								<ul>
+									<li><a href="{% url organization_index %}" target="navTab"  rel="organizationindex" title="组织机构管理" >组织机构管理</a></li>
+								</ul>
+							</li>
+							{% endifcontain %}
+							
+							{% ifcontain 'dynamicconf' request.session.authority_list_module %}
+							<li><a>动态配置管理</a>
+								<ul>
+									<li><a href="{% url dynamicconf_index_ldapconf %}" target="navTab"  rel="ldapconfindex" title="LDAP配置管理" >LDAP配置管理</a></li>
+								</ul>
+							</li>
+							{% endifcontain %}
+							
+							{% ifcontain 'account' request.session.authority_list_module %}
+							<li><a>帐号管理</a>
+								<ul>
+									{% ifcontain 'accountsuperuser' request.session.authority_list_button %}
+										<li><a href="{% url accounts_index %}" target="navTab" rel="accountindex" title="用户管理">用户管理</a></li>
+									{% else %}
+										<li><a href="{% url accounts_info user.id %}" target="navTab" rel="accountindex" title="用户信息">用户信息</a></li>
+									{% endifcontain %}
+								</ul>
+							</li>
+							{% endifcontain %}
+							
+							{% ifcontain 'authority' request.session.authority_list_module %}
+							<li><a>权限管理</a>
+								<ul>
+									<li><a href="{% url authority_index_role %}" target="navTab" rel="roleindex" title="角色管理">角色管理</a></li>
+									<li><a href="{% url authority_index_module %}" target="navTab" rel="moduleindex" title="模块管理">模块管理</a></li>
+									<li><a href="{% url authority_index_button %}" target="navTab" rel="buttonindex" title="功能按钮">功能按钮</a></li>
+									<li><a href="{% url authority_index_modulefield %}" target="navTab" rel="modulefieldindex" title="模块字段">模块字段</a></li>
+								</ul>
+							</li>
+							{% endifcontain %}
+							
+							{% ifcontain 'log' request.session.authority_list_module %}
+							<li><a>日志管理</a>
+								<ul>
+									<li><a href="{% url log_index %}" target="navTab" rel="logindex" title="日志管理">日志管理</a></li>
+								</ul>
+							</li>
+							{% endifcontain %}
+							
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div id="container">
+			<div id="navTab" class="tabsPage">
+				<div class="tabsPageHeader">
+					<div class="tabsPageHeaderContent"><!-- 显示左右控制时添加 class="tabsPageHeaderMargin" -->
+						<ul class="navTab-tab">
+							<li tabid="main" class="main"><a href="javascript:;"><span><span class="home_icon">我的主页</span></span></a></li>
+						</ul>
+					</div>
+					<div class="tabsLeft">left</div><!-- 禁用只需要添加一个样式 class="tabsLeft tabsLeftDisabled" -->
+					<div class="tabsRight">right</div><!-- 禁用只需要添加一个样式 class="tabsRight tabsRightDisabled" -->
+					<div class="tabsMore">more</div>
+				</div>
+				<ul class="tabsMoreList">
+					<li><a href="javascript:;">我的主页</a></li>
+				</ul>
+				<div class="navTab-panel tabsPageContent layoutBox">
+					<div class="page unitBox">
+						<div id="jbsxBox_main" style="padding:0 16px; line-height:19px; text-align:left;">
+							<div class="right">
+								<p style="line-height:19px">主要功能模块加载中……</p>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="footer">Copyright &copy; 2013 <a href="http://www.autonavi.com" target="_blank">AutoNavi</a></div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

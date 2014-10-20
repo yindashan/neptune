@@ -1,0 +1,259 @@
+.clickMenu
+{
+	margin: 0;
+	padding: 0;
+	cursor: default;
+}
+.clickMenu, .clickMenu ul
+{
+	list-style: none;
+}
+.clickMenu ul
+{
+	margin: 0;
+	padding: 2px;
+	border: 1px solid black;
+	background-color: #eee;
+	min-width: 100px; /* ie doesnt know this :/ */
+	//float: left;/*ie again*/
+	//width: 100%;/*and again*/
+}
+.clickMenu div.outerbox
+{
+	display: none;
+	min-width: 106px; /* firefox produces animation-flickering when the box is bigger than this :/ */
+}
+
+.clickMenu li
+{
+	position: relative;
+	padding: 0 20px 0 2px;
+	/*white-space: nowrap; does not really work in ie */
+}
+
+.clickMenu li.hover
+{
+	z-index: 1 !important; /* the hover z-index has to be below the normal one the hovering items may be drawn over a submenu */
+	background-color: #aaa;
+}
+
+
+
+
+
+li.simpleon
+{
+	color: green;
+	font-weight: bold;
+}
+li.simpleoff
+{
+	color: red;
+	font-weight: bold;
+}
+li.advon
+{
+	background: url(tick.png) 0 50%;
+}
+li.advoff
+{
+	background: url(cross.png) 0 50%;
+}
+#targetall
+{
+	list-style: none;
+	background-color: #eee;
+}
+#targetall li
+{
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+#thSelectColumn div.cmDiv
+{
+	display: inline;
+	background: none;
+	border: 0;
+}
+#thSelectColumn li.main
+{
+	padding: 0;
+	background: none;
+	width: 100%;
+	text-align: right;
+}
+#thSelectColumn li.main li
+{
+	text-align: left;
+	padding-right: 2px;
+}
+#thSelectColumn
+{
+	padding-right: 2px;
+	width: 10px;
+}
+#ulSelectColumn
+{
+	vertical-align: middle;
+}
+
+
+#targetalldamage
+{
+	list-style: none;
+	background-color: #eee;
+}
+#targetalldamage li
+{
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+#thSelectColumndamage div.cmDiv
+{
+	display: inline;
+	background: none;
+	border: 0;
+}
+#thSelectColumndamage li.main
+{
+	padding: 0;
+	background: none;
+	width: 100%;
+	text-align: right;
+}
+#thSelectColumndamage li.main li
+{
+	text-align: left;
+	padding-right: 2px;
+}
+#thSelectColumndamage
+{
+	padding-right: 2px;
+	width: 10px;
+}
+#ulSelectColumndamage
+{
+	vertical-align: middle;
+}
+
+
+#targetallrecover
+{
+	list-style: none;
+	background-color: #eee;
+}
+#targetallrecover li
+{
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+#thSelectColumnrecover div.cmDiv
+{
+	display: inline;
+	background: none;
+	border: 0;
+}
+#thSelectColumnrecover li.main
+{
+	padding: 0;
+	background: none;
+	width: 100%;
+	text-align: right;
+}
+#thSelectColumnrecover li.main li
+{
+	text-align: left;
+	padding-right: 2px;
+}
+#thSelectColumnrecover
+{
+	padding-right: 2px;
+	width: 10px;
+}
+#ulSelectColumnrecover
+{
+	vertical-align: middle;
+}
+
+
+#targetallchange
+{
+	list-style: none;
+	background-color: #eee;
+}
+#targetallchange li
+{
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+#thSelectColumnchange div.cmDiv
+{
+	display: inline;
+	background: none;
+	border: 0;
+}
+#thSelectColumnchange li.main
+{
+	padding: 0;
+	background: none;
+	width: 100%;
+	text-align: right;
+}
+#thSelectColumnchange li.main li
+{
+	text-align: left;
+	padding-right: 2px;
+}
+#thSelectColumnchange
+{
+	padding-right: 2px;
+	width: 10px;
+}
+#ulSelectColumnchange
+{
+	vertical-align: middle;
+}
+
+
+#targetallaccount
+{
+	list-style: none;
+	background-color: #eee;
+}
+#targetallaccount li
+{
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+#thSelectColumnaccount div.cmDiv
+{
+	display: inline;
+	background: none;
+	border: 0;
+}
+#thSelectColumnaccount li.main
+{
+	padding: 0;
+	background: none;
+	width: 100%;
+	text-align: right;
+}
+#thSelectColumnaccount li.main li
+{
+	text-align: left;
+	padding-right: 2px;
+}
+#thSelectColumnaccount
+{
+	padding-right: 2px;
+	width: 10px;
+}
+#ulSelectColumnaccount
+{
+	vertical-align: middle;
+}
+
+
+
+
+

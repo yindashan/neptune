@@ -1,0 +1,118 @@
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url asset_asset_transfer asset.id %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="assetindex"/>
+		<div class="pageFormContent" layoutH="58">
+		
+			<dl class="nowrap">
+				<dt>使用部门：</dt>
+				<dd>
+					<textarea size="30" readonly="readonly" id="department_code" name="org3.department_code" rows="3" cols="27" lookupGroup="org" >{{ asset.departmentcode.department_code }}-{{ asset.departmentcode.business_group }}-{{ asset.departmentcode.division }}-{{ asset.departmentcode.department }}-{{ asset.departmentcode.sub_sector}}</textarea>					
+					<a class="btnLook" href="{% url asset_searchback_departmentcode %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org3">查找带回</a>
+					<span class="info">(查询关联的部门代码)</span>
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>使用人：</label>
+				<input type="text" size="30" class="required" name="username" value="{{ asset.username }}" />
+			</div>
+
+			<div class="unit">
+				<label>部门备注：</label>
+				<textarea name="department_desc" rows="3" cols="27" >{{ asset.department_desc }}</textarea>
+			</div>
+			<div class="unit">
+				<label>资产备注：</label>
+				<textarea name="asset_desc" rows="3" cols="27" >{{ asset.asset_desc }}</textarea>
+			</div>
+
+			<div class="divider">divider</div>
+			<div class="unit">
+				<font color="red" size="12px">横线以下内容只能查看，不能修改<br /></font>
+			</div>	
+
+			<div class="unit">
+				<label>资产编号：</label>
+				<input type="text" readonly="readonly" size="30" name="elementid" value="{{ asset.elementid }}" />
+			</div>
+			<div class="unit">
+				<label>原资产编号：</label>
+				<input type="text" readonly="readonly" size="30" name="old_elementid" value="{{ asset.old_elementid }}" />
+			</div>
+			<div class="unit">
+				<label>服务代码：</label>
+				<input type="text" readonly="readonly" size="30"  name="service_code" value="{{ asset.service_code }}" />
+			</div>
+			<div class="unit">
+				<label>规格：</label>
+				<input type="text" readonly="readonly" size="30"  name="specification" value="{{ asset.specification }}" />
+			</div>
+			<div class="unit">
+				<label>品牌：</label>
+				<input type="text" readonly="readonly" size="30"  name="brand" value="{{ asset.brand }}" />
+			</div>
+			<div class="unit">
+				<label>型号：</label>
+				<input type="text" readonly="readonly" size="30"  name="model" value="{{ asset.model }}" />
+			</div>
+			<div class="unit">
+				<label>数量：</label>
+				<input type="text" readonly="readonly" size="30"  name="num" {% if asset.num %}value="{{ asset.num }}"{% endif %} />
+			</div>
+			<div class="unit">
+				<label>单价：</label>
+				<input type="text" readonly="readonly" size="30"  name="unit_price" {% if asset.unit_price %}value="{{ asset.unit_price }}"{% endif %} />
+			</div>
+			<div class="unit">
+				<label>购入日期：</label>
+				<input type="text" name="purchase_date" class="date" size="30" format="yyyy-MM-dd" value='{{ asset.purchase_date|date:"Y-m-d" }}' readonly="readonly" yearstart="-10" yearend="20" />
+			</div>
+			<div class="unit">
+				<label>入库单号：</label>
+				<input type="text" readonly="readonly" size="30"  name="in_storage_no" value="{{ asset.in_storage_no }}" />
+			</div>
+			<div class="unit">
+				<label>领取日期：</label>
+				<input type="text" name="draw_date" class="date" size="30" format="yyyy-MM-dd" value='{{ asset.draw_date|date:"Y-m-d" }}' readonly="true" yearstart="-10" yearend="20" />
+			</div>
+			<div class="unit">
+				<label>出库单号：</label>
+				<input type="text" readonly="readonly" size="30"  name="out_storage_no" value="{{ asset.out_storage_no }}" />
+			</div>
+
+			<div class="unit">
+				<label>申请单号：</label>
+				<input type="text" readonly="readonly" size="30"  name="apply_no" value="{{ asset.apply_no }}" />
+			</div>
+
+			<div class="unit">
+				<label>对帐标识：</label>
+				{% for key,value in reconcile_flag_dict.items %}
+					{% ifequal asset.reconcile_flag key %}
+						<input type="text" readonly="readonly" size="30"  name="reconcile_flag" value="{{ value }}" />						
+					{% endifequal %}
+				{% endfor %}
+			</div>
+
+			<div class="unit">
+				<label>设备代码：</label>
+				<textarea name="equipmentcode" rows="2" cols="27" readonly="readonly">{{ asset.equipmentcode.equipment_code }}-{{ asset.equipmentcode.class_name }}-{{ asset.equipmentcode.subclass_name }}</textarea>
+			</div>
+			
+			<div class="unit">
+				<label>资产归属：</label>
+				<textarea name="companycode" rows="2" cols="27" readonly="readonly">{{ asset.companycode.company_code }}-{{ asset.companycode.company_name }}</textarea>			
+			</div>			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">确定</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

@@ -1,0 +1,207 @@
+<script type="text/javascript">
+	/**
+	 * 自定义高级查询触发函数
+	 * 处理navTab上的查询, 会重新载入当前navTab
+	 * @param {Object} form
+	 */
+	function advancednavTabSearch(form, navTabId){
+		var $form = $(form);
+		if (form[DWZ.pageInfo.pageNum]) form[DWZ.pageInfo.pageNum].value = 1;
+		navTab.reload($form.attr('action'), {data: $form.serializeArray(), navTabId:navTabId});
+		//$.pdialog.getCurrent();
+		$.pdialog.closeCurrent();
+		return false;
+	}
+	
+	function cls(){
+   		var t = document.getElementsByTagName("input");
+   		for(var i=0; i<t.length; i++) {
+  			if(t[i].type=='text') {
+    			t[i].value="";//清空
+  			}
+		}
+   		var t1 = document.getElementsByTagName("textarea");
+   		for(var i1=0; i1<t1.length; i1++) {
+			if(t1[i1].type=='textarea') {
+    			t1[i1].value="";//清空
+  			}
+   		}
+	}
+	
+</script>
+<div class="pageContent">
+	<form method="post" action="{% url asset_index_asset %}" class="pageForm required-validate" onsubmit="return advancednavTabSearch(this);">
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>资产编号：</label>
+				<input type="text" class="" size="30" name="elementid" value="{{ elementid }}" />
+			</div>
+			<div class="divider">divider</div>
+			<div class="unit">
+				<label>原资产编号：</label>
+				<input type="text" class="" size="30" name="old_elementid" value="{{ old_elementid }}" />
+				<span class="inputInfo">台式机分开报损的产物</span>
+			</div>
+			<div class="unit">
+				<label>服务代码：</label>
+				<input type="text" class="" size="30"  name="service_code" value="{{ service_code }}" />
+			</div>
+			<div class="unit">
+				<label>规格：</label>
+				<input type="text" size="30"  name="specification" value="{{ specification }}" />
+			</div>
+			<div class="unit">
+				<label>品牌：</label>
+				<input type="text" class="" size="30"  name="brand" value="{{ brand }}" />
+			</div>
+			<div class="unit">
+				<label>型号：</label>
+				<input type="text" class="" size="30"  name="model" value="{{ model }}" />
+			</div>
+			<div class="unit">
+				<label>数量范围：</label>
+				<table>
+					<tr>
+						<td>
+							<input type="text" size="11" value="{{ num_min }}" class="" name="num_min" />
+						</td>
+						<td>
+							<span class="limit">-</span>
+						</td>
+						<td>
+							<input type="text" size="11" value="{{ num_max }}" class="" name="num_max" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="unit">
+				<label>单价范围：</label>
+				<table>
+					<tr>
+						<td>
+							<input type="text" size="11" value="{{ unit_price_min }}" class="" name="unit_price_min" />
+						</td>
+						<td>
+							<span class="limit">-</span>
+						</td>
+						<td>
+							<input type="text" size="11" value="{{ unit_price_max }}" class="" name="unit_price_max" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="unit">
+				<label>购入日期范围：</label>
+				<table>
+					<tr>
+						<td>
+							<input type="text" size="11" value="{{ dateStart }}" readonly="readonly" class="date" name="dateStart" />
+						</td>
+						<td>
+							<span class="limit">-</span>
+						</td>
+						<td>
+							<input type="text" size="11" value="{{ dateEnd }}" readonly="readonly" class="date" name="dateEnd" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="unit">
+				<label>入库单号：</label>
+				<input type="text" size="30"  name="in_storage_no" value="{{ in_storage_no }}" />
+			</div>
+			<div class="unit">
+				<label>领取日期范围：</label>
+				<table>
+					<tr>
+						<td>
+							<input type="text" size="11" value="{{ dateStart2 }}" readonly="readonly" class="date" name="dateStart2" />
+						</td>
+						<td>
+							<span class="limit">-</span>
+						</td>
+						<td>
+							<input type="text" size="11" value="{{ dateEnd2 }}" readonly="readonly" class="date" name="dateEnd2" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="unit">
+				<label>出库单号：</label>
+				<input type="text" size="30"  name="out_storage_no" value="{{ out_storage_no }}" />
+			</div>
+			<div class="unit">
+				<label>保修期限范围：</label>
+				<table>
+					<tr>
+						<td>
+							<input type="text" size="11" value="{{ dateStart_deadline }}" readonly="readonly" class="date" name="dateStart_deadline" />
+						</td>
+						<td>
+							<span class="limit">-</span>
+						</td>
+						<td>
+							<input type="text" size="11" value="{{ dateEnd_deadline }}" readonly="readonly" class="date" name="dateEnd_deadline" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="unit">
+				<label>使用人：</label>
+				<input type="text" size="30"  name="username" value="{{ username }}" />
+			</div>
+			<div class="unit">
+				<label>申请单号：</label>
+				<input type="text" size="30"  name="apply_no" value="{{ apply_no }}" />
+			</div>
+			<div class="unit">
+				<label>对帐标识：</label>
+				<select name="reconcile_flag" class="required combox" >
+				{% if reconcile_flag > -1 %}
+					<option value="all" {% ifequal reconcile_flag "all" %} selected="selected" {% endifequal %}>全部</option>
+					{% for key,value in reconcile_flag_dict.items %}
+						{% ifequal reconcile_flag key %}
+							<option value="{{ key }}" selected="selected">{{ value }}</option>
+						{% else %}
+							<option value="{{ key }}">{{ value }}</option>
+						{% endifequal %}
+					{% endfor %}
+				{% else %}
+					<option value="all" selected="selected">全部</option>
+					{% for key,value in reconcile_flag_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				{% endif %}
+				</select>
+			</div>
+			<dl class="nowrap">
+				<dt>设备代码：</dt>
+				<dd>
+					<input size="30" id="equipment_code" name="org1.equipment_code" type="text" value="{{ equipment_code }}" />
+					<a class="btnLook" href="{% url asset_searchback_equipmentcode %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org1">查找带回</a>
+				</dd>
+			</dl>
+			<dl class="nowrap">
+				<dt>资产归属：</dt>
+				<dd>
+					<input size="30" id="company_code" name="org2.company_code" type="text" value="{{ company_code }}"/>
+					<a class="btnLook" href="{% url asset_searchback_companycode %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org2">查找带回</a>
+				</dd>
+			</dl>
+			<dl class="nowrap">
+				<dt>使用部门：</dt>
+				<dd>
+					<input size="30" id="department_code" name="org3.department_code" type="text" value="{{ department_code }}"/>
+					<a class="btnLook" href="{% url asset_searchback_departmentcode %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org3">查找带回</a>
+				</dd>
+			</dl>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">开始检索</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" onclick="javascript: cls();">清空重输</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+</div>

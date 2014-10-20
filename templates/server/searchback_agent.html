@@ -1,0 +1,88 @@
+<form id="pagerForm" action="{% url server_searchback_agent %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url server_searchback_agent %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td style="padding-right:1px;">
+					<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+					SaltId：<input type="text" name="saltid" value="{{ saltid }}" />&nbsp;&nbsp;
+					内网IP：<input type="text" name="in_ip" value="{{ in_ip }}" />
+				</td>
+			</tr>
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th align="center">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="nocid" class="asc">机房编号</th>
+			{% else %}
+				<th orderField="nocid" class="desc">机房编号</th>
+			{% endifequal %}
+				<th>机房名称</th>
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="elementid" class="asc">资产编号</th>
+			{% else %}
+				<th orderField="elementid" class="desc">资产编号</th>
+			{% endifequal %}
+				<th>SaltID</th>
+				<th>内网IP</th>
+				<th>服务名称</th>
+				<th>查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for server in servers.object_list %}
+           <tr>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ server.nocid }}</td>
+           <td>{{ server.nocname }}</td>
+           <td>{{ server.elementid }}</td>
+           <td>{{ server.saltid }}</td>
+           <td>{{ server.in_ip }}</td>
+           <td>{{ server.service_name }}</td>
+           <td>
+				<a class="btnSelect" href="javascript:$.bringBackT({agent_in_ip:'{{ server.in_ip }}', agent_saltid:'{{ server.saltid }}'})" title="查找带回">选择</a>
+		   </td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ servers.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ servers.paginator.count }}" numPerPage="{{ servers.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

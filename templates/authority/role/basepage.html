@@ -1,0 +1,84 @@
+<form id="pagerForm" action="{% url authority_index_role %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="nocid" value=""/>
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url authority_index_role %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						角色名称：<input type="text" name="query" value="{{ query }}" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+				<li><a class="add" href="{% url authority_add_role %}" target="dialog" mask="true" width="950" height="600" title="添加" rel="addreource"><span>新增</span></a></li>
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url authority_selecteddelete_role %}" class="delete"><span>批量删除</span></a></li>             
+			</ul>
+		</div>
+
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+			<tr>
+				<th width="3%">
+				<input type="checkbox" group="ids" class="checkboxCtrl">
+				</th>
+				<th width="3%">序号</th>
+				<th width="10%">角色主键</th>
+				<th width="10%">角色名称</th>
+				<th width="30%">角色描述</th>
+				<th width="25%">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+		   {% for role in roles.object_list %}
+           <tr target="sid_group" rel="{{ role.id }}">
+           <td><input name="ids" value="{{ role.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ role.id }}</td>
+           <td>{{ role.role_name }}</td>
+           <td>{{ role.role_desc }}</td>
+           <td>
+              <a class="btnedit" href="{% url authority_edit_role role.id %}" target="dialog" mask="true"  width="950" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+              <a class="btndelete" href="{% url authority_delete_role role.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+              <a class="btnuserlink" href="{% url authority_relate_role_user role.id %}" target="dialog" mask="true"  width="800" height="600" rel="relate" title="关联用户"><span>关联用户</span></a>
+              <a class="btnmodulelink" href="{% url authority_relate_role_module role.id %}" target="dialog" mask="true"  width="800" height="600" rel="relate" title="关联模块"><span>关联模块</span></a>
+              <a class="btnbuttonlink" href="{% url authority_relate_role_button role.id %}" target="dialog" mask="true"  width="800" height="600" rel="relate" title="关联按钮"><span>关联按钮</span></a>
+              <a class="btnfieldlink" href="{% url authority_relate_role_modulefield role.id %}" target="dialog" mask="true"  width="800" height="600" rel="relate" title="关联模块字段"><span>关联字段</span></a>
+           </td>
+           </tr>
+           {% endfor %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ roles.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ roles.paginator.count }}" numPerPage="{{ roles.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>
+

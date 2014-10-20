@@ -1,0 +1,35 @@
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url authority_edit_module module.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="moduleindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>模块名称：</label>
+				<input type="text" class="required" size="30"  name="module_name" value="{{ module.module_name }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>模块类型：</label>
+				<input type="text" class="required" size="30"  name="module_type" value="{{ module.module_type }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>模块顺序：</label>
+				<input type="text" class="required digits" size="30"  name="order" value="{{ module.order }}" />
+			</div>
+            <div class="unit">
+				<label>模块描述：</label>
+				<textarea name="module_desc" rows="3" cols="57">{{ module.module_desc }}</textarea>
+			</div>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

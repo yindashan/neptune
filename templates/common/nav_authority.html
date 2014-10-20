@@ -1,0 +1,24 @@
+<script type="text/javascript">
+	navTab.openTab("roleindex", "{% url authority_index_role %}", {title:"角色管理"});
+</script>
+<div class="accordion" fillSpace="sidebar">
+	<div class="accordionHeader">
+		<h2><span>Folder</span>系统管理</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree treeFolder expand">
+		
+			{% ifcontain 'authority' request.session.authority_list_module %}
+			<li><a>权限管理</a>
+				<ul>
+					<li><a href="{% url authority_index_role %}" target="navTab" rel="roleindex" title="角色管理">角色管理</a></li>
+					<li><a href="{% url authority_index_module %}" target="navTab" rel="moduleindex" title="模块管理">模块管理</a></li>
+					<li><a href="{% url authority_index_button %}" target="navTab" rel="buttonindex" title="功能按钮">功能按钮</a></li>
+					<li><a href="{% url authority_index_modulefield %}" target="navTab" rel="modulefieldindex" title="模块字段">模块字段</a></li>
+				</ul>
+			</li>
+			{% endifcontain %}
+					
+		</ul>
+	</div>
+</div>

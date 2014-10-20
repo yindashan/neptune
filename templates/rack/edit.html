@@ -1,0 +1,60 @@
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url rack_edit rack.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="rackindex"/>
+		<div class="pageFormContent" layoutH="58">
+		
+			<dl class="nowrap">
+				<dt>机房：</dt>
+				<dd>
+					<input name="org.city" type="hidden" readonly="readonly" />
+					<input size="30" name="org.nocid" type="text" readonly="readonly" value="{{ rack.nocinfo }}"/>
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>机架编号：</label>
+				<input type="text" class="required" size="30"  name="rackid" value="{{ rack.rackid }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>额定电流：</label>
+				<input type="text" class="required digits" size="30"  name="rated_amp" value="{{ rack.rated_amp }}" /><span class="info">&nbsp;(单位:mA)</span>
+			</div>
+			<div class="unit">
+				<label>已使用电流：</label>
+				<input type="text" class="required digits" size="30"  name="used_amp" value="{{ rack.used_amp }}" /><span class="info">&nbsp;(单位:mA)</span>
+			</div>
+			<div class="unit">
+				<label>机架总空间：</label>
+				<input type="text" class="required digits" size="30"  name="space" value="{{ rack.space }}" readonly="readonly" /><span class="info">&nbsp;(单位:U,值为42U/48U)</span>
+			</div>
+			<!-- 
+			<div class="unit">
+				<label>机架剩余空间：</label>
+				<input type="text" class="required digits" size="30"  name="left_space" value="{{ rack.left_space }}" /><span class="info">&nbsp;(单位:U)</span>
+			</div>
+			 -->
+			<div class="unit">
+				<label>机架状态：</label>
+				<select name="status" class="required combox" >
+					{% for key,value in rack_status_dict.items %}
+						{% ifequal rack.status key %}
+							<option value="{{ key }}" selected="selected">{{ value }}</option>
+						{% else %}
+							<option value="{{ key }}">{{ value }}</option>
+						{% endifequal %}
+					{% endfor %}
+				</select>
+			</div>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

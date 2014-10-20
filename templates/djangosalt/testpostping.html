@@ -1,0 +1,39 @@
+<script type="text/javascript">
+
+</script>
+
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url djangosalt_testpostping %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="djangosaltindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>目标主机：</label>
+				<input type="text" size="30" id="target" name="target" value="" />
+			</div>
+			<div class="unit">
+				<label>执行函数：</label>
+				<input type="text" size="30" id="func" name="func" value="" />
+			</div>
+			<div class="unit">
+				<label>参数：</label>
+				<input type="text" size="30" id="argument" name="argument" value="" />
+			</div>
+			<div class="unit">
+				<label>shell脚本：</label>
+				<textarea id="shellcontent" name="shellcontent" rows="25" cols="90" ></textarea>
+			</div>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

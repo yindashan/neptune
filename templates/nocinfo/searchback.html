@@ -1,0 +1,77 @@
+<form id="pagerForm" action="{% url nocinfo_searchback %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url nocinfo_searchback %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+				运营商名称：<input type="text" name="query" value="{{ query }}" />
+			</li>	  
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="7%" align="center">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="15%" orderField="ispName" class="asc">运营商名称</th>
+			{% else %}
+				<th width="15%" orderField="ispName" class="desc">运营商名称</th>
+			{% endifequal %}
+				<th>总部地址</th>
+				<th>客服电话</th>
+				<th>常用电话</th>
+				<th>查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for isp in isps.object_list %}
+           <tr>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ isp.ispName }}</td>
+           <td>{{ isp.address }}</td>
+           <td>{{ isp.phone1 }}</td>
+           <td>{{ isp.phone2 }}</td>
+           <td>
+				<a class="btnSelect" href="javascript:$.bringBackT({ispName:'{{ isp.ispName }}'})" title="查找带回">选择</a>
+		   </td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ isps.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ isps.paginator.count }}" numPerPage="{{ isps.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

@@ -1,0 +1,85 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#nocid").autocomplete("{% url nocinfo_autocomplete %}", {
+		minChars: 0,
+		//width: 180,
+		max: 10,
+		//autoFill: true,
+		matchContains: true,
+		//multiple: true,
+		//multipleSeparator: ",",
+		scroll: true,
+		scrollHeight: 300
+	}).result(function(event, data, formatted){
+		//$.ajaxSettings.global = true;
+	});
+	
+	$("#nocid").focus(function(){
+		$.ajaxSettings.global = false;
+	});
+	$("#nocid").blur(function(){
+		$.ajaxSettings.global = true;
+	});
+	
+});
+</script>
+
+<div class="page">
+	<div class="pageContent">
+	{% load static %}
+	<form method="post" action="{% url rack_add %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="rackindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<dl class="nowrap">
+				<dt>机房：</dt>
+				<dd>
+					<input name="org.city" type="hidden" readonly="readonly" />
+					<input size="30" id="nocid" name="org.nocid" type="text" />
+					<a class="btnLook" href="{% url rack_searchback %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(查询关联的机房)</span>
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>机架编号：</label>
+				<input type="text" class="required" size="30"  name="rackid" value="" />
+			</div>
+			<div class="unit">
+				<label>额定电流：</label>
+				<input type="text" class="required digits" size="30"  name="rated_amp" value="" /><span class="info">&nbsp;(单位:mA)</span>
+			</div>
+			<div class="unit">
+				<label>已使用电流：</label>
+				<input type="text" class="required digits" size="30"  name="used_amp" value="" /><span class="info">&nbsp;(单位:mA)</span>
+			</div>
+			<div class="unit">
+				<label>机架总空间：</label>
+				<input type="text" class="required digits" size="30"  name="space" value="" /><span class="info">&nbsp;(单位:U,值为42U/48U)</span>
+			</div>
+			<!-- 
+			<div class="unit">
+				<label>机架剩余空间：</label>
+				<input type="text" class="required digits" size="30"  name="left_space" value="" /><span class="info">&nbsp;(单位:U)</span>
+			</div>
+			 -->
+			<div class="unit">
+				<label>机架状态：</label>
+				<select name="status" class="required combox" >
+					{% for key,value in rack_status_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

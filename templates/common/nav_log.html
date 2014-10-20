@@ -1,0 +1,21 @@
+<script type="text/javascript">
+	navTab.openTab("logindex", "{% url log_index %}", {title:"日志管理"});
+</script>
+<div class="accordion" fillSpace="sidebar">
+	<div class="accordionHeader">
+		<h2><span>Folder</span>系统管理</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree treeFolder expand">
+			
+			{% ifcontain 'log' request.session.authority_list_module %}
+			<li><a>日志管理</a>
+				<ul>
+					<li><a href="{% url log_index %}" target="navTab" rel="logindex" title="日志管理">日志管理</a></li>
+				</ul>
+			</li>
+			{% endifcontain %}
+					
+		</ul>
+	</div>
+</div>

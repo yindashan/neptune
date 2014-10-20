@@ -1,0 +1,77 @@
+<form id="pagerForm" action="{% url nocnetinfo_searchback %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url nocnetinfo_searchback %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+				机房编号：<input type="text" name="query" value="{{ query }}" />
+			</li>	  
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="7%" align="center">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="12%" orderField="nocid" class="asc">机房编号</th>
+			{% else %}
+				<th width="12%" orderField="nocid" class="desc">机房编号</th>
+			{% endifequal %}
+				<th orderfield="status">机房状态</th>
+				<th orderfield="city">机房所在城市</th>
+				<th orderfield="address">机房地址</th>
+				<th width="80" >查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for nocinfo in nocinfos.object_list %}
+           <tr>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ nocinfo.nocid }}</td>
+           <td>{{ nocinfo.status }}</td>
+           <td>{{ nocinfo.city }}</td>
+           <td>{{ nocinfo.address }}</td>
+           <td>
+				<a class="btnSelect" href="javascript:$.bringBackT({nocid:'{{ nocinfo.nocid }}', city:'{{ nocinfo.city }}'})" title="查找带回">选择</a>
+		   </td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ nocinfos.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ nocinfos.paginator.count }}" numPerPage="{{ nocinfos.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

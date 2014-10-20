@@ -1,0 +1,76 @@
+<form id="pagerForm" action="{% url authority_searchback_modulefield_field %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="nocid" value=""/>
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url authority_searchback_modulefield_field %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+				字段名称：<input type="text" name="query" value="{{ query }}" />
+			</li>
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="7%" align="center">序号</th>
+				<th>字段主键</th>
+				<th>字段名称</th>
+				<th>字段类型</th>
+				<th>字段大小</th>
+				<th>字段描述</th>
+				<th>所属表</th>
+				<th>查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for field in fields.object_list %}
+           <tr>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ field.id }}</td>
+           <td>{{ field.field_name }}</td>
+           <td>{{ field.field_type }}</td>
+           <td>{{ field.field_size }}</td>
+           <td>{{ field.field_desc }}</td>
+           <td>{{ field.table.table_name }}</td>
+           <td>
+				<a class="btnSelect" href="javascript:$.bringBackT({field_desc:'{{ field.field_desc }}', field_id:'{{ field.id }}'})" title="查找带回">选择</a>
+		   </td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ fields.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ fields.paginator.count }}" numPerPage="{{ fields.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

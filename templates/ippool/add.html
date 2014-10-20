@@ -1,0 +1,66 @@
+<div class="page">
+	<div class="pageContent">
+	{% load static %}
+	<form method="post" action="{% url ips_add %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="ipindex"/>
+		<div class="pageFormContent" layoutH="58">
+
+			<div class="unit">
+				<label>IP地址：</label>
+				<input type="text" class="required" size="30"  name="ipaddress" value="" />
+			</div>
+			<div class="unit">
+				<label>子网掩码：</label>
+				<input type="text" size="30" name="ipmask" value="" />
+			</div>
+			
+			<dl class="nowrap">
+				<dt>所属机房：</dt>
+				<dd>
+					<input size="30" name="org.nocid" type="text" readonly="readonly" />
+					<a class="btnLook" href="{% url ips_searchbacknoc %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(查询所属机房)</span>
+				</dd>
+			</dl>
+<!--			
+			<dl class="nowrap">
+				<dt>所属服务器：</dt>
+				<dd>
+					<input class="required" size="30" name="org.elementid" type="text" readonly="readonly" />
+					<a class="btnLook" href="{% url ips_searchbackequip %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookuoGroup="org">查找带回</a>
+					<span class="info">(查询所属服务器)</span>
+				</dd>
+			</dl>
+ -->			
+            <div class="unit">
+				<label>IP类型：</label>
+				<select name="iptype" class="required combox" >
+					{% for key,value in ip_type_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			
+			<div class="unit">
+				<label>使用状态：</label>
+				<select name="status" class="required combox" >
+					{% for key,value in ip_status_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			
+			<div class="unit">
+				<label>备注：</label>
+				<input type="text" size="30" name="desc" value="" />
+			</div>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	</div>
+</div>

@@ -1,0 +1,185 @@
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url applyonline_add %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="applyonlineindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<!-- 
+			<div class="unit">
+				<label>申请单号：</label>
+				<input type="text" class="required" size="30" name="applyid" value="" />
+			</div>
+			 -->
+			<div class="unit">
+				<label>服务名称：</label>
+				<input type="text" class="" size="30"  name="service_name" value="" />
+			</div>
+			<div class="unit">
+				<label>服务域名：</label>
+				<input type="text" class="" size="30" name="service_domainname" value="" />
+			</div>
+			<div class="unit">
+				<label>版本号：</label>
+				<input type="text" class="" size="30" name="version" value="" />
+			</div>
+			<!-- 
+			<div class="unit">
+				<label>申请人：</label>
+				<input type="text" class="required" size="30" name="apply_user" value="dashan.yin" />
+			</div>
+			 -->
+			 
+			<div class="unit">
+				<label>申请时间：</label>
+				<input type="text" name="apply_time" id="startDate_s" class="Wdate required" size="30" readonly="readonly"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'%y-%M-%d',maxDate:'#F{$dp.$D(\'endDate_s\',{d:-3})}'})" />
+			</div>
+			 
+			<div class="unit">
+				<label>优先级：</label>
+				<input type="radio" name="priority" value="0" checked="checked"/>紧急
+				<input type="radio" name="priority" value="1"/>一般
+			</div>
+			<div class="unit">
+				<label>更新文件名：</label>
+				<input type="text" class="" size="30" name="file_name" value="" />
+			</div>
+			<div class="unit">
+				<label>更新文件下载链接：</label>
+				<input type="text" class="" size="30" name="file_url" value="" />
+			</div>
+			<div class="unit">
+				<label>计划上线时间：</label>
+				<input type="text" name="online_time" id="endDate_s" class="Wdate required" size="30" readonly="readonly"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate_s\',{d:3})}'})" />
+			</div>
+			<div class="unit">
+				<label>相关研发人员：</label>
+				<input type="text" class="" size="30" name="develop_user" value="" />
+			</div>
+			<div class="unit">
+				<label>相关测试人员：</label>
+				<input type="text" class="" size="30" name="test_user" value="" />
+			</div>
+			<div class="unit">
+				<label>相关运维人员：</label>
+				<input type="text" class="required" size="30" name="operate_user" value="" />
+			</div>
+			
+			<div class="unit">
+				<label>系统测试：</label>
+				<input type="radio" name="is_system_test" value="0" checked="checked"/>是
+				<input type="radio" name="is_system_test" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>功能测试：</label>
+				<input type="radio" name="is_function_test" value="0" checked="checked"/>是
+				<input type="radio" name="is_function_test" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>性能测试：</label>
+				<input type="radio" name="is_capability_test" value="0" checked="checked"/>是
+				<input type="radio" name="is_capability_test" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>压力测试：</label>
+				<input type="radio" name="is_pressure_test" value="0" checked="checked"/>是
+				<input type="radio" name="is_pressure_test" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>UI测试：</label>
+				<input type="radio" name="is_ui_test" value="0" checked="checked"/>是
+				<input type="radio" name="is_ui_test" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>专项测试：</label>
+				<input type="radio" name="is_special_test" value="0" checked="checked"/>是
+				<input type="radio" name="is_special_test" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>用户接受测试(UAT)：</label>
+				<input type="radio" name="is_uat_test" value="0" checked="checked"/>是
+				<input type="radio" name="is_uat_test" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>稳定性测试：</label>
+				<input type="radio" name="is_stability_test" value="0" checked="checked"/>是
+				<input type="radio" name="is_stability_test" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>版本控制：</label>
+				<input type="radio" name="is_version_control" value="0" checked="checked"/>是
+				<input type="radio" name="is_version_control" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>培训完成：</label>
+				<input type="radio" name="is_train_complete" value="0" checked="checked"/>是
+				<input type="radio" name="is_train_complete" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>数据转换完成：</label>
+				<input type="radio" name="is_datatransfer_complete" value="0" checked="checked"/>是
+				<input type="radio" name="is_datatransfer_complete" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>文档完整：</label>
+				<input type="radio" name="is_document_complete" value="0" checked="checked"/>是
+				<input type="radio" name="is_document_complete" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>环境符合要求：</label>
+				<input type="radio" name="is_environment_complete" value="0" checked="checked"/>是
+				<input type="radio" name="is_environment_complete" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>是否有回退计划：</label>
+				<input type="radio" name="is_backup_plan" value="0" checked="checked"/>是
+				<input type="radio" name="is_backup_plan" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>系统参数配置完成：</label>
+				<input type="radio" name="is_paramconf_complete" value="0" checked="checked"/>是
+				<input type="radio" name="is_paramconf_complete" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>可否上线：</label>
+				<input type="radio" name="is_can_online" value="0" checked="checked"/>是
+				<input type="radio" name="is_can_online" value="1"/>否
+			</div>
+			<div class="unit">
+				<label>健康检查url是否变更：</label>
+				<input type="radio" name="is_check_url" value="0" checked="checked"/>是
+				<input type="radio" name="is_check_url" value="1"/>否
+			</div>
+			
+			<div class="unit">
+				<label>新健康检查url：</label>
+				<input type="text" class="" size="30" name="check_url" value="" />
+			</div>
+			
+			
+			
+			<div class="unit">
+				<label>部署步骤：</label>
+				<textarea name="deploy_step" rows="5" cols="57"></textarea>
+			</div>
+			<div class="unit">
+				<label>回滚方案：</label>
+				<textarea name="backup_method" rows="5" cols="57"></textarea>
+			</div>
+			<div class="unit">
+				<label>更新验证：</label>
+				<textarea name="update_check" rows="5" cols="57"></textarea>
+			</div>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

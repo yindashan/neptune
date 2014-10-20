@@ -1,0 +1,476 @@
+<style type="text/css">
+#one{width:200px; height:180px; float:left}
+#two{width:50px; height:180px; float:left}
+#three{width:200px; height:180px; float:left}
+.btn{width:50px; height:30px; margin-top:20px; cursor:pointer;}
+.bs{border:1px #B8D0D6 solid}
+</style>
+<script type="text/javascript">
+	
+	if(window.Node) {
+		Node.prototype.replaceNode=function($target) {
+		  return this.parentNode.replaceChild($target,this);
+		}
+		Node.prototype.swapNode=function($target){
+		  var $targetParent=$target.parentNode;
+		  var $targetNextSibling=$target.nextSibling;
+		  var $thisNode=this.parentNode.replaceChild($target,this);
+		  $targetNextSibling?$targetParent.insertBefore($thisNode,$targetNextSibling):$targetParent.appendChild($thisNode);
+		  return this;
+		}
+	}
+	
+	function doOrder(select, sequence) {                  //将上、下两个方法合并成一个
+		if (!select||select.selectedIndex==-1) {            //如果没有选择列表项，不进行任何操作
+		     return false;
+		} else if (select) {
+		    var newIndex = select.selectedIndex + sequence;      //获取移动后的索引
+		    var oldIndex = select.selectedIndex;               //旧索引
+		    if (newIndex>=select.options.length||newIndex<0||sequence==0||newIndex<0) {   //判断是否超出边界                                                        
+		        return false;
+		    }
+		    //select.options[newIndex].swapNode(select.options[oldIndex]); //交换指定索引处的节点
+		    if (newIndex > oldIndex) {
+		    	select.options[oldIndex].swapNode(select.options[newIndex]);
+		    } else {
+		    	select.options[newIndex].swapNode(select.options[oldIndex]);
+		    }
+		 }
+		 return true;
+	}
+		
+	function doUp_actiongroup() {
+	   doOrder(document.getElementById("select2_actiongroup"), -1);              //向上移动的方法
+	}
+	
+	function doDown_actiongroup() {
+	   doOrder(document.getElementById("select2_actiongroup"), 1);               //向下移动的方法
+	}
+	
+	//下拉框交换JQuery
+	$(function(){
+		//服务器列表操作
+	    //移到右边
+	    $('#add_server').click(function() {
+	    //获取选中的选项，删除并追加给对方
+	        $('#select1_server option:selected').appendTo('#select2_server');
+	    });
+	    //移到左边
+	    $('#remove_server').click(function() {
+	        $('#select2_server option:selected').appendTo('#select1_server');
+	    });
+	    //全部移到右边
+	    $('#add_all_server').click(function() {
+	        //获取全部的选项,删除并追加给对方
+	        $('#select1_server option').appendTo('#select2_server');
+	    });
+	    //全部移到左边
+	    $('#remove_all_server').click(function() {
+	        $('#select2_server option').appendTo('#select1_server');
+	    });
+	    //双击选项
+	    $('#select1_server').dblclick(function(){ //绑定双击事件
+	        //获取全部的选项,删除并追加给对方
+	        $("option:selected",this).appendTo('#select2_server'); //追加给对方
+	    });
+	    //双击选项
+	    $('#select2_server').dblclick(function(){
+	       $("option:selected",this).appendTo('#select1_server');
+	    });
+	    
+	    //基础应用模板操作
+	    //移到右边
+	    $('#add_softform').click(function() {
+	    //获取选中的选项，删除并追加给对方
+	        $('#select1_softform option:selected').appendTo('#select2_softform');
+	    });
+	    //移到左边
+	    $('#remove_softform').click(function() {
+	        $('#select2_softform option:selected').appendTo('#select1_softform');
+	    });
+	    //全部移到右边
+	    $('#add_all_softform').click(function() {
+	        //获取全部的选项,删除并追加给对方
+	        $('#select1_softform option').appendTo('#select2_softform');
+	    });
+	    //全部移到左边
+	    $('#remove_all_softform').click(function() {
+	        $('#select2_softform option').appendTo('#select1_softform');
+	    });
+	    //双击选项
+	    $('#select1_softform').dblclick(function(){ //绑定双击事件
+	        //获取全部的选项,删除并追加给对方
+	        $("option:selected",this).appendTo('#select2_softform'); //追加给对方
+	    });
+	    //双击选项
+	    $('#select2_softform').dblclick(function(){
+	       $("option:selected",this).appendTo('#select1_softform');
+	    });	    
+	    
+	    //应用操作
+	    //移到右边
+	    $('#add_apppackage').click(function() {
+	    //获取选中的选项，删除并追加给对方
+	        $('#select1_apppackage option:selected').appendTo('#select2_apppackage');
+	    });
+	    //移到左边
+	    $('#remove_apppackage').click(function() {
+	        $('#select2_apppackage option:selected').appendTo('#select1_apppackage');
+	    });
+	    //全部移到右边
+	    $('#add_all_apppackage').click(function() {
+	        //获取全部的选项,删除并追加给对方
+	        $('#select1_apppackage option').appendTo('#select2_apppackage');
+	    });
+	    //全部移到左边
+	    $('#remove_all_apppackage').click(function() {
+	        $('#select2_apppackage option').appendTo('#select1_apppackage');
+	    });
+	    //双击选项
+	    $('#select1_apppackage').dblclick(function(){ //绑定双击事件
+	        //获取全部的选项,删除并追加给对方
+	        $("option:selected",this).appendTo('#select2_apppackage'); //追加给对方
+	    });
+	    //双击选项
+	    $('#select2_apppackage').dblclick(function(){
+	       $("option:selected",this).appendTo('#select1_apppackage');
+	    });
+	    
+	    
+	    //操作流程
+	    //移到右边
+	    $('#add_actiongroup').click(function() {
+	    //获取选中的选项，删除并追加给对方
+	        $('#select1_actiongroup option:selected').appendTo('#select2_actiongroup');
+	    });
+	    //移到左边
+	    $('#remove_actiongroup').click(function() {
+	        $('#select2_actiongroup option:selected').appendTo('#select1_actiongroup');
+	    });
+	    //全部移到右边
+	    $('#add_all_actiongroup').click(function() {
+	        //获取全部的选项,删除并追加给对方
+	        $('#select1_actiongroup option').appendTo('#select2_actiongroup');
+	    });
+	    //全部移到左边
+	    $('#remove_all_actiongroup').click(function() {
+	        $('#select2_actiongroup option').appendTo('#select1_actiongroup');
+	    });
+	    //双击选项
+	    $('#select1_actiongroup').dblclick(function(){ //绑定双击事件
+	        //获取全部的选项,删除并追加给对方
+	        $("option:selected",this).appendTo('#select2_actiongroup'); //追加给对方
+	    });
+	    //双击选项
+	    $('#select2_actiongroup').dblclick(function(){
+	       $("option:selected",this).appendTo('#select1_actiongroup');
+	    });
+	    
+	    
+	    //测试用例
+	    //移到右边
+	    $('#add_testcase').click(function() {
+	    //获取选中的选项，删除并追加给对方
+	        $('#select1_testcase option:selected').appendTo('#select2_testcase');
+	    });
+	    //移到左边
+	    $('#remove_testcase').click(function() {
+	        $('#select2_testcase option:selected').appendTo('#select1_testcase');
+	    });
+	    //全部移到右边
+	    $('#add_all_testcase').click(function() {
+	        //获取全部的选项,删除并追加给对方
+	        $('#select1_testcase option').appendTo('#select2_testcase');
+	    });
+	    //全部移到左边
+	    $('#remove_all_testcase').click(function() {
+	        $('#select2_testcase option').appendTo('#select1_testcase');
+	    });
+	    //双击选项
+	    $('#select1_testcase').dblclick(function(){ //绑定双击事件
+	        //获取全部的选项,删除并追加给对方
+	        $("option:selected",this).appendTo('#select2_testcase'); //追加给对方
+	    });
+	    //双击选项
+	    $('#select2_testcase').dblclick(function(){
+	       $("option:selected",this).appendTo('#select1_testcase');
+	    });
+	});
+	
+	function add(select1, select2){
+		(select1.selected).appendTo(select2)
+	}
+	
+	function add_softform(){
+		add(document.getElementById("select1_softform"), document.getElementById("select2_softform"))
+	}
+
+ 	
+ 	//修改select2数据为选中
+ 	function selectedDate(){
+		$('#select2_server option').attr("selected", "selected");
+		$('#select2_softform option').attr("selected", "selected");
+		$('#select2_apppackage option').attr("selected", "selected");
+		$('#select2_actiongroup option').attr("selected", "selected");
+		$('#select2_testcase option').attr("selected", "selected");
+ 	}
+
+</script>
+
+
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url schedule_go schedule.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">{% csrf_token %}
+		<input type="hidden" name="navTabId" value="scheduleindex"/>
+		
+		<div class="pageFormContent" layoutH="58">
+		
+			<fieldset class="bs">
+				<legend class="bs">基本信息</legend>
+				
+				<div class="unit">
+					<label>上线计划单号：</label>
+					<input type="text" size="30" name="schedule_id" value="{{ schedule.schedule_id }}" readonly="readonly" />
+				</div>				
+				
+				<div class="unit">
+					<label>项目名称：</label>
+					<input type="text" size="30" name="service_name" value="{{ schedule.service_name }}" readonly="readonly" />
+				</div>
+				<div class="unit">
+					<label>上线部门：</label>
+					<input type="text" class="required" size="30" name="department" value="{{ schedule.department }}" />
+				</div>
+				<div class="unit">
+					<label>研发部门：</label>
+					<input type="text" size="30" name="department_dep" value="{{ schedule.department_dep }}" readonly="readonly" />
+				</div>
+				<div class="unit">
+					<label>联系人：</label>
+					<input type="text" class="required" size="30" name="contact" value="{{ schedule.contact }}" />
+				</div>
+				<div class="unit">
+					<label>联系信息：</label>
+					<input type="text" class="required" size="30" name="contact_info" value="{{ schedule.contact_info }}" />
+				</div>
+				
+				<div class="unit">
+					<label>自动回滚：</label>
+					{% ifequal schedule.auto_rollback 0%}
+						<label><input type="radio", name="auto_rollback" value="0" checked="checked" />是</label>
+						<label><input type="radio", name="auto_rollback" value="1" />否</label>
+					{% else %}
+						<label><input type="radio", name="auto_rollback" value="0" />是</label>
+						<label><input type="radio", name="auto_rollback" value="1" checked="checked" />否</label>
+					{% endifequal %}
+				</div>				
+			</fieldset>
+			
+			<fieldset class="bs">
+				<legend class="bs">服务器列表</legend>
+				<table width="700" align="center" border="0" cellpadding="0" cellspacing="0" class="newContTab">
+				  <tr>
+				    <td>
+				    	<div>
+					        <div>
+					          <select multiple="multiple" id="select1_server" style="width:200px;height:250px; float:left; border:4px #B8D0D6 solid outset; padding:4px; ">
+						          {% for server in servers %}
+						          	<option value = "{{ server.id }}">{{ server.saltid }} </option>
+						          {% endfor %}						          
+					          </select>
+					        </div>
+					        
+					        <div style="float:left"> 
+					        	<span id="add_server"><input type="button" class="btn" value=">" /></span><br />
+					          	<span id="remove_server"><input type="button" class="btn" value="<" /></span><br />
+					          	<span id="add_all_server"><input type="button" class="btn" value=">>" /></span> <br />
+					          	<span id="remove_all_server"><input type="button" class="btn" value="<<" /></span> 
+					        </div>
+					        
+					        <div>
+					          <select name="server_ids" multiple="multiple" id="select2_server" style="width:200px;height:250px; float:lfet;border:4px #B8D0D6 solid outset; padding:4px;">
+						          {% for server in servergroup %}
+						          	<option value = "{{ server.id }}">{{ server.saltid }} </option>
+						          {% endfor %}	
+					          </select>
+					        </div>
+
+				      	</div>
+				  	</td>
+				  	
+				  </tr>
+				</table>				
+			</fieldset>
+			
+			<fieldset class="bs">
+				<legend class="bs">基础应用模板</legend>
+				<table width="700" align="center" border="0" cellpadding="0" cellspacing="0" class="newContTab">
+				  <tr>
+				    <td>
+				    	<div>
+					        <div>
+					          <select multiple="multiple" id="select1_softform" style="width:200px;height:250px; float:left; border:4px #B8D0D6 solid outset; padding:4px; ">
+						          {% for softform in softforms %}
+						            {% ifequal softform.version  ''%}
+						          		<option value = "{{ softform.id }}">{{ softform.soft_name }}</option>
+						          	{% else %}
+						          	    <option value = "{{ softform.id }}">{{ softform.soft_name }}-{{ softform.version }}</option>
+						          	{% endifequal %}
+						          {% endfor %}						          
+					          </select>
+					        </div>
+					        
+					        <div style="float:left"> 
+					        	<span id="add_softform"><input type="button" class="btn" value=">" /></span><br />
+					          	<span id="remove_softform"><input type="button" class="btn" value="<" /></span><br />
+					          	<span id="add_all_softform"><input type="button" class="btn" value=">>" /></span> <br />
+					          	<span id="remove_all_softform"><input type="button" class="btn" value="<<" /></span> 
+					        </div>
+					        
+					        <div>
+					          <select name="softform_ids" multiple="multiple" id="select2_softform" style="width:200px;height:250px; float:lfet;border:4px #B8D0D6 solid outset; padding:4px;">
+						          {% for softform in softformgroup %}
+						            {% ifequal softform.version  ''%}
+						          		<option value = "{{ softform.id }}">{{ softform.soft_name }}</option>
+						          	{% else %}
+						          	    <option value = "{{ softform.id }}">{{ softform.soft_name }}-{{ softform.version }}</option>
+						          	{% endifequal %}
+						          {% endfor %}					          
+					          </select>
+					        </div>
+
+				      	</div>
+				  	</td>
+				  	
+				  </tr>
+				</table>				
+			</fieldset>
+
+			<fieldset class="bs">
+				<legend class="bs">应用</legend>
+				<table width="700" align="center" border="0" cellpadding="0" cellspacing="0" class="newContTab">
+				  <tr>
+				    <td>
+				    	<div>
+					        <div>
+					          <select multiple="multiple" id="select1_apppackage" style="width:200px;height:250px; float:left; border:4px #B8D0D6 solid outset; padding:4px; ">
+						          {% for apppackage in apppackages %}
+						          	<option value = "{{ apppackage.id }}">{{ apppackage.package_name }} </option>
+						          {% endfor %}						          
+					          </select>
+					        </div>
+					        
+					        <div style="float:left"> 
+					        	<span id="add_apppackage"><input type="button" class="btn" value=">" /></span><br />
+					          	<span id="remove_apppackage"><input type="button" class="btn" value="<" /></span><br />
+					          	<span id="add_all_apppackage"><input type="button" class="btn" value=">>" /></span> <br />
+					          	<span id="remove_all_apppackage"><input type="button" class="btn" value="<<" /></span> 
+					        </div>
+					        
+					        <div>
+					          <select name="apppackage_ids" multiple="multiple" id="select2_apppackage" style="width:200px;height:250px; float:lfet;border:4px #B8D0D6 solid outset; padding:4px;">
+						          {% for apppackage in apppackagegroup %}
+						          	<option value = "{{ apppackage.id }}">{{ apppackage.package_name }} </option>
+						          {% endfor %}					          
+					          </select>
+					        </div>
+
+				      	</div>
+				  	</td>
+				  	
+				  </tr>
+				</table>				
+			</fieldset>
+
+			<fieldset class="bs">
+				<legend class="bs">操作组</legend>
+				<table width="700" align="center" border="0" cellpadding="0" cellspacing="0" class="newContTab">
+				  <tr>
+				    <td>
+				    	<div>
+					        <div>
+					          <select multiple="multiple" id="select1_actiongroup" style="width:200px;height:250px; float:left; border:4px #B8D0D6 solid outset; padding:4px; ">
+						          {% for actiongroup in actiongroupss %}
+						          	<option value = "{{ actiongroup.id }}">{{ actiongroup.name }} </option>
+						          {% endfor %}						          
+					          </select>
+					        </div>
+					        
+					        <div style="float:left"> 
+					        	<span id="add_actiongroup"><input type="button" class="btn" value=">" /></span><br />
+					          	<span id="remove_actiongroup"><input type="button" class="btn" value="<" /></span><br />
+					          	<span id="add_all_actiongroup"><input type="button" class="btn" value=">>" /></span> <br />
+					          	<span id="remove_all_actiongroup"><input type="button" class="btn" value="<<" /></span> 
+					        </div>
+					        
+					        <div>
+					          <select name="actiongroup_ids" multiple="multiple" id="select2_actiongroup" style="width:200px;height:250px; float:lfet;border:4px #B8D0D6 solid outset; padding:4px;">
+						          {% for actiongroup in actiongroup_s %}
+						          	<option value = "{{ actiongroup.id }}">{{ actiongroup.name }} </option>
+						          {% endfor %}					          
+					          </select>
+					        </div>
+					        
+					        <div style="float:left">
+					          <br /><br /><br />
+					          <input type="button" class="btn" value="↑" onclick="doUp_actiongroup()" /><br />
+							  <input type="button" class="btn" value="↓" onclick="doDown_actiongroup()" />
+					        </div>
+				      	</div>
+				  	</td>
+				  	
+				  </tr>
+				</table>				
+			</fieldset>
+
+			<fieldset class="bs">
+				<legend class="bs">测试用例</legend>
+				<table width="700" align="center" border="0" cellpadding="0" cellspacing="0" class="newContTab">
+				  <tr>
+				    <td>
+				    	<div>
+					        <div>
+					          <select multiple="multiple" id="select1_testcase" style="width:200px;height:250px; float:left; border:4px #B8D0D6 solid outset; padding:4px; ">
+						          {% for testcase in testcases %}
+						          	<option value = "{{ testcase.id }}">{{ testcase.name }} </option>
+						          {% endfor %}						          
+					          </select>
+					        </div>
+					        
+					        <div style="float:left"> 
+					        	<span id="add_testcase"><input type="button" class="btn" value=">" /></span><br />
+					          	<span id="remove_testcase"><input type="button" class="btn" value="<" /></span><br />
+					          	<span id="add_all_testcase"><input type="button" class="btn" value=">>" /></span> <br />
+					          	<span id="remove_all_testcase"><input type="button" class="btn" value="<<" /></span> 
+					        </div>
+					        
+					        <div>
+					          <select name="testcase_ids" multiple="multiple" id="select2_testcase" style="width:200px;height:250px; float:lfet;border:4px #B8D0D6 solid outset; padding:4px;">
+						          {% for testcase in testcasegroup %}
+						          	<option value = "{{ testcase.id }}">{{ testcase.name }} </option>
+						          {% endfor %}					          
+					          </select>
+					        </div>
+
+				      	</div>
+				  	</td>
+				  	
+				  </tr>
+				</table>				
+			</fieldset>			
+
+		</div>
+		
+		
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit" onclick="selectedDate()">确认执行</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+		
+	</form>	
+	
+	</div>
+</div>
+

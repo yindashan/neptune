@@ -1,0 +1,102 @@
+<form id="pagerForm" action="{% url accounts_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="username" value=""/>
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url accounts_index %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						用户名：<input type="text" name="query" value="{{ query }}" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	  <div class="pageContent">
+		<div class="panelBar">
+			<ul class="toolBar">
+			{% for authority in request.session.authority_list_button %}
+				{% ifequal 'accountadd' authority %}
+				<li><a class="add" href="{% url accounts_register %}" target="dialog" mask="true" width="800" height="600" title="添加用户" rel="addreource"><span>新增</span></a></li>
+				{% endifequal %}
+				{% ifequal 'accountdelete' authority %}
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url accounts_selecteddelete %}" class="delete"><span>批量删除</span></a></li>             
+				{% endifequal %}
+            {% endfor %}
+			</ul>
+		</div>
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+			<tr>
+				<th width="2%">
+				<input type="checkbox" group="ids" class="checkboxCtrl">
+				</th>
+				<th width="5%">序号</th>
+				<th width="15%">用户名</th>
+				<th width="20%">电子邮箱</th>
+				<th width="15%">角色</th>
+				<th width="15%">部门</th>
+				<th width="15%">联系方式</th>
+				<th width="12%">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'accountselect' request.session.authority_list_button %}
+		   {% for user in users.object_list %}
+           <tr target="sid_group" rel="{{ user.id }}">
+           <td><input name="ids" value="{{ user.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ user.username }}</td>
+           <td>{{ user.email }}</td>
+           <td>
+           		{{ user.role_set.all|join:',' }}
+           </td>
+           <td>{{ user.userprofile.department }}</td>
+           <td>{{ user.userprofile.phone }}</td>
+           <td>
+           {% for authority in request.session.authority_list_button %}
+	           {% ifequal 'accountedit' authority %}
+	              <a class="btnedit" href="{% url accounts_edit user.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+	           {% endifequal %}
+	           {% ifequal 'accountdelete' authority %}
+	              <a class="btndelete" href="{% url accounts_delete user.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+	           {% endifequal %}
+           {% endfor %}
+           </td>
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ users.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ users.paginator.count }}" numPerPage="{{ users.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+				
+	</div>
+	
+</div>
+

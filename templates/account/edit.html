@@ -1,0 +1,155 @@
+<script type="text/javascript">
+  	function removeRolename() {
+  		$("#role_name").val("");//清空
+  		return false;
+  	}
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#role_name").autocomplete("{% url authority_autocomplete_role %}", {
+		minChars: 0, //Default: 1，如果设为0，在输入框内双击或者删除输入框内内容时显示列表
+		//width: 180,  //指定下拉框的宽度.Default: input元素的宽度,最后设为默认，否则FF和360浏览器之间显示宽度不一致
+		max: 10,  //autoComplete下拉显示项目的个数.Default: 10
+		//autoFill: true, //自动填充
+		matchContains: true, //是否contains匹配
+		multiple: true, //是否允许输入多个值
+		multipleSeparator: ",", //多个值之间用什么间隔
+		scroll: true,  //当结果集大于默认高度时是否使用卷轴显示 Default: true 
+		scrollHeight: 300  //自动完成提示的卷轴高度用像素大小表示  Default: 180  //最后一行代码后面不能有逗号(,),否则会在360和IE浏览器上出问题
+		/*
+		formatItem: function(data, i, max) {//格式化列表中的条目 row:条目对象,i:当前条目数,max:总条目数
+			return i + "/" + max + ":" + data;
+        },
+        formatMatch: function(data, i, max) {//配合formatItem使用，作用在于，由于使用了formatItem，所以条目中的内容有所改变，而我们要匹配的是原始的数据，所以用formatMatch做一个调整，使之匹配原始数据
+			return data;
+        },
+        formatResult: function(data) {//定义最终返回的数据，比如我们还是要返回原始数据，而不是formatItem过的数据
+			return data;
+		}
+		*/
+	}).result(function(event, data, formatted){
+		//alert(data); data为选中的数据
+		//$.ajaxSettings.global = true; //恢复dwz全局ajax动画
+	});
+	
+	$("#role_name").focus(function(){
+		$.ajaxSettings.global = false; //取消dwz全局ajax动画
+	});
+	$("#role_name").blur(function(){
+		$.ajaxSettings.global = true; //恢复dwz全局ajax动画
+	});
+	
+	
+	$("#parent_organization_name").autocomplete("{% url organization_autocomplete %}", {
+		minChars: 0, //Default: 1，如果设为0，在输入框内双击或者删除输入框内内容时显示列表
+		//width: 180,  //指定下拉框的宽度.Default: input元素的宽度,最后设为默认，否则FF和360浏览器之间显示宽度不一致
+		max: 10,  //autoComplete下拉显示项目的个数.Default: 10
+		//autoFill: true, //自动填充
+		matchContains: true, //是否contains匹配
+		//multiple: true, //是否允许输入多个值
+		//multipleSeparator: ",", //多个值之间用什么间隔
+		scroll: true,  //当结果集大于默认高度时是否使用卷轴显示 Default: true 
+		scrollHeight: 300  //自动完成提示的卷轴高度用像素大小表示  Default: 180  //最后一行代码后面不能有逗号(,)
+		/*
+		formatItem: function(data, i, max) {//格式化列表中的条目 row:条目对象,i:当前条目数,max:总条目数
+			return i + "/" + max + ":" + data;
+        },
+        formatMatch: function(data, i, max) {//配合formatItem使用，作用在于，由于使用了formatItem，所以条目中的内容有所改变，而我们要匹配的是原始的数据，所以用formatMatch做一个调整，使之匹配原始数据
+			return data;
+        },
+        formatResult: function(data) {//定义最终返回的数据，比如我们还是要返回原始数据，而不是formatItem过的数据
+			return data;
+		}
+		*/
+	}).result(function(event, data, formatted){
+		//alert(data); data为选中的数据
+		//$.ajaxSettings.global = true; //恢复dwz全局ajax动画
+	});
+	
+	$("#parent_organization_name").focus(function(){
+		$.ajaxSettings.global = false; //取消dwz全局ajax动画
+	});
+	$("#parent_organization_name").blur(function(){
+		$.ajaxSettings.global = true; //恢复dwz全局ajax动画
+	});
+});
+</script>
+
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url accounts_edit user.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="accountindex"/>
+		<div class="pageFormContent" layoutH="58">
+
+			<div class="unit">
+				<label>用户名：</label>
+				<input type="text" class="required" size="30"  name="username" value="{{ user.username }}" readonly="readonly" />
+			</div>
+			<!-- 
+			<div class="unit">
+				<label>密码：</label>
+				<input type="password" size="30" name="password" value="" />
+				<span class="info">(如果不修改直接让它为空)</span>
+			</div>
+			{% ifequal request.user.userprofile.usertype 4 %}
+            <div class="unit">
+				<label>权限：</label>
+				<select name="usertype" class="required combox" >
+					{% for key,value in account_usertype_dict.items %}
+						{% ifequal user.userprofile.usertype key %}
+							<option value="{{ key }}" selected="selected">{{ value }}</option>
+						{% else %}
+							<option value="{{ key }}">{{ value }}</option>
+						{% endifequal %}
+					{% endfor %}
+				</select>
+			</div>
+			{% endifequal %}
+			 -->
+            <div class="unit">
+				<label>电子邮件：</label>
+				<input type="text" class="required email" size="30" name="email" value="{{ user.email }}" />
+			</div>
+			
+			{% ifcontain 'accountsuperuser' request.session.authority_list_button %}
+			<dl class="nowrap">
+				<dt>角色：</dt>
+				<dd>
+					<input size="30" id="role_name" name="org.role_name" type="text" value="{{ role_list|join:',' }}" />
+					<a class="btnLook" href="{% url accounts_searchback_role %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(配置角色)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					<!-- 
+					<span class="button"><span class="buttonContent"><button onclick="javascript: removeRolename();" type="button">清空角色</button></span></span>
+					 -->
+				</dd>
+			</dl>
+            <dl class="nowrap">
+				<dt>部门：</dt>
+				<dd>
+					<input size="30" id="parent_organization_name" name="org.parent_organization_name" type="text" value="{{ user.userprofile.department }}"/>
+					<a class="btnLook" href="{% url organization_searchback %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(指定所属组织机构)</span>
+				</dd>
+			</dl>
+			{% else %}
+				<input size="30" name="org.role_name" id="role_name" type="hidden" readonly="readonly" value="{{ role_list|join:',' }}" />
+				<input size="30" name="org.parent_organization_name" type="hidden" readonly="readonly" value="{{ user.userprofile.department }}"/>
+			{% endifcontain %}
+			
+            <div class="unit">
+				<label>联系方式：</label>
+				<input type="text" class="phone" size="30" name="phone" value="{{ user.userprofile.phone }}" />
+			</div>
+
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

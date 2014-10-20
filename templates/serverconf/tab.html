@@ -1,0 +1,208 @@
+<script type="text/javascript">
+	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+  	
+  	//定义并初始化全局变量
+  	var global_rel = "jbsxBox_basicinfo";
+  	var global_url = "{% url serverconf_search_test 8 %}";
+  	
+	$("#jbsxBox_basicinfo").loadUrl("{% url serverconf_search_test 8 %}", {}, function(){
+		$("#jbsxBox_basicinfo").find("[layoutH]").layoutH();
+	});
+	
+	function retriveURL(rel) {
+		var href = $("a[rel=" + rel + "]").attr("href");
+		$("form[id='lazyForm']").attr("onsubmit", "return divSearch(this, '" + rel + "');");
+		$("form[id='lazyForm']").attr("action", href);
+		global_rel = rel;
+		global_url = href;
+	}
+	
+	$(document).ready(function() {
+		$("#elementid").autocomplete("{% url equipment_autocomplete %}", {
+			minChars: 0, //Default: 1，如果设为0，在输入框内双击或者删除输入框内内容时显示列表
+			//width: 180,  //指定下拉框的宽度.Default: input元素的宽度,最后设为默认，否则FF和360浏览器之间显示宽度不一致
+			max: 10,  //autoComplete下拉显示项目的个数.Default: 10
+			//autoFill: true, //自动填充
+			matchContains: true, //是否contains匹配
+			//multiple: true, //是否允许输入多个值
+			//multipleSeparator: ",", //多个值之间用什么间隔
+			scroll: true,  //当结果集大于默认高度时是否使用卷轴显示 Default: true 
+			scrollHeight: 300  //自动完成提示的卷轴高度用像素大小表示  Default: 180  //最后一行代码后面不能有逗号(,)
+			/*
+			formatItem: function(data, i, max) {//格式化列表中的条目 row:条目对象,i:当前条目数,max:总条目数
+				return i + "/" + max + ":" + data;
+	        },
+	        formatMatch: function(data, i, max) {//配合formatItem使用，作用在于，由于使用了formatItem，所以条目中的内容有所改变，而我们要匹配的是原始的数据，所以用formatMatch做一个调整，使之匹配原始数据
+				return data;
+	        },
+	        formatResult: function(data) {//定义最终返回的数据，比如我们还是要返回原始数据，而不是formatItem过的数据
+				return data;
+			}
+			*/
+		}).result(function(event, data, formatted){
+			//alert(data); data为选中的数据
+			//$.ajaxSettings.global = true; //恢复dwz全局ajax动画
+		});
+		
+		$("#elementid").focus(function(){
+			$.ajaxSettings.global = false; //取消dwz全局ajax动画
+		});
+		$("#elementid").blur(function(){
+			$.ajaxSettings.global = true; //恢复dwz全局ajax动画
+		});
+		
+	});
+	
+	function subForm(){
+		//获取pagerForm参数
+		var $panel = $("#" + global_rel)
+		var $pagerForm = $("#pagerForm", $panel);
+		var args = $("#pagerForm").serialize();
+		$panel.ajaxUrl({
+			type:"POST", url:global_url, data:args, callback:function(){
+				navTab._loadUrlCallback($panel);
+			}
+		});
+	}
+	
+	//function subForm(){
+		//获取pagerForm参数
+		//var rel = $("#pagerForm").attr("rel");
+		//alert(global_rel);
+		//var $panel = $("#" + global_rel)
+		//var $pagerForm = $("#pagerForm", $panel);
+		//var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+		//var args = $pagerForm.serializeArray();
+		//var args = $("#pagerForm").serialize(); //在这里不能用$pagerForm替换$("#pagerForm")
+		//var args = {Action:"ajax", Name:"ajax"}; //ajax中data属性对应的值为以json字符串的形式提交到后台
+		//alert(args);
+		//var url = "{% url serverconf_search_test 1 %}";
+		//var url = $("#pagerForm").attr("action");
+		//alert(global_url);
+		/*
+		$panel.loadUrl(global_url, args, function(){
+			navTab._loadUrlCallback($panel);
+		});
+		*/
+		/*
+		$panel.ajaxUrl({
+			type:"POST", url:global_url, data:args, callback:function(){
+				navTab._loadUrlCallback($panel);
+			}
+		});
+		*/
+	//}
+</script>
+
+<style type="text/css">
+	ul.rightTools {display:block;}
+	ul.rightTools li{float:left; display:block; margin-left:5px}
+</style>
+<div class="pageContent" style="padding:5px">
+	<div class="panel" defH="35">
+		<h1>服务器基本信息</h1>
+		<div>
+			<form id="pagerForm" rel="jbsxBox_basicinfo" onsubmit="return divSearch(this, 'jbsxBox_basicinfo');" action="{% url serverconf_search_test 8 %}" method="post">
+				<ul class="rightTools">
+					<li>
+						<label>资产编号：</label>
+						<input class="required" size="30" id="elementid" name="org.elementid" type="text" value="{{ elementid }}" />
+					</li>
+					<li>
+						<a class="btnLook" href="{% url serverconf_searchback %}" target="dialog" mask="true" width="650" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					</li>
+					<li><div class="buttonActive"><div class="buttonContent"><button type="button" onclick="javascript:subForm();">检索</button></div></div></li>
+				</ul>
+			</form>
+		</div>
+	</div>
+	<div class="divider"></div>
+	<div class="tabs">
+		<div class="tabsHeader">
+			<div class="tabsHeaderContent">
+				<ul>
+					<li><a href="{% url serverconf_search_test 8 %}" target="ajax" rel="jbsxBox_basicinfo" onclick="javascript:retriveURL('jbsxBox_basicinfo');"><span>服务器基本信息</span></a></li>
+					{% ifcontain 'virtualmachine' request.session.authority_list_module %}
+					<li><a href="{% url serverconf_search_test 9 %}" target="ajax" rel="jbsxBox_virtualmachine" onclick="javascript:retriveURL('jbsxBox_virtualmachine');"><span>虚拟机管理</span></a></li>
+					{% endifcontain %}
+					<li><a href="{% url serverconf_search_test 1 %}" target="ajax" rel="jbsxBox_cpu" onclick="javascript:retriveURL('jbsxBox_cpu');"><span>CPU信息</span></a></li>
+					<li><a href="{% url serverconf_search_test 2 %}" target="ajax" rel="jbsxBox_memory" onclick="javascript:retriveURL('jbsxBox_memory');"><span>内存信息</span></a></li>
+					<li><a href="{% url serverconf_search_test 3 %}" target="ajax" rel="jbsxBox_disk" onclick="javascript:retriveURL('jbsxBox_disk');"><span>硬盘信息</span></a></li>
+					<li><a href="{% url serverconf_search_test 4 %}" target="ajax" rel="jbsxBox_netcard" onclick="javascript:retriveURL('jbsxBox_netcard');"><span>网卡信息</span></a></li>
+					<li><a href="{% url serverconf_search_test 5 %}" target="ajax" rel="jbsxBox_raidcard" onclick="javascript:retriveURL('jbsxBox_raidcard');"><span>Raid卡信息</span></a></li>
+					<li><a href="{% url serverconf_search_test 6 %}" target="ajax" rel="jbsxBox_managecard" onclick="javascript:retriveURL('jbsxBox_managecard');"><span>远程管理卡信息</span></a></li>
+					<li><a href="{% url serverconf_search_test 7 %}" target="ajax" rel="jbsxBox_appmanage" onclick="javascript:retriveURL('jbsxBox_appmanage');"><span>应用管理</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="tabsContent">
+			
+			<div>
+				<div id="jbsxBox_basicinfo" class="unitBox" style="margin-left:1px;">
+					<!-- BasicInfo信息 -->
+				</div>
+			</div>
+			
+			{% ifcontain 'virtualmachine' request.session.authority_list_module %}
+			<div>
+				<div id="jbsxBox_virtualmachine" class="unitBox" style="margin-left:1px;">
+					<!-- VirtualMachine信息 -->
+				</div>
+			</div>
+			{% endifcontain %}
+			
+			<div>
+				<div id="jbsxBox_cpu" class="unitBox" style="margin-left:1px;">
+					<!-- CPU信息 -->
+				</div>
+			</div>
+			
+			<div>
+				<div id="jbsxBox_memory" class="unitBox" style="margin-left:1px;">
+					<!-- Memory信息 -->
+				</div>
+			</div>
+			
+			<div>
+				<div id="jbsxBox_disk" class="unitBox" style="margin-left:1px;">
+					<!-- Disk信息 -->
+				</div>
+			</div>
+			
+			<div>
+				<div id="jbsxBox_netcard" class="unitBox" style="margin-left:1px;">
+					<!-- NetCard信息 -->
+				</div>
+			</div>
+			
+			<div>
+				<div id="jbsxBox_raidcard" class="unitBox" style="margin-left:1px;">
+					<!-- RaidCard信息 -->
+				</div>
+			</div>
+			
+			<div>
+				<div id="jbsxBox_managecard" class="unitBox" style="margin-left:1px;">
+					<!-- ManageCard信息 -->
+				</div>
+			</div>
+			
+			<div>
+				<div id="jbsxBox_appmanage" class="unitBox" style="margin-left:1px;">
+					<!-- AppManage信息 -->
+				</div>
+			</div>
+			
+		</div>
+		<div class="tabsFooter">
+			<div class="tabsFooterContent"></div>
+		</div>
+	</div>
+	
+</div>
+
+
+	
+

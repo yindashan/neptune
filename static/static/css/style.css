@@ -1,0 +1,2069 @@
+.tr {
+    text-align: right;
+}
+.menu {
+    border-bottom: 2px solid #EBE8DF;
+    height: 23px;
+    margin-left: 130px;
+    margin-top: 0;
+    padding: 4px 0 0;
+}
+.menu a {
+    border-right: 1px dotted #C3C3AC;
+    color: #640712;
+    float: left;
+    line-height: 16px;
+    list-style: none outside none;
+    margin: 5px 0;
+    padding: 0 25px;
+}
+.foot_right_a a {
+    color: #308330;
+    margin: 0 4px;
+}
+body {
+    border: 0 none;
+    height: 100%;
+    margin: 0;
+    max-height: 100%;
+    padding: 0;
+}
+#framecontent {
+    background: none repeat scroll 0 0 #F5F5F3;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 130px;
+}
+.left_nav_a a {
+    background-position: 0 732px;
+    display: block;
+}
+.left_nav_a a:hover {
+    background-position: -29px 732px;
+}
+.left_nav_a .a1 {
+    background-position: 0 697px;
+}
+.left_nav_a .a1:hover {
+    background-position: -29px 697px;
+}
+.left_nav_a .a2 {
+    background-position: 0 665px;
+}
+.left_nav_a .a2:hover {
+    background-position: -29px 665px;
+}
+.left_nav_a .a3 {
+    background-position: 0 632px;
+}
+.left_nav_a .a3:hover {
+    background-position: -29px 632px;
+}
+.left_nav_a .a4 {
+    background-position: 0 599px;
+}
+.left_nav_a .a4:hover {
+    background-position: -29px 599px;
+}
+.left_nav_a a span {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #F5F5F3;
+    border-color: -moz-use-text-color -moz-use-text-color #DDDDDD;
+    border-style: none none solid;
+    border-width: 0 0 1px;
+    color: #777777;
+    display: block;
+    margin-left: 29px;
+    padding: 10px 0 8px;
+}
+.leftbar {
+    margin-left: 12px;
+}
+body {
+    background: none repeat scroll 0 0 #F5F5F3;
+}
+#sidebarblock {
+    float: left;
+    margin-top: 73px;
+    width: 285px;
+}
+#framecontent {
+    height: 200px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: static;
+    width: 840px;
+}
+#maincontent {
+    margin: 0 auto;
+    position: static;
+    width: 840px;
+}
+#mainblock {
+    float: left;
+    margin: 0 29px 0 0;
+    overflow: hidden;
+    width: 525px;
+}
+#header {
+    margin: 0;
+    position: relative;
+}
+#header {
+    height: 40px;
+    margin: 20px auto;
+    width: 840px;
+}
+h1#logo {
+    margin: 0;
+    position: static;
+}
+h1#logo {
+    background: url("http://www.xiachufang.com/pic/logo.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    float: left;
+    height: 36px;
+    width: 108px;
+}
+#header form {
+    float: left;
+    padding-left: 30px;
+}
+#header form #nav-keyword {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #D9D9D9 -moz-use-text-color -moz-use-text-color #D9D9D9;
+    border-style: solid none none solid;
+    border-width: 1px 0 0 1px;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 3px;
+    width: 244px;
+}
+#header form .submit {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #A0331F;
+    border-color: -moz-use-text-color -moz-use-text-color #66170A;
+    border-style: none none solid;
+    border-width: 0 0 1px;
+    color: #FFFFFF;
+    cursor: pointer;
+    height: 35px;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+    width: 68px;
+}
+#header .nav {
+    background: none repeat scroll 0 0 #FFFFFF;
+    float: right;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 5px 0 12px;
+    width: 345px;
+}
+#header .nav li {
+    float: left;
+    padding: 0 10px;
+}
+#header .nav .noti-n {
+    background: none repeat scroll 0 0 #AA2105;
+    color: #FFFFFF;
+    font-family: Verdana;
+    font-size: 12px;
+    margin-top: -1px;
+    padding: 3px 6px;
+}
+#header .nav li.last {
+    float: right;
+    padding: 3px 0 0;
+}
+#header .nav li.last a:hover {
+    background: none repeat scroll 0 0 transparent;
+}
+#header .setting {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-bottom: 1px solid #DADADA;
+    padding: 8px 0;
+    position: absolute;
+    right: 0;
+    top: 37px;
+    visibility: hidden;
+    width: 120px;
+}
+#header .setting li {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+form#search-cook {
+    padding: 40px 0 15px;
+}
+#sidebarblock form#search-cook {
+    padding: 15px 15px 0;
+}
+form#search-cook #nav-nickname {
+    border: 1px solid #E1E1E1;
+    height: 27px;
+    line-height: 27px;
+    padding: 5px;
+    width: 160px;
+}
+form#search-cook p {
+    height: 50px;
+    line-height: 50px;
+}
+form#search-cook .red-link {
+    height: 37px;
+    width: 78px;
+}
+#the-cooks {
+    margin-top: 20px;
+    padding: 10px;
+}
+#the-cooks .friend {
+    border-bottom: 1px solid #E1E1E1;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+#the-cooks .height-30 {
+    margin: 5px 0 0;
+    text-align: center;
+}
+#search-main {
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding: 15px;
+}
+#search-main .friend-list {
+    height: 60px;
+    margin-bottom: 50px;
+}
+#search-main .sub-title {
+    margin: 10px 0;
+}
+#search-main h1 a {
+    font-size: 12px;
+    margin-left: 12px;
+}
+#search-main .friend {
+    float: left;
+    width: 165px;
+}
+.color-f {
+    color: #FFFFFF;
+}
+input, pre, body, button, select, textarea {
+    font: 14px/1 Tahoma,Geneva,sans-serif;
+}
+body, img, a, div, span, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, textarea, th, td, tr, input {
+    margin: 0;
+    padding: 0;
+}
+h1, h2, h3, h4, h5, h6, p {
+    font-size: 100%;
+    font-weight: normal;
+    line-height: 27px;
+}
+h1, h2 {
+    font-weight: bold;
+}
+code {
+    font-family: courier new,courier,monospace;
+}
+small {
+    font-size: 12px;
+}
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+sup {
+    vertical-align: text-top;
+}
+sub {
+    vertical-align: text-bottom;
+}
+textarea {
+    overflow: auto;
+}
+input, button, select, textarea {
+    font-size: 14px;
+    line-height: 22px;
+}
+div {
+    cursor: default;
+}
+a div, a p {
+    cursor: pointer;
+}
+pre {
+    line-height: 22px;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+table {
+    border: 0 none;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.table td, .table th {
+    border-bottom: 1px solid #EEEEEE;
+    padding: 6px;
+}
+.table th {
+    border-bottom: 1px solid #EEEEEE;
+}
+.table {
+    border: 1px solid #F3F3F3;
+    margin: auto;
+}
+fieldset, img {
+    border: 0 none;
+}
+address, caption, cite, code, dfn, em, strong, var {
+    font-style: normal;
+    font-weight: normal;
+}
+ul {
+    list-style: none outside none;
+}
+caption, th {
+    text-align: left;
+}
+q:before, q:after {
+    content: "";
+}
+.c {
+    clear: both;
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.cl:after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+    width: 0;
+}
+* html .cl {
+    height: 0;
+}
+.cl {
+    display: block;
+}
+.red-link {
+    background: none repeat scroll 0 0 #AF2F15;
+    border: 0 none;
+    color: #FFFFFF;
+    margin: auto;
+    padding: 8px 15px;
+}
+.red-button {
+    background: url("/pic/xcf.png") repeat scroll 0 490px #AA2105;
+    border: 1px solid #AA2105;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Tahoma,Geneva,sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    height: 30px;
+    line-height: 22px;
+    margin: 0;
+    padding: 3px 32px;
+    text-decoration: none;
+}
+.page-title {
+    font-size: 27px;
+    margin-bottom: 20px;
+    margin-left: 0;
+    margin-top: 48px;
+}
+.page-short-body {
+    background: none repeat scroll 0 0 #FFFFFF;
+    line-height: 27px;
+    padding: 25px;
+}
+a {
+    color: #AA2105;
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover {
+    background: none repeat scroll 0 0 #AA2105;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+a img {
+    border-width: 0;
+}
+.dh-red:hover, .dh-red {
+    background: url("/pic/xcf.png") repeat scroll 0 427px transparent;
+    display: inline-block;
+    height: 14px;
+    vertical-align: 1px;
+    width: 14px;
+}
+.dh-gray, .dh-gray:hover {
+    background: url("/pic/xcf.png") repeat scroll 0 414px transparent;
+}
+.dhz-red, .dhz-red:hover {
+    background: url("/pic/zan.png") repeat scroll 0 0 transparent;
+    float: left;
+    height: 22px;
+    width: 65px;
+}
+.dhz-gray, .dhz-gray:hover {
+    background: url("/pic/zan.png") repeat scroll 0 22px transparent;
+}
+.gray-text {
+    color: #999999;
+    font-size: 12px;
+}
+.title-recipe-name, .title-people-name, .title-head, .title-home {
+    font-size: 27px;
+    margin-bottom: 15px;
+    margin-top: 30px;
+}
+.sub-title {
+    color: #999999;
+    font-size: 16px;
+    margin-bottom: 8px;
+    margin-top: 35px;
+}
+.sub-title2 {
+    color: #999999;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.sub-title-b {
+    font-size: 16px;
+    margin-bottom: 8px;
+    margin-top: 35px;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.topic-reply .user-face {
+    float: left;
+    overflow: hidden;
+    position: absolute;
+}
+.topic-reply li .reply-doc {
+    float: left;
+    margin: 0 0 27px 75px;
+}
+.topic-reply li .reply-doc h4 {
+    height: 22px;
+    line-height: 22px;
+    margin: 0 0 4px 4px;
+}
+.topic-reply li .reply-doc p {
+    line-height: 150%;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+.recipe-stats {
+    color: #999999;
+    padding-right: 12px;
+}
+.recipe-stats-sep {
+    border-right: 1px dotted #999999;
+    margin-right: 12px;
+}
+.recipe-star-block, .recipe-stats-block {
+    font-size: 12px;
+    margin-top: 10px;
+}
+.recipe-star-block {
+    line-height: 18px;
+}
+.recipe-star-n {
+    color: #AF2F15;
+    font-family: Verdana;
+    font-size: 16px;
+    margin-left: 12px;
+}
+.dish-block {
+    margin-top: 20px;
+    width: 639px;
+}
+.dish-item {
+    float: left;
+    margin-right: 22px;
+    width: 160px;
+}
+.dish-pic {
+    height: 160px;
+    width: 160px;
+}
+.pager {
+    line-height: 150%;
+    text-align: center;
+}
+.pager a, .pager span {
+    line-height: 27px;
+    margin: 1px 3px;
+    padding: 2px 5px;
+    text-decoration: none;
+}
+.pager .now {
+    background: none repeat scroll 0 0 #AA2105;
+    color: #FFFFFF;
+}
+.bar a {
+    padding: 10px;
+}
+.bar {
+    margin-bottom: 15px;
+}
+.current {
+    padding: 10px;
+}
+pre {
+    line-height: 27px;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.left_nav_a a:hover, .left_nav_a a, .star0, .star5, .star10, .star15, .star20, .star25, .star30, .star35, .star40, .star45, .star50 {
+    background: url("/pic/xcf.png") repeat scroll 0 0 transparent;
+}
+.star0, .star5, .star10, .star15, .star20, .star25, .star30, .star35, .star40, .star45, .star50 {
+    display: inline-block;
+    height: 17px;
+    margin-top: -3px;
+    vertical-align: 3px;
+    width: 80px;
+}
+.star50 {
+    background-position: 0 390px;
+}
+.star45 {
+    background-position: 0 373px;
+}
+.star40 {
+    background-position: 0 356px;
+}
+.star35 {
+    background-position: 0 339px;
+}
+.star30 {
+    background-position: 0 322px;
+}
+.star25 {
+    background-position: 0 305px;
+}
+.star20 {
+    background-position: 0 288px;
+}
+.star15 {
+    background-position: 0 271px;
+}
+.star10 {
+    background-position: 0 254px;
+}
+.star5 {
+    background-position: 0 237px;
+}
+.star0 {
+    background-position: 0 220px;
+}
+#topic {
+    background: none repeat scroll 0 0 #FFFFFF;
+    line-height: 150%;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+#topic-home, #category-home {
+    background: none repeat scroll 0 0 #FFFFFF;
+    line-height: 150%;
+    margin-bottom: 20px;
+    padding: 25px 20px;
+}
+#comments {
+    background: none repeat scroll 0 0 #FFFFFF;
+    line-height: 150%;
+    padding: 1px 20px;
+}
+.gray-desc {
+    color: #999999;
+    font-size: 12px;
+}
+.c6-link a, .c6-link a:visited {
+    color: #666666;
+}
+.c6-link a:hover {
+    background: none repeat scroll 0 0 #666666;
+    color: #FFFFFF;
+}
+.gray-link a, .gray-link a:visited {
+    color: #AAAAAA;
+    font-size: 12px;
+    text-decoration: none;
+}
+.gray-link a:hover {
+    background: none repeat scroll 0 0 #AAAAAA;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.color_red, .color-red {
+    color: red;
+}
+.color_gray, .color-gray {
+    color: #666666;
+}
+.color-lgray {
+    color: #999999;
+}
+.color-green {
+    color: #006600;
+}
+.color-orange {
+    color: #E77200;
+}
+.color-black {
+    color: #000000;
+}
+.bg-color {
+    background-color: #F5F5F3;
+}
+.recipe_new:hover, .recipe_new, .recipe_out, .recipe_out:hover {
+    background: url("/pic/add.gif") no-repeat scroll 0 70% transparent;
+    color: #777777;
+    font-size: 12px;
+    margin-left: 9px;
+    margin-right: 7px;
+    padding-left: 20px;
+}
+.recipe_out:hover, .recipe_out {
+    background: url("/pic/logout.gif") no-repeat scroll 0 70% transparent;
+}
+.Err {
+    color: red;
+    display: none;
+    font-size: 12px;
+    margin-top: 5px;
+}
+.popwin {
+    background: none repeat scroll 0 0 #FFFFFF;
+    position: fixed;
+    visibility: hidden;
+}
+.popwin_bg {
+    background: none repeat scroll 0 0 #000000;
+    opacity: 0.7;
+    position: fixed;
+}
+.popwin, .popwin_bg {
+}
+.popwin form {
+    border: 1px solid #FFFFFF;
+    margin: 0;
+    padding: 0;
+}
+.rm, .popwin_close {
+    font-family: "Comic Sans MS",Arial;
+}
+.popwin_close {
+    color: #FFFFFF;
+    font-family: Verdana;
+    font-size: 12px;
+    padding: 8px 3px 0;
+    position: absolute;
+    right: 2px;
+    text-decoration: none;
+    top: 4px;
+    z-index: 1;
+}
+.popwin_close:hover {
+    background: none repeat scroll 0 0 transparent;
+}
+.Ph2 {
+    color: #558800;
+    margin-top: -12px;
+}
+#popwin_loading {
+    background: url("/pic/gif/wait.gif") no-repeat scroll 100% 50% transparent;
+    font-size: 16px;
+    padding-right: 24px;
+}
+.noti-item {
+    border-bottom: 1px solid #DDDDDD;
+    padding: 12px 0;
+}
+.color-white {
+    color: #FFFFFF;
+}
+.bg-white {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.recipe-info-block {
+    padding: 1px 20px;
+}
+.recipe-info {
+    padding: 20px 0 0;
+}
+.ll {
+    float: left;
+}
+.rr {
+    float: right;
+}
+.hide {
+    display: none;
+}
+.recipe-collect-block {
+    margin-left: 150px;
+    margin-top: 24px;
+}
+.recipe-ing {
+    background: none repeat scroll 0 0 #FFFFFF;
+    width: 100%;
+}
+.recipe-ing td {
+    padding: 10px;
+    width: 50%;
+}
+.recipe-ing span {
+    color: #999999;
+    font-size: 12px;
+    margin-left: 10px;
+}
+.recipe-ing, .recipe-ing td {
+    border: 1px solid #EEEEEE;
+}
+.recipe-steps {
+    line-height: 27px;
+    padding: 0 20px 0 24px;
+}
+.recipe-tips {
+    padding: 0 0 45px;
+}
+.recipe-dish {
+    margin-bottom: 26px;
+    margin-top: 35px;
+}
+.recipe-cat-item {
+    background: none repeat scroll 0 0 #FFFFFF;
+    float: left;
+    font-size: 14px;
+    margin-left: 22px;
+    width: 40%;
+}
+.recipe-list-item {
+    background: none repeat scroll 0 0 #FFFFFF;
+    margin-bottom: 15px;
+}
+.recipe-list-pic {
+    float: left;
+    height: 106px;
+    margin-right: 15px;
+    width: 140px;
+}
+.recipe-list-info {
+    color: #999999;
+    height: 106px;
+    margin: 0 5px 0 15px;
+    overflow: hidden;
+}
+.recipe-list-title {
+    color: #BF5944;
+    font-size: 14px;
+    padding-top: 8px;
+}
+.recipe-list-ing {
+    font-size: 12px;
+    line-height: 18px;
+    margin-top: 3px;
+}
+.recipe-list-author {
+    font-size: 12px;
+    margin-top: 8px;
+}
+.recipe-list-popwin {
+    border: 3px solid #EEEEEE;
+    padding: 15px;
+}
+.recipe-list-popwin div, .recipe-list-popwin img {
+    cursor: pointer;
+}
+.s-list-block {
+    padding: 15px 25px 25px;
+}
+.s-list-item {
+    border-bottom: 1px dotted #DDDDDD;
+    height: 12px;
+    padding: 12px 0;
+}
+.more-link {
+    font-size: 12px;
+    margin-left: 15px;
+}
+label.error, span.error {
+    color: red;
+    font-size: 12px;
+    margin-left: 10px;
+}
+.height-30 {
+    height: 30px;
+    line-height: 30px;
+}
+.height-20 {
+    height: 20px;
+    line-height: 20px;
+}
+.friend-actions {
+    font-size: 12px;
+    padding: 15px 10px;
+}
+.friend-actions h3 {
+    background: url("/pic/title_line.gif") repeat-x scroll 0 -2px transparent;
+    height: 24px;
+    line-height: 24px;
+    margin-bottom: 5px;
+}
+.friend-actions h3 span {
+    background: none repeat scroll 0 0 #FFFFFF;
+    margin-left: 20px;
+    padding: 0 4px;
+}
+.friend-actions h3 span em {
+    background: none repeat scroll 0 0 #EEEEEE;
+    padding: 0 4px;
+}
+.friend-actions .list {
+    margin-bottom: 24px;
+}
+.friend-actions .list .left {
+    float: left;
+}
+.friend-actions .list .right {
+    float: left;
+    margin-left: 10px;
+    width: 105px;
+}
+.friend-actions .list .dish-pic {
+    height: auto;
+    width: 140px;
+}
+.friend-actions .bottom {
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+}
+.friend-actions .bottom .gray-desc {
+    padding: 0 10px;
+}
+#friend-home {
+    background: none repeat scroll 0 0 #FFFFFF;
+    line-height: 150%;
+    margin-bottom: 20px;
+    padding: 20px 12px;
+}
+.action-day .left {
+    background: none repeat scroll 0 0 #F0F0F0;
+    float: left;
+    height: 48px;
+    text-align: center;
+    width: 48px;
+}
+.action-day .left .month {
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+}
+.action-day .left .day {
+    font-size: 24px;
+    height: 28px;
+    line-height: 28px;
+}
+.action-day .left em.day {
+    font-size: 16px;
+    height: 48px;
+    line-height: 48px;
+}
+.action-day .right {
+    float: left;
+    margin: 0 0 40px 10px;
+    width: 440px;
+}
+.action-day .right .pic {
+    height: auto;
+}
+.action-day .right li {
+    float: left;
+    margin: 0 8px 10px 0;
+    text-align: center;
+    width: 140px;
+}
+.action-day .right li.last {
+    margin-right: 0;
+}
+.action-day .right li.c {
+    height: 10px;
+}
+.action-day .height-20 {
+    overflow: hidden;
+}
+a.concern {
+    border: 1px solid #E1E1E1;
+    color: #BBBBBB;
+    padding: 2px 5px;
+}
+a.concern:hover {
+    background: none repeat scroll 0 0 #AA2105;
+    border-color: #E1E1E1;
+    color: #FFFFFF;
+}
+a.cancel-concern {
+    border: 1px solid transparent;
+    color: #BBBBBB;
+}
+a.cancel-concern:hover {
+    color: #FFFFFF;
+}
+.friend {
+    min-height: 51px;
+    padding-bottom: 34px;
+    position: relative;
+}
+.friend .left {
+    left: 0;
+    padding-right: 20px;
+    position: absolute;
+    top: 0;
+    width: 60px;
+}
+.friend .right {
+    padding-left: 80px;
+}
+.friend .right h3 {
+    line-height: 20px;
+    padding-bottom: 2px;
+    position: relative;
+}
+.friend .right h3 .gray-desc {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.friend a.concern, .friend a.cancel-concern {
+    font-size: 12px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+a.share-sina:link, a.share-sina:visited {
+    background: url("/pic/share.png") no-repeat scroll 0 0 transparent;
+}
+a.share-douban:link, a.share-douban:visited {
+    background: url("/pic/share.png") no-repeat scroll -24px 0 transparent;
+}
+a.share-fanfou:link, a.share-fanfou:visited {
+    background: url("/pic/share.png") no-repeat scroll -48px 0 transparent;
+}
+a.share-kaixin:link, a.share-kaixin:visited {
+    background: url("/pic/share.png") no-repeat scroll -72px 0 transparent;
+}
+a.share-qzone:link, a.share-qzone:visited {
+    background: url("/pic/share.png") no-repeat scroll -96px 0 transparent;
+}
+.sharing a {
+    float: left;
+    height: 30px;
+    line-height: 20em;
+    margin: 0 6px 0 0;
+    outline: 0 none;
+    overflow: hidden;
+    width: 24px;
+}
+#account_weekly label {
+    margin-left: 20px;
+}
+#account_weekly button {
+    margin-top: 20px;
+}
+.pv-stats {
+    padding: 25px;
+}
+.pv-stats div {
+    margin-bottom: 15px;
+}
+.pv-stats span {
+    font-size: 30px;
+}
+.account-basic span {
+    float: left;
+    padding-right: 20px;
+    text-align: right;
+    width: 108px;
+}
+.account-basic input {
+    border: 1px solid #CCCCCC;
+    float: left;
+    height: 28px;
+    width: 208px;
+}
+.account-basic .account-desc textarea {
+    border: 1px solid #CCCCCC;
+    height: 277px;
+    width: 305px;
+}
+.account-basic .vip-desc textarea {
+    border: 1px solid #CCCCCC;
+    height: 73px;
+    width: 305px;
+}
+.payment-head {
+    background-color: #666666;
+    color: white;
+    padding: 15px;
+}
+.payment-main, .payment-desc {
+    background-color: #C0C0C0;
+    margin-bottom: 15px;
+}
+.payment-main label {
+    float: left;
+    line-height: 30px;
+    padding-right: 20px;
+    text-align: right;
+    vertical-align: middle;
+    width: 108px;
+}
+.payment-main .item {
+    padding: 15px;
+}
+.payment-desc {
+    padding: 15px;
+}
+.payment-desc .item {
+    margin-top: 5px;
+}
+.payment-desc .item span {
+    color: red;
+    float: right;
+}
+.payment-main .item input {
+    font-size: 14px;
+    padding: 4px;
+}
+.payment-main button {
+    margin-bottom: 60px;
+    margin-left: 150px;
+    margin-top: 20px;
+}
+.payment-main .p-notic {
+    color: white;
+    font-size: 12px;
+    margin-left: 150px;
+}
+.vip-list {
+    margin-right: 20px;
+    width: 525px;
+}
+.vip-list .left {
+    position: absolute;
+    width: 80px;
+}
+.vip-list .item {
+    float: left;
+    height: 80px;
+    margin-left: 15px;
+    margin-top: 12px;
+    width: 240px;
+}
+.vip-list .right {
+    padding-left: 70px;
+}
+.vip-list .right h3 {
+    height: 15px;
+    line-height: 20px;
+    padding-bottom: 5px;
+}
+.vip-list .right h3 span {
+    height: 15px;
+}
+.vip-list .right p {
+    line-height: 132%;
+    overflow: hidden;
+}
+span#master {
+    background: url("/pic/maozi.png") no-repeat scroll 0 0 transparent;
+    margin-left: 2px;
+    padding-left: 15px;
+}
+.acook-recipe-right, .acook-recipe-right-ali {
+    margin-top: 35px;
+    width: 285px;
+}
+.acook-recipe-right-ali a {
+    color: #3366CC;
+    text-decoration: none;
+}
+.acook-recipe-right-ali a:hover {
+    background-color: #FFFFFF;
+    color: #FF6600;
+}
+.acook-topic-right {
+    width: 285px;
+}
+.aside_adcook {
+    background: none repeat scroll 0 0 #FFFFFF;
+    margin-top: 35px;
+    overflow: hidden;
+    padding: 8px;
+    width: 269px;
+}
+.aside_adcook img {
+    border: 3px solid #DDDDDD;
+    float: left;
+}
+.aside_adcook p {
+    float: right;
+    line-height: 20px;
+    width: 170px;
+}
+.aside_adcook a {
+    color: #3366CC;
+}
+.aside_adcook a:hover {
+    background: none repeat scroll 0 0 transparent;
+    color: #AA2105;
+}
+.aside_adcook strong {
+    color: red;
+    display: block;
+    margin-top: 5px;
+}
+.relate-topics {
+    padding: 15px;
+}
+.relate-topics li {
+    line-height: 200%;
+}
+.tab li {
+    background: none repeat scroll 0 0 #B4B0A4;
+    float: left;
+    text-align: center;
+}
+.tab li.on {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.tab li a {
+    color: #FFFFFF;
+}
+.tab li a:hover {
+    background: none repeat scroll 0 0 transparent;
+}
+.tab li.on a {
+    color: #404040;
+}
+.food-category-name {
+    margin: 10px 0;
+}
+.food-detail {
+    font-size: 12px;
+    min-height: 122px;
+    padding: 22px 18px 12px;
+    position: relative;
+}
+.food-detail .left {
+    left: 18px;
+    position: absolute;
+    top: 20px;
+}
+.food-detail .left img {
+    height: 122px;
+    width: 120px;
+}
+.food-detail .right {
+    padding-left: 140px;
+}
+.food-detail .right h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.food-detail .right ul li {
+    line-height: 150%;
+}
+.food-detail .food-child-list {
+    height: 70px;
+    margin: 15px 0 0;
+}
+.food-detail .food-child-list li {
+    float: left;
+    padding-right: 25px;
+}
+.food-tab {
+    height: 30px;
+    margin-top: 27px;
+}
+.food-tab li {
+    height: 30px;
+    line-height: 30px;
+    margin-right: 5px;
+    padding: 0 20px;
+}
+.food-relate {
+    padding: 20px;
+}
+.food-relate h3 {
+    color: #999999;
+    font-weight: bold;
+    padding: 35px 0 10px;
+}
+.food-relate p {
+    line-height: 200%;
+}
+.food-relate .basic li {
+    line-height: 25px;
+}
+.food-relate .elements {
+    margin-top: 45px;
+    width: 100%;
+}
+.food-relate .elements td, .food-relate .elements th {
+    border: 1px solid #EEEEEE;
+    font-size: 12px;
+    line-height: 35px;
+    padding: 0 15px;
+    width: 25%;
+}
+.food-relate .elements th {
+    background: none repeat scroll 0 0 #F6F6F6;
+    color: #8A8A8A;
+    font-weight: normal;
+    text-align: center;
+}
+.food-relate .elements td span {
+    display: block;
+    float: left;
+    text-align: right;
+    width: 40px;
+}
+.food-relate .elements td em {
+    color: #B3B3B3;
+    padding-left: 15px;
+}
+.food-price {
+    font-size: 12px;
+    padding: 15px 10px;
+}
+.food-price dl {
+    border-bottom: 1px dashed #DDDDDD;
+    padding: 5px 0 20px;
+    text-align: center;
+}
+.food-price dl dd {
+    line-height: 30px;
+}
+.food-price dl dd em {
+    font-size: 16px;
+    font-weight: bold;
+}
+.food-price .store {
+    border-bottom: 1px dashed #DDDDDD;
+    line-height: 24px;
+    padding: 5px 0;
+}
+.food-price .store em {
+    padding-left: 6px;
+}
+.food-price .user {
+    padding: 5px 0;
+}
+.food-price .user li {
+    height: 40px;
+    line-height: 40px;
+}
+.food-price .user li div {
+    float: left;
+}
+.food-price .user li img {
+    height: 30px;
+    width: 30px;
+}
+.food-price .user li span {
+    color: #000000;
+    padding-left: 5px;
+}
+.food-price .user li em {
+    float: right;
+    padding: 0 5px;
+}
+.food-price .bottom {
+    padding: 10px 0;
+    text-align: center;
+}
+.food-partner {
+    padding: 15px;
+}
+.food-partner ul {
+    height: 120px;
+    position: relative;
+}
+.food-partner ul li {
+    display: inline;
+    position: absolute;
+}
+.food-partner em {
+    background: none repeat scroll 0 0 #AAAAAA;
+    color: #FFFFFF;
+}
+.food-partner a:hover {
+    background: none repeat scroll 0 0 transparent;
+    text-decoration: underline;
+}
+.food-partner .partner-7 {
+    color: #9A5137;
+    font-size: 18px;
+}
+.food-partner .partner-6 {
+    color: #A8AE5F;
+    font-size: 16px;
+}
+.food-partner .partner-5 {
+    color: #7A8B91;
+    font-size: 16px;
+}
+.food-partner .partner-4 {
+    color: #A9C287;
+    font-size: 14px;
+}
+.food-partner .partner-3 {
+    color: #A9C287;
+    font-size: 14px;
+}
+.food-partner .partner-2 {
+    color: #4480A0;
+    font-size: 12px;
+}
+.food-partner .partner-1 {
+    color: #C3CEE1;
+    font-size: 12px;
+}
+.categoryPage {
+    padding: 20px;
+}
+.categoryPage a {
+    color: #B96453;
+}
+.categoryPage a:hover {
+    background: none repeat scroll 0 0 #AA2105;
+    color: white;
+}
+.categoryPage h3 {
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+.categoryPage h3 a {
+    font-size: 12px;
+    margin-left: 20px;
+}
+.title-head a {
+    font-size: 14px;
+    margin-left: 20px;
+}
+.cateList1, .cateList2, .cateList3, .cateList4 {
+    overflow: hidden;
+}
+.cateList1, .cateList4 {
+    margin-bottom: 20px;
+}
+.cateList1 ul li a span, .cateList2 ul li a span, .cateList3 ul li a span, .cateList4 ul li a span {
+    font-size: 12px !important;
+}
+.cateList3 {
+    line-height: 24px;
+    margin-bottom: 10px;
+}
+.cateList1 div, .cateList2 div {
+    color: #999999;
+    float: left;
+    font-weight: bold;
+    width: 78px;
+}
+.cateList1 div span {
+    display: block;
+    line-height: 60px;
+}
+.cateList1 div em {
+    display: block;
+    font-weight: bold;
+    line-height: 27px;
+}
+.cateList1 ul, .cateList2 ul {
+    float: right;
+    overflow: hidden;
+    width: 480px;
+}
+.cateList1 ul li {
+    float: left;
+    line-height: 27px;
+    width: 60px;
+}
+.cateList2 div {
+    color: #999999;
+    line-height: 90px;
+}
+.cateList2 ul li {
+    float: left;
+}
+.cateList2 ul li a {
+    background: none repeat scroll 0 0 #F5F5F3;
+    display: block;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    width: 60px;
+}
+.cateList2 ul li a img {
+    display: block;
+    margin-bottom: 5px;
+}
+.cateList3 h4 {
+    color: #999999;
+    float: left;
+    font-weight: bold;
+    line-height: 30px;
+    width: 50px;
+}
+.cateList3 ul {
+    height: 30px;
+    overflow: hidden;
+}
+.cateList3 ul li {
+    float: left;
+    line-height: 30px;
+    width: 72px;
+}
+.cateList3 div {
+    color: #999999;
+}
+.cl2_no {
+    width: auto !important;
+}
+.showMore {
+    height: auto !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+}
+.mt10 {
+    margin-top: 10px;
+}
+.cateShowMore {
+    color: white !important;
+}
+.twoCloumn {
+    float: left;
+    width: 280px !important;
+}
+.twoCloumn ul {
+    width: 200px !important;
+}
+.cate_newsl {
+    padding: 15px;
+}
+.cate_newsl ul li {
+    border-bottom: 1px dotted #CCCCCC;
+    padding: 6px 10px;
+}
+.cate_newsl ul li a {
+    float: right;
+}
+.cate_price {
+    font-size: 14px;
+    padding: 20px;
+    text-align: center;
+}
+.cate_price h5 {
+    color: black;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+.cate_price h5 strong {
+    font-size: 18px;
+    font-weight: normal;
+}
+.cate_price span {
+    color: #999999;
+}
+.xg_sc {
+    height: 150px;
+    position: relative;
+}
+.xg_sc a, .xg_sc strong {
+    position: absolute;
+}
+.xg {
+    background: none repeat scroll 0 0 #CCCCCC;
+    color: white;
+    left: 45%;
+    padding: 1px 3px;
+    top: 45%;
+}
+.xg1 {
+    color: #985238;
+    font-size: 20px;
+    font-weight: bold;
+    left: 30%;
+    top: 25%;
+}
+.xg2 {
+    color: #A6AF5E;
+    font-size: 18px;
+    left: 25%;
+    top: 60%;
+}
+.xg3 {
+    color: #7A8B92;
+    font-size: 16px;
+    left: 60%;
+    top: 75%;
+}
+.xg4 {
+    color: #6E9737;
+    font-size: 14px;
+    left: 10%;
+    top: 10%;
+}
+.xg5 {
+    color: #9AB774;
+    font-size: 13px;
+    left: 6%;
+    top: 80%;
+}
+.xg6 {
+    color: #377699;
+    font-size: 12px;
+    left: 74%;
+    top: 45%;
+}
+.xg7 {
+    color: #AFBDD8;
+    font-size: 11px;
+    left: 65%;
+    top: 8%;
+}
+.xcf-footer {
+    border-top: 1px dotted #CCCCCC;
+    clear: both;
+    color: #AAAAAA;
+    font-size: 12px;
+    line-height: 36px;
+    margin: 20px auto;
+    width: 840px;
+}
+.xcf-footer span {
+    float: right;
+}
+.recipe_list {
+    overflow: hidden;
+}
+.menuInfo {
+    margin-bottom: 15px;
+    overflow: hidden;
+    padding: 15px;
+}
+.menuInfo_img {
+    border: 1px solid #C5C5C3;
+    float: left;
+    padding: 2px;
+    width: 200px;
+}
+.menuInfo_meta {
+    float: right;
+    font-size: 12px;
+    width: 280px;
+}
+.menuInfo_meta p {
+    color: #707070;
+    line-height: 30px;
+    margin-bottom: 10px;
+}
+.info-share {
+    border-bottom: 1px solid #EEEEEE;
+    color: #999999;
+    font-size: 12px;
+    margin: 20px 0;
+    padding: 10px 0;
+}
+.menuInfo_txt {
+    font-size: 14px;
+    line-height: 27px;
+}
+.menuInfo_txt p {
+    padding: 10px 0;
+}
+.menuInfo_edit {
+    background-color: #F2F2F2;
+}
+.feed-author {
+    line-height: 18px;
+    padding: 5px 0;
+}
+.menuTabItem {
+    height: 30px;
+    overflow: hidden;
+}
+.menuTabItem li {
+    float: left;
+    margin-right: 5px;
+}
+.menuTabItem li a {
+    background: none repeat scroll 0 0 #B4B0A4;
+    color: white;
+    display: block;
+    line-height: 30px;
+    outline: medium none;
+    padding: 0 20px;
+}
+.menuTabItem li.on a {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: black;
+    outline: medium none;
+}
+.menuTabList {
+    padding: 15px;
+}
+.edit-control {
+    font-size: 12px;
+    list-style: none outside none;
+    margin-top: 8px;
+}
+ul.edit-control li:first-child {
+    padding-left: 0;
+}
+ul.edit-control li {
+    float: left;
+    padding-left: 10px;
+}
+.editLy {
+    background: none repeat scroll 0 0 #F2F2F2;
+    display: none;
+    margin-top: 5px;
+    padding: 10px 15px;
+}
+.editLy label {
+    color: black;
+    float: left;
+    font-size: 14px;
+    width: 40px;
+}
+.editLy textarea, #editLy input {
+    margin-bottom: 10px;
+}
+#collected-block a:hover {
+    background: none repeat scroll 0 0 #CCCCCC;
+}
+.collect {
+    background: none repeat scroll 0 0 #AF2F15;
+    color: #FFFFFF;
+    margin: auto;
+    padding: 8px 15px;
+}
+.gray-collect {
+    background: none repeat scroll 0 0 #CCCCCC;
+    color: #FFFFFF;
+    margin: auto;
+    padding: 8px 15px;
+}
+.uncollect-span a:link, .uncollect-span a:visited {
+    color: #CCCCCC;
+    margin-left: 20px;
+}
+.accountBind {
+    margin-bottom: 50px;
+}
+.accountBindOuter {
+    margin: auto;
+    padding-top: 30px;
+    width: 400px;
+}
+.accountBindItem {
+    height: 46px;
+    line-height: 46px;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+.accountBindItemText {
+    display: inline-block;
+    float: left;
+    margin-left: 30px;
+}
+.cancelBind {
+    display: inline-block;
+}
+#notify-oauth {
+    display: none;
+}
+.notify-oauth-inner {
+    line-height: 30px;
+    margin: 20px;
+}
+.bind {
+    background-color: #F5F5F3;
+    margin-left: 70px;
+    margin-right: 40px;
+    margin-top: 20px;
+    padding: 15px;
+}
+.popwin_bbg {
+    background: none repeat scroll 0 0 #000000;
+    height: 100%;
+    left: 0;
+    opacity: 0.4;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+}
+#fancybox-loading {
+    cursor: pointer;
+    display: none;
+    height: 40px;
+    left: 50%;
+    margin-left: -20px;
+    margin-top: -20px;
+    overflow: hidden;
+    position: fixed;
+    top: 50%;
+    width: 40px;
+    z-index: 1104;
+}
+#fancybox-loading div {
+    background-image: url("fancybox/fancybox.png");
+    height: 480px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 40px;
+}
+#fancybox-overlay {
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1100;
+}
+#fancybox-tmp {
+    border: 0 none;
+    display: none;
+    margin: 0;
+    overflow: auto;
+    padding: 0;
+}
+#fancybox-wrap {
+    display: none;
+    left: 0;
+    outline: medium none;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    z-index: 1101;
+}
+#fancybox-outer {
+    background: none repeat scroll 0 0 #FFFFFF;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+#fancybox-content {
+    border: 0 solid #FFFFFF;
+    height: 0;
+    outline: medium none;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    width: 0;
+    z-index: 1102;
+}
+#fancybox-hide-sel-frame {
+    background: none repeat scroll 0 0 transparent;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1101;
+}
+#fancybox-close {
+    background: url("fancybox/fancybox.png") repeat scroll -40px 0 transparent;
+    cursor: pointer;
+    display: none;
+    height: 30px;
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    width: 30px;
+    z-index: 1103;
+}
+#fancybox-error {
+    color: #000000;
+    font-size: 16px;
+    line-height: 18px;
+    margin: 0;
+    padding: 14px;
+}
+#fancybox-img {
+    border: medium none;
+    height: 100%;
+    line-height: 0;
+    margin: 0;
+    outline: medium none;
+    padding: 0;
+    vertical-align: top;
+    width: 100%;
+}
+#fancybox-frame {
+    border: medium none;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+#fancybox-left, #fancybox-right {
+    background: url("fancybox/blank.gif") repeat scroll 0 0 transparent;
+    bottom: 0;
+    cursor: pointer;
+    display: none;
+    height: 100%;
+    outline: medium none;
+    position: absolute;
+    width: 35%;
+    z-index: 1102;
+}
+#fancybox-left {
+    left: 0;
+}
+#fancybox-right {
+    right: 0;
+}
+#fancybox-left-ico, #fancybox-right-ico {
+    cursor: pointer;
+    display: block;
+    height: 30px;
+    left: -9999px;
+    margin-top: -15px;
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    z-index: 1102;
+}
+#fancybox-left-ico {
+    background-image: url("fancybox/fancybox.png");
+    background-position: -40px -30px;
+}
+#fancybox-right-ico {
+    background-image: url("fancybox/fancybox.png");
+    background-position: -40px -60px;
+}
+#fancybox-left:hover, #fancybox-right:hover {
+    visibility: visible;
+}
+#fancybox-left:hover span {
+    left: 20px;
+}
+#fancybox-right:hover span {
+    left: auto;
+    right: 20px;
+}
+.fancybox-bg {
+    border: 0 none;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 20px;
+    z-index: 1001;
+}
+#fancybox-bg-n {
+    background-image: url("fancybox/fancybox-x.png");
+    left: 0;
+    top: -20px;
+    width: 100%;
+}
+#fancybox-bg-ne {
+    background-image: url("fancybox/fancybox.png");
+    background-position: -40px -162px;
+    right: -20px;
+    top: -20px;
+}
+#fancybox-bg-e {
+    background-image: url("fancybox/fancybox-y.png");
+    background-position: -20px 0;
+    height: 100%;
+    right: -20px;
+    top: 0;
+}
+#fancybox-bg-se {
+    background-image: url("fancybox/fancybox.png");
+    background-position: -40px -182px;
+    bottom: -20px;
+    right: -20px;
+}
+#fancybox-bg-s {
+    background-image: url("fancybox/fancybox-x.png");
+    background-position: 0 -20px;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+}
+#fancybox-bg-sw {
+    background-image: url("fancybox/fancybox.png");
+    background-position: -40px -142px;
+    bottom: -20px;
+    left: -20px;
+}
+#fancybox-bg-w {
+    background-image: url("fancybox/fancybox-y.png");
+    height: 100%;
+    left: -20px;
+    top: 0;
+}
+#fancybox-bg-nw {
+    background-image: url("fancybox/fancybox.png");
+    background-position: -40px -122px;
+    left: -20px;
+    top: -20px;
+}
+#fancybox-title {
+    font-family: Helvetica;
+    font-size: 12px;
+    z-index: 1102;
+}
+.fancybox-title-inside {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #333333;
+    padding-bottom: 10px;
+    position: relative;
+    text-align: center;
+}
+.fancybox-title-outside {
+    color: #FFFFFF;
+    padding-top: 10px;
+}
+.fancybox-title-over {
+    bottom: 0;
+    color: #FFFFFF;
+    left: 0;
+    position: absolute;
+    text-align: left;
+}
+#fancybox-title-over {
+    background-image: url("fancybox/fancy_title_over.png");
+    display: block;
+    padding: 10px;
+}
+.fancybox-title-float {
+    bottom: -20px;
+    height: 32px;
+    left: 0;
+    position: absolute;
+}
+#fancybox-title-float-wrap {
+    border: medium none;
+    border-collapse: collapse;
+    width: auto;
+}
+#fancybox-title-float-wrap td {
+    border: medium none;
+    white-space: nowrap;
+}
+#fancybox-title-float-left {
+    background: url("fancybox/fancybox.png") no-repeat scroll -40px -90px transparent;
+    padding: 0 0 0 15px;
+}
+#fancybox-title-float-main {
+    background: url("fancybox/fancybox-x.png") repeat scroll 0 -40px transparent;
+    color: #FFFFFF;
+    font-weight: bold;
+    line-height: 29px;
+    padding: 0 0 3px;
+}
+#fancybox-title-float-right {
+    background: url("fancybox/fancybox.png") no-repeat scroll -55px -90px transparent;
+    padding: 0 0 0 15px;
+}
+.fancybox-ie6 #fancybox-close {
+    background: none repeat scroll 0 0 transparent;
+}
+.fancybox-ie6 #fancybox-left-ico {
+    background: none repeat scroll 0 0 transparent;
+}
+.fancybox-ie6 #fancybox-right-ico {
+    background: none repeat scroll 0 0 transparent;
+}
+.fancybox-ie6 #fancybox-title-over {
+    background: none repeat scroll 0 0 transparent;
+}
+.fancybox-ie6 #fancybox-title-float-left {
+    background: none repeat scroll 0 0 transparent;
+}
+.fancybox-ie6 #fancybox-title-float-main {
+    background: none repeat scroll 0 0 transparent;
+}
+.fancybox-ie6 #fancybox-title-float-right {
+    background: none repeat scroll 0 0 transparent;
+}
+.fancybox-ie6 #fancybox-bg-w, .fancybox-ie6 #fancybox-bg-e, .fancybox-ie6 #fancybox-left, .fancybox-ie6 #fancybox-right, #fancybox-hide-sel-frame {
+}
+#fancybox-loading.fancybox-ie6 {
+    margin-top: 0;
+    position: absolute;
+}
+#fancybox-loading.fancybox-ie6 div {
+    background: none repeat scroll 0 0 transparent;
+}
+.fancybox-ie .fancybox-bg {
+    background: none repeat scroll 0 0 transparent !important;
+}
+.fancybox-ie #fancybox-bg-n {
+}
+.fancybox-ie #fancybox-bg-ne {
+}
+.fancybox-ie #fancybox-bg-e {
+}
+.fancybox-ie #fancybox-bg-se {
+}
+.fancybox-ie #fancybox-bg-s {
+}
+.fancybox-ie #fancybox-bg-sw {
+}
+.fancybox-ie #fancybox-bg-w {
+}
+.fancybox-ie #fancybox-bg-nw {
+}

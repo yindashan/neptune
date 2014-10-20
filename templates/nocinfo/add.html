@@ -1,0 +1,90 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#ispName").autocomplete("{% url isps_autocomplete %}", {
+		minChars: 0,
+		//width: 180,
+		max: 10,
+		//autoFill: true,
+		matchContains: true,
+		//multiple: true,
+		//multipleSeparator: ",",
+		scroll: true,
+		scrollHeight: 300
+	}).result(function(event, data, formatted){
+		//$.ajaxSettings.global = true;
+	});
+	
+	$("#ispName").focus(function(){
+		$.ajaxSettings.global = false;
+	});
+	$("#ispName").blur(function(){
+		$.ajaxSettings.global = true;
+	});
+	
+});
+</script>
+
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url nocinfo_add %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="nocinfoindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>机房编号：</label>
+				<input type="text" class="required" size="30"  name="nocid" value="" />
+			</div>
+			<div class="unit">
+				<label>机房名称：</label>
+				<input type="text" class="required" size="30"  name="nocname" value="" />
+			</div>
+			<div class="unit">
+				<label>机房所在城市：</label>
+				<input type="text" size="30"  name="city" value="" />
+			</div>
+			<div class="unit">
+				<label>机房状态：</label>
+				<select name="status" class="required combox" >
+					{% for key,value in nocinfo_status_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			
+			<dl class="nowrap">
+				<dt>运营商：</dt>
+				<dd>
+					<input size="30" id="ispName" name="org.ispName" type="text" />
+					<a class="btnLook" href="{% url nocinfo_searchback %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(查询关联的运营商)</span>
+				</dd>
+			</dl>
+			
+			<div class="unit">
+				<label>机房地址：</label>
+				<input type="text" size="30"  name="address" value="" />
+			</div>
+			<div class="unit">
+				<label>机房联系人：</label>
+				<input type="text" size="30"  name="noc_username" value="" />
+			</div>
+			<div class="unit">
+				<label>联系方式：</label>
+				<input type="text" class="phone" size="30"  name="phone" value="" />
+			</div>
+            <div class="unit">
+				<label>备注：</label>
+				<textarea name="desc" rows="3" cols="57"></textarea>
+			</div>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

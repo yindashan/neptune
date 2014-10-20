@@ -1,0 +1,101 @@
+<form id="pagerForm" action="{% url serverconf_searchback %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url serverconf_searchback %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+				资产编号：<input type="text" name="query" value="{{ query }}" />
+			</li>	  
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="7%" align="center">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="12%" orderField="elementid" class="asc">资产编号</th>
+			{% else %}
+				<th width="12%" orderField="elementid" class="desc">资产编号</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="6%" orderField="element_type" class="asc">设备类型</th>
+			{% else %}
+				<th width="6%" orderField="element_type" class="desc">设备类型</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="8%" orderField="buy_time" class="asc">采购时间</th>
+			{% else %}
+				<th width="8%" orderField="buy_time" class="desc">采购时间</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="8%" orderField="deadline" class="asc">保修期限</th>
+			{% else %}
+				<th width="8%" orderField="deadline" class="desc">保修期限</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="6%" orderField="status" class="asc">设备状态</th>
+			{% else %}
+				<th width="6%" orderField="status" class="desc">设备状态</th>
+			{% endifequal %}
+				<th width="5%" >查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for equipment in equipments.object_list %}
+           <tr>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ equipment.elementid }}</td>
+           <td>{{ equipment.element_type }}</td>
+           <td>{{ equipment.buy_time|date:"Y-m-d" }}</td>
+           <td>{{ equipment.deadline|date:"Y-m-d" }}</td>
+           <td>
+           		{% for key,value in equipment_status_dict.items %}
+					{% ifequal equipment.status key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>
+				<a class="btnSelect" href="javascript:$.bringBackT({elementid:'{{ equipment.elementid }}', sequence:'{{ equipment.sequence }}'})" title="查找带回">选择</a>
+		   </td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ equipments.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ equipments.paginator.count }}" numPerPage="{{ equipments.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

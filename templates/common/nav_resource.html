@@ -1,0 +1,38 @@
+<script type="text/javascript">
+	navTab.openTab("assetindex", "{% url asset_index_asset %}", {title:"固定资产管理"});
+</script>
+<div class="accordion" fillSpace="sidebar">
+	<div class="accordionHeader">
+		<h2><span>Folder</span>系统管理</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree treeFolder expand">
+			
+			{% ifsplitcontain 'asset,assetdamage,assetrecover,assetchange,assetaccount,equipmentcode' request.session.authority_list_module %}
+			<li><a>资产管理</a>
+				<ul>
+				{% ifcontain 'asset' request.session.authority_list_module %}
+					<li><a href="{% url asset_index_asset %}" target="navTab" rel="assetindex" title="固定资产管理" >固定资产管理</a></li>
+				{% endifcontain %}
+				{% ifcontain 'assetdamage' request.session.authority_list_module %}
+					<li><a href="{% url asset_index_assetdamage %}" target="navTab" rel="assetdamageindex" title="报损资产管理" >报损资产管理</a></li>
+				{% endifcontain %}
+				{% ifcontain 'assetrecover' request.session.authority_list_module %}
+					<li><a href="{% url asset_index_assetrecover %}" target="navTab" rel="assetrecoverindex" title="待回收资产管理" >待回收资产管理</a></li>
+				{% endifcontain %}
+				{% ifcontain 'assetchange' request.session.authority_list_module %}
+					<li><a href="{% url asset_index_assetchange %}" target="navTab" rel="assetchangeindex" title="资产变动管理" >资产变动管理</a></li>
+				{% endifcontain %}
+				{% ifcontain 'assetaccount' request.session.authority_list_module %}
+					<li><a href="{% url asset_index_assetaccount %}" target="navTab" rel="assetaccountindex" title="资产账管理" >资产账管理</a></li>
+				{% endifcontain %}
+				{% ifcontain 'equipmentcode' request.session.authority_list_module %}
+					<li><a href="{% url equipmentcode_index %}" target="navTab" rel="equipmentcodeindex" title="设备代码管理" >设备代码管理</a></li>								
+				{% endifcontain %}
+				</ul>
+			</li>
+			{% endifsplitcontain %}
+					
+		</ul>
+	</div>
+</div>

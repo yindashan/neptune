@@ -1,0 +1,51 @@
+<script type="text/javascript">
+	//alert("{{ request.session.authority_list_button }}");
+	var authority_str = "{{ request.session.authority_list_button }}";
+	//去掉字符串两边的中括号
+	authority_str = authority_str.substring(1, authority_str.length-1)
+	var reg1 = new RegExp("u&#39;","g"); //创建正则RegExp对象
+	var reg2 = new RegExp("&#39;","g"); //创建正则RegExp对象
+	authority_str = authority_str.replace(reg1, "");
+	authority_str = authority_str.replace(reg2, "");
+	//alert(authority_str);
+	var authority_array = authority_str.split(",");
+	//alert(typeof(authority_array));
+	
+	var flag = isSuperUser(authority_array);
+	if(flag) {
+		navTab.openTab("accountindex", "{% url accounts_index %}", {title:"用户管理"});
+	} else {
+		navTab.openTab("accountindex", "{% url accounts_info user.id %}", {title:"用户信息"});
+	}
+	
+	function isSuperUser(authority_array) {
+		for(var i=0; i<authority_array.length; i++) {
+			if(authority_array[i].replace(/(^\s*)|(\s*$)/g, "") == "accountsuperuser") {
+				return true;
+			}
+		}
+		return false;
+	}
+</script>
+<div class="accordion" fillSpace="sidebar">
+	<div class="accordionHeader">
+		<h2><span>Folder</span>系统管理</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree treeFolder expand">
+			
+			{% ifcontain 'account' request.session.authority_list_module %}
+			<li><a>帐号管理</a>
+				<ul>
+					{% ifcontain 'accountsuperuser' request.session.authority_list_button %}
+						<li><a href="{% url accounts_index %}" target="navTab" rel="accountindex" title="用户管理">用户管理</a></li>
+					{% else %}
+						<li><a href="{% url accounts_info user.id %}" target="navTab" rel="accountindex" title="用户信息">用户信息</a></li>
+					{% endifcontain %}
+				</ul>
+			</li>
+			{% endifcontain %}
+					
+		</ul>
+	</div>
+</div>

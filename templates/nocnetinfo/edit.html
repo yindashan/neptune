@@ -1,0 +1,58 @@
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url nocnetinfo_edit nocnetinfo.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="nocnetinfoindex"/>
+		<div class="pageFormContent" layoutH="58">
+		
+			<dl class="nowrap">
+				<dt>机房：</dt>
+				<dd>
+					<input name="org.city" type="hidden" readonly="readonly" />
+					<input size="30" name="org.nocid" type="text" readonly="readonly" value="{{ nocnetinfo.nocinfo }}"/>
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>起始IP：</label>
+				<input type="text" class="required" size="30"  name="ip_start" value="{{ nocnetinfo.ip_start }}" readonly="readonly"/>
+			</div>
+			<div class="unit">
+				<label>截止IP：</label>
+				<input type="text" class="required" size="30"  name="ip_end" value="{{ nocnetinfo.ip_end }}" readonly="readonly"/>
+			</div>
+			<div class="unit">
+				<label>IP类型：</label>
+				{% for key,value in ip_type_dict.items %}
+					{% ifequal nocnetinfo.ipType key %}
+						<input type="text" class="required" size="30"  name="iptype" value="{{ value }}" readonly="readonly"/>
+					{% endifequal %}
+				{% endfor %}
+			</div>
+			<div class="unit">
+				<label>子网掩码：</label>
+				<input type="text" class="required" size="30"  name="ip_mark" value="{{ nocnetinfo.ip_mark }}" readonly="readonly"/>
+			</div>
+			<div class="unit">
+				<label>默认网关：</label>
+				<input type="text" class="required" size="30"  name="gateway" value="{{ nocnetinfo.gateway }}" />
+			</div>
+			<div class="unit">
+				<label>本地DNS1：</label>
+				<input type="text" class="required" size="30"  name="ldns1" value="{{ nocnetinfo.ldns1 }}" />
+			</div>
+			<div class="unit">
+				<label>本地DNS2：</label>
+				<input type="text" size="30"  name="ldns2" value="{{ nocnetinfo.ldns2 }}" />
+			</div>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

@@ -1,0 +1,154 @@
+<style type="text/css">
+#one{width:200px; height:180px; float:left}
+#two{width:50px; height:180px; float:left}
+#three{width:200px; height:180px; float:left}
+.btn{width:50px; height:30px; margin-top:20px; cursor:pointer;}
+</style>
+<script type="text/javascript">
+	
+	if(window.Node) {
+		Node.prototype.replaceNode=function($target) {
+		  return this.parentNode.replaceChild($target,this);
+		}
+		Node.prototype.swapNode=function($target){
+		  var $targetParent=$target.parentNode;
+		  var $targetNextSibling=$target.nextSibling;
+		  var $thisNode=this.parentNode.replaceChild($target,this);
+		  $targetNextSibling?$targetParent.insertBefore($thisNode,$targetNextSibling):$targetParent.appendChild($thisNode);
+		  return this;
+		}
+	}
+	
+	function doOrder(select, sequence) {                  //将上、下两个方法合并成一个
+		if (!select||select.selectedIndex==-1) {            //如果没有选择列表项，不进行任何操作
+		     return false;
+		} else if (select) {
+		    var newIndex = select.selectedIndex + sequence;      //获取移动后的索引
+		    var oldIndex = select.selectedIndex;               //旧索引
+		    if (newIndex>=select.options.length||newIndex<0||sequence==0) {   //判断是否超出边界                                                        
+		        return false;
+		    }
+//		    select.options[newIndex].swapNode(select.options[oldIndex]); //交换指定索引处的节点
+		    if (newIndex > oldIndex) {
+		    	select.options[oldIndex].swapNode(select.options[newIndex]);
+		    } else {
+		    	select.options[newIndex].swapNode(select.options[oldIndex]);
+		    }
+		 }
+		 return true;
+	}
+	
+	function doUp() {
+	   doOrder(document.getElementById("select2"), -1);              //向上移动的方法
+	}
+	
+	function doDown() {
+	   doOrder(document.getElementById("select2"), 1);               //向下移动的方法
+	}
+	
+	
+	//下拉框交换JQuery
+	$(function(){
+	    //移到右边
+	    $('#add').click(function() {
+	    //获取选中的选项，删除并追加给对方
+	        $('#select1 option:selected').appendTo('#select2');
+	    });
+	    //移到左边
+	    $('#remove').click(function() {
+	        $('#select2 option:selected').appendTo('#select1');
+	    });
+	    //全部移到右边
+	    $('#add_all').click(function() {
+	        //获取全部的选项,删除并追加给对方
+	        $('#select1 option').appendTo('#select2');
+	    });
+	    //全部移到左边
+	    $('#remove_all').click(function() {
+	        $('#select2 option').appendTo('#select1');
+	    });
+	    //双击选项
+	    $('#select1').dblclick(function(){ //绑定双击事件
+	        //获取全部的选项,删除并追加给对方
+	        $("option:selected",this).appendTo('#select2'); //追加给对方
+	    });
+	    //双击选项
+	    $('#select2').dblclick(function(){
+	       $("option:selected",this).appendTo('#select1');
+	    });
+	});
+ 	
+ 	//修改select2数据为选中
+ 	function selectedDate(){
+		$('#select2 option').attr("selected", "selected");
+ 	}
+
+</script>
+
+
+<div class="page">
+	<div class="pageContent">
+
+	<form method="post" action="{% url actiongroup_add %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">{% csrf_token %}
+		<input type="hidden" name="navTabId" value="actiongroupindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>名称：</label>
+				<input type="text" class="required" size="30" name="name" value="" />
+			</div>
+			
+			<div class="unit">
+				<label>说明：</label>
+				<textarea name="desc" rows="2" cols="57"></textarea>
+			</div>
+			
+			<div class="unit">
+				<label>操作：</label>
+				<table width="600" align="center" border="0" cellpadding="0" cellspacing="0" class="newContTab">
+				  <tr>
+				    <td>
+				    	<div>
+					        <div>
+					          <select multiple="multiple" id="select1" style="width:180px;height:240px; float:left; border:4px #B8D0D6 solid outset; padding:4px; ">
+						          {% for action in actions %}
+						          	<option value = "{{ action.id }}">{{ action.name }} </option>
+						          {% endfor %}						          
+					          </select>
+					        </div>
+					        
+					        <div style="float:left"> 
+					        	<span id="add"><input type="button" class="btn" value=">" /></span><br />
+					          	<span id="remove"><input type="button" class="btn" value="<" /></span><br />
+					          	<span id="add_all"><input type="button" class="btn" value=">>" /></span> <br />
+					          	<span id="remove_all"><input type="button" class="btn" value="<<" /></span> 
+					        </div>
+					        
+					        <div>
+					          <select name="actionids" multiple="multiple" id="select2" style="width:180px;height:240px; float:lfet;border:4px #B8D0D6 solid outset; padding:4px;">
+					          </select>
+					        </div>
+					        
+					        <div style="float:left">
+					          <br /><br /><br />
+					          <input type="button" class="btn" value="↑" onclick="doUp()" /><br />
+							  <input type="button" class="btn" value="↓" onclick="doDown()" />
+					        </div>
+				      	</div>
+				  	</td>
+				  	
+				  </tr>
+				</table>
+			</div>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit" onclick="selectedDate()">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>	
+	
+	</div>
+</div>
+

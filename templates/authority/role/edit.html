@@ -1,0 +1,140 @@
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+  	
+  	function selectmodule(id) {
+  		/**
+  		 * $('#button').attr('disabled');获取disabled的值
+  		 * $('#button').attr('disabled', "true");添加disabled属性或修改disabled的值
+		 * $('#button').removeAttr("disabled"); 移除disabled属性
+		 */ 
+  		var identifier = id;
+  		var modulestatus = $("#" + identifier).attr("checked");
+  		identifier = identifier + "_";
+  		if(modulestatus == "checked") {
+  			$("input[id^=" + identifier + "]").removeAttr("disabled");
+  		} else {
+  			$("input[id^=" + identifier + "]").removeAttr("checked");
+  			$("input[id^=" + identifier + "]").attr("disabled","true");
+  		}
+  	}
+  	
+  	function removeUsername() {
+  		$("#username").val("");//清空
+  		return false;
+  	}
+  	
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#username").autocomplete("{% url accounts_autocomplete %}", {
+		minChars: 0,
+		//width: 180,
+		max: 10,
+		//autoFill: true,
+		matchContains: true,
+		multiple: true,
+		multipleSeparator: ",",
+		scroll: true,
+		scrollHeight: 300 
+	}).result(function(event, data, formatted){
+		//$.ajaxSettings.global = true;
+	});
+	
+	$("#username").focus(function(){
+		$.ajaxSettings.global = false;
+	});
+	$("#username").blur(function(){
+		$.ajaxSettings.global = true;
+	});
+	
+});
+</script>
+
+<form method="post" action="{% url authority_edit_role role.id %}" class="pageForm required-validate" 
+	onsubmit="return validateCallback(this, dialogAjaxDone)">
+	<input type="hidden" name="navTabId" value="roleindex"/>
+<div class="page">
+<div class="pageHeader">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					角色名称：<input type="text" class="required" size="30"  name="role_name" value="{{ role.role_name }}" />
+				</td>
+				<td>
+					角色备注：<input type="text" class="required" size="30"  name="role_desc" value="{{ role.role_desc }}" />
+				</td>
+				<td>
+					关联用户：<input size="30" id="username" name="org.username" type="text" value="{{ user_list|join:',' }}" />
+				</td>
+				<td>
+					<a class="btnLook" href="{% url authority_searchback_role_user %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+				</td>
+				<td>
+					<span class="button"><span class="buttonContent"><button onclick="javascript: removeUsername();" type="button">清空</button></span></span>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+			    <th width="3%">
+			    	&nbsp;
+				</th>
+				<th width="3%">序号</th>
+				<th width="10%">模块名称</th>
+				<th width="60%">模块按钮</th>
+				<th width="18%">模块字段</th>
+			</tr>
+		</thead>
+		<tbody>
+		 {% load common_tags %}
+		 {% for module in modules %}
+           <tr>
+               {% if module|include:role.modules.all %}
+                   <td><input type="checkbox" name="modulecheckbox" value="{{ module.id }}" id="{{ module.id }}" checked="checked" onclick="javascript: selectmodule({{ module.id }});" ></td>
+               {% else %}
+                   <td><input type="checkbox" name="modulecheckbox" value="{{ module.id }}" id="{{ module.id }}" onclick="javascript: selectmodule({{ module.id }});" ></td>
+               {% endif %}
+           	   <td>{{ forloop.counter }}</td>
+	           <td>{{ module.module_name }}</td>
+	           <td>
+	           	{% for button in module.button_set.all %}
+	           	    {% if button|include:role.buttons.all %}
+	           		    <label><input type="checkbox" name="buttoncheckbox" value="{{ button.id }}" id="{{ module.id }}_{{ button.id }}" checked="checked"  />{{ button.button_name }}</label>
+	                {% else %}
+	           		    <label><input type="checkbox" name="buttoncheckbox" value="{{ button.id }}" id="{{ module.id }}_{{ button.id }}" />{{ button.button_name }}</label>
+	                {% endif %}
+	           	{% endfor %}
+	           </td>
+	           <td>
+	           	{% for modulefield in module.modulefield_set.all %}
+	           	    {% if modulefield|include:role.modulefields.all %}
+	           			<label><input type="checkbox" name="modulefieldcheckbox" value="{{ modulefield.id }}" id="{{ module.id }}_{{ modulefield.id }}" checked="checked" />{{ modulefield.modulefield_name }}</label>
+	                {% else %}
+	           			<label><input type="checkbox" name="modulefieldcheckbox" value="{{ modulefield.id }}" id="{{ module.id }}_{{ modulefield.id }}" />{{ modulefield.modulefield_name }}</label>
+	                {% endif %}
+	           	{% endfor %}
+	           </td>
+           </tr>
+         {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</div>
+</form>
+

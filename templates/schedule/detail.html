@@ -1,0 +1,210 @@
+<style type="text/css">
+.bs{border:1px #B8D0D6 solid}
+</style>
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url schedule_detail schedule.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="scheduleindex"/>		
+		<div class="pageFormContent" layoutH="58">
+			<fieldset class="bs">
+				<legend class="bs">基本信息</legend>			
+			
+				<div class="unit">
+					<label>上线计划单号：</label>
+					<input type="text" size="30" value="{{ schedule.schedule_id }}" readonly="readonly" />
+				</div>
+				<div class="unit">
+					<label>项目名称：</label>
+					<input type="text" size="30" value="{{ schedule.service_name }}" readonly="readonly" />
+				</div>
+				<div class="unit">
+					<label>上线部门：</label>
+					<input type="text" size="30" value="{{ schedule.department }}" readonly="readonly" />
+				</div>
+				<div class="unit">
+					<label>研发部门：</label>
+					<input type="text" size="30" value="{{ schedule.department_dep }}" readonly="readonly" />
+				</div>
+				<div class="unit">
+					<label>联系人：</label>
+					<input type="text" size="30" value="{{ schedule.contact }}" readonly="readonly" />
+				</div>
+				<div class="unit">
+					<label>联系信息：</label>
+					<input type="text" size="30" value="{{ schedule.contact_info }}" readonly="readonly" />
+				</div>
+				<div class="unit">
+					<label>自动回滚：</label>				
+					{% ifequal schedule.auto_rollback 0 %}
+						<input type="text" size="30" value="是" readonly="readonly" />
+					{% else %}
+						<input type="text" size="30" value="否" readonly="readonly" />
+					{% endifequal %}
+				</div>
+			</fieldset>
+
+			<fieldset class="bs">
+				<legend class="bs">服务器列表</legend>				
+				<table class="table" width="100%">
+					<thead>
+						<tr>
+							<th width="8%">机房编号</th>
+							<th width="10%">机房名称</th>
+							<th width="10%">资产编号</th>
+							<th width="8%">SaltID</th>
+							<th width="8%">内网IP</th>
+							<th width="8%">外网IP</th>
+							<th width="7%">管理帐号</th>
+							<th width="7%">管理密码</th>
+							<th width="7%">管理端口</th>
+							<th width="8%">基础应用</th>
+							<th width="8%">服务名称</th>
+						</tr>
+					</thead>
+					<tbody>
+					   	{% for server in servers %}
+				           <tr target="sid_group" rel="{{ server.id }}">
+					           <td>{{ server.nocid }}</td>
+					           <td>{{ server.nocname }}</td>
+					           <td>{{ server.elementid }}</td>
+					           <td>{{ server.saltid }}</td>
+					           <td>{{ server.in_ip }}</td>
+					           <td>{{ server.out_ip }}</td>
+					           <td>{{ server.manage_account }}</td>
+					           <td>{{ server.manage_password }}</td>
+					           <td>
+					           	{% if server.manage_port %}
+						           {{ server.manage_port }}
+					           	{% endif %}
+					           </td>
+					           <td>
+					           		{{ server.softforms.all|join:',' }}
+					           </td>
+					           <td>{{ server.service_name }}</td>
+				           </tr>
+			            {% endfor %}
+					</tbody>
+				</table>				
+			</fieldset>	
+			
+			<fieldset class="bs">
+				<legend class="bs">基础应用模板</legend>
+				<table class="table" width="100%">
+					<thead>
+					<tr>
+						<th width="12%">软件类型</th>
+						<th width="20%">软件包名称</th>
+						<th width="12%">版本</th>
+						<th width="12%">操作系统</th>
+						<th width="12%">操作系统位数</th>
+						<th width="12%">操作系统版本</th>
+					</tr>
+					</thead>
+					<tbody>
+					   {% for softform in softforms %}
+			           <tr target="sid_group" rel="{{ softform.id }}">
+			           <td>{{ softform.soft_type }}</td>
+			           <td>{{ softform.soft_name }}</td>
+			           <td>{{ softform.version }}</td>
+			           <td>{{ softform.os }}</td>
+			           <td>{{ softform.os_byte }}</td>
+			           <td>{{ softform.os_version }}</td>
+			           </tr>
+			           {% endfor %}
+					</tbody>
+				</table>				
+			</fieldset>
+			
+			<fieldset class="bs">
+				<legend class="bs">应用</legend>		
+				<table class="table" width="100%">
+					<thead>
+					<tr>
+						<th width="12%">应用包名</th>
+						<th width="12%">下载方式</th>
+						<th width="20%">下载路径</th>					
+						<th width="12%">用户名</th>
+						<th width="12%">部署目录</th>
+						<th width="15%">说明</th>
+					</tr>
+					</thead>
+					<tbody>
+					   {% for apppackage in apppackages %}
+			           <tr target="sid_group" rel="{{ apppackage.id }}">
+			           <td>{{ apppackage.package_name }}</td>
+			           <td>
+			           		{% for key,value in down_type_dict.items %}
+								{% ifequal apppackage.down_type key %}
+										{{ value }}
+								{% endifequal %}
+							{% endfor %}
+			           </td>
+			           <td>{{ apppackage.down_path }}</td>
+			           <td>{{ apppackage.account }}</td>
+			           <td>{{ apppackage.installation_path }}</td>
+			           <td>{{ apppackage.desc }}</td>
+			           </tr>
+			           {% endfor %}
+					</tbody>
+				</table>							
+			</fieldset>
+			
+			<fieldset class="bs">
+				<legend class="bs">操作组</legend>	
+				<table class="table" width="100%">
+					<thead>
+						<tr>
+							<th width="20%">名称</th>
+							<th width="15%">说明</th>
+						</tr>
+					</thead>
+					<tbody>
+					   {% for actiongroup in actiongroupss %}
+			           <tr target="sid_group" rel="{{ actiongroup.id }}">
+			           <td>{{ actiongroup.name }}</td>
+			           <td>{{ actiongroup.desc }}</td>
+			           </tr>
+			           {% endfor %}
+					</tbody>
+				</table>							
+			</fieldset>
+			
+			<fieldset class="bs">
+				<legend class="bs">测试用例</legend>	
+				<table class="table" width="100%">
+					<thead>
+						<tr>
+							<th width="20%">名称</th>
+							<th width="15%">内容</th>
+							<th width="15%">方式</th>
+						</tr>
+					</thead>
+					<tbody>
+					   {% for testcase in testcases %}
+			           <tr target="sid_group" rel="{{ testcase.id }}">
+			           <td>{{ testcase.name }}</td>
+			           <td>{{ testcase.content }}</td>
+			           <td>
+			           		{% for key,value in case_type_dict.items %}
+								{% ifequal testcase.case_type key %}
+										{{ value }}
+								{% endifequal %}
+							{% endfor %}
+			           </td>			           
+			           </tr>
+			           {% endfor %}
+					</tbody>
+				</table>									
+			</fieldset>
+			
+			
+		</div>				
+		<div class="formBar">
+			<ul>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	</div>
+</div>

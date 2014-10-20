@@ -1,0 +1,43 @@
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageContent">
+		<form method="post" action="{% url action_add %}" enctype="multipart/form-data" class="pageForm required-validate" onsubmit="return iframeCallback(this, dialogAjaxDone)">
+		{% csrf_token %}
+		{% load static %}
+		<div class="pageFormContent" layoutH="56">
+			<div class="unit">
+				<label>类型：</label>
+				<input type="text" class="required" size="30"  name="action_type" value="" />
+			</div>
+			<div class="unit">
+				<label>名称：</label>
+				<input type="text" class="required" size="30" name="name" value="" />
+			</div>
+            <div class="unit">
+				<label>操作系统：</label>
+				<input type="text" size="30" name="run_os" value="" />
+			</div>
+			<div class="unit">
+				<label>操作：</label>
+				<textarea name="action_cmd" rows="10" cols="57"></textarea>
+			</div>
+			
+			<div class="unit">
+				<label>请选择上传脚本：</label>
+				<input name="file" type="file" />				
+			</div>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+		</form>
+	</div>
+</div>

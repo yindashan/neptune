@@ -1,0 +1,87 @@
+<form id="pagerForm" action="{% url asset_searchback_asset %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url asset_searchback_asset %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+				资产编号：<input type="text" name="query" value="{{ query }}" />
+			</li>	  
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="7%" align="center">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="8%" orderField="elementid" class="asc">资产编号</th>
+			{% else %}
+				<th width="8%" orderField="elementid" class="desc">资产编号</th>
+			{% endifequal %}
+				<th width="10%">购入日期</th>
+				<th width="7%">入库单号</th>
+				<th width="10%">领取日期</th>
+				<th width="7%">出库单号</th>
+				<th width="7%">对帐标识</th>
+				<th width="10%" >查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for asset in assets.object_list %}
+           <tr>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ asset.elementid }}</td>
+           <td>{{ asset.purchase_date|date:"Y-m-d" }}</td>
+           <td>{{ asset.in_storage_no }}</td>
+           <td>{{ asset.draw_date|date:"Y-m-d" }}</td>
+           <td>{{ asset.out_storage_no }}</td>
+           <td>
+           		{% for key,value in reconcile_flag_dict.items %}
+					{% ifequal asset.reconcile_flag key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>
+				<a class="btnSelect" href="javascript:$.bringBackT({elementid:'{{ asset.elementid }}', in_storage_no:'{{ asset.in_storage_no }}'})" title="查找带回">选择</a>
+		   </td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ assets.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ assets.paginator.count }}" numPerPage="{{ assets.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

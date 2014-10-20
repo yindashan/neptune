@@ -1,0 +1,149 @@
+<form id="pagerForm" action="{% url nocinfo_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url nocinfo_index %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						运营商名称：<input type="text" name="ispname" value="{{ ispname }}" />&nbsp;&nbsp;&nbsp;
+						机房编号：<input type="text" name="query" value="{{ query }}" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+			{% for authority in request.session.authority_list_button %}
+				{% ifequal 'nocinfoadd' authority %}
+				<li><a class="add" href="{% url nocinfo_add %}" target="dialog" mask="true" width="800" height="600" title="添加机房" rel="addreource"><span>新增</span></a></li>
+				{% endifequal %}
+				{% ifequal 'nocinfodelete' authority %}
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url nocinfo_selecteddelete %}" class="delete"><span>批量删除</span></a></li>             
+				{% endifequal %}
+				{% ifequal 'nocinfoimport' authority %}
+                <li class="line">line</li>
+           	  	<li><a class="icon" href="{% url nocinfo_uploadfile %}" target="dialog" mask="true" width="500" height="300" title="导入csv文件" rel="uploadfileresource"><span>导入CSV文件</span></a></li>
+				{% endifequal %}
+				{% ifequal 'nocinfoexport' authority %}
+                <li><a class="icon" href="{% url nocinfo_downloadfile %}" target="dwzExport" targetType="navTab" title="确定要导出这些记录吗？"><span>导出CSV文件</span></a></li>
+				{% endifequal %}
+            {% endfor %}
+			</ul>
+		</div>
+
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+			<tr>
+				<th width="3%">				
+				<input type="checkbox" group="ids" class="checkboxCtrl">				
+				</th>
+				<th width="3%">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="8%" orderField="isp__ispName" class="asc">运营商名称</th>
+			{% else %}
+				<th width="8%" orderField="isp__ispName" class="desc">运营商名称</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="10%" orderField="nocid" class="asc">机房编号</th>
+			{% else %}
+				<th width="10%" orderField="nocid" class="desc">机房编号</th>
+			{% endifequal %}
+				<th width="10%">机房名称</th>
+				<th width="5%">机房状态</th>
+			{% for authority in request.session.authority_list_modulefield %}
+			{% ifequal 'nocinfoaddress' authority %}
+				<th width="15%">机房地址</th>
+	        {% endifequal %}
+			{% ifequal 'nocinfonoc_username' authority %}
+				<th width="8%">机房联系人</th>
+	        {% endifequal %}
+			{% ifequal 'nocinfophone' authority %}
+				<th width="8%">联系方式</th>
+	        {% endifequal %}
+			{% endfor %}
+				<th width="10%">备注</th>
+				<th width="14%">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'nocinfoselect' request.session.authority_list_button %}
+		   {% for nocinfo in nocinfos.object_list %}
+           <tr target="sid_group" rel="{{ nocinfo.id }}">
+           <td><input name="ids" value="{{ nocinfo.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td><a href="{% url isps_relate_nocinfo_link_isp nocinfo.isp.id %}" target="navTab" rel="ispindex" title="运营商管理" >{{ nocinfo.isp.ispName }}</a></td>
+           <td>{{ nocinfo.nocid }}</td>
+           <td>{{ nocinfo.nocname }}</td>
+           <td>
+           		{% for key,value in nocinfo_status_dict.items %}
+					{% ifequal nocinfo.status key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+        {% for authority in request.session.authority_list_modulefield %}
+		{% ifequal 'nocinfoaddress' authority %}
+           <td>{{ nocinfo.address }}</td>
+        {% endifequal %}
+		{% ifequal 'nocinfonoc_username' authority %}
+           <td>{{ nocinfo.noc_username }}</td>
+        {% endifequal %}
+		{% ifequal 'nocinfophone' authority %}
+           <td>{{ nocinfo.phone }}</td>
+        {% endifequal %}
+		{% endfor %}
+           <td>{{ nocinfo.desc }}</td>
+           <td>
+           {% for authority in request.session.authority_list_button %}
+	           {% ifequal 'nocinfoedit' authority %}
+	              <a class="btnedit" href="{% url nocinfo_edit nocinfo.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+	           {% endifequal %}
+	           {% ifequal 'nocinfodelete' authority %}
+	              <a class="btndelete" href="{% url nocinfo_delete nocinfo.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+	           {% endifequal %}
+           {% endfor %}
+              <a class="btnnetlink" href="{% url nocnetinfo_relate_nocinfo_link_nocnetinfo nocinfo.id %}" target="navTab"  rel="nocnetinfoindex" title="机房网络管理"><span>关联</span></a>
+              <a class="btnlink" href="{% url rack_relate_nocinfo_link_rack nocinfo.id %}" target="navTab"  rel="rackindex" title="机架管理"><span>关联</span></a>
+              <a class="btnelementlink" href="{% url equipment_relate_nocinfo_link_equipment nocinfo.id %}" target="navTab"  rel="equipmentindex" title="设备管理"><span>关联</span></a>
+              <a class="btnselect" href="{% url log_changerecord 2,nocinfo.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="查看变更记录"><span>查看</span></a>
+           </td>
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ nocinfos.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ nocinfos.paginator.count }}" numPerPage="{{ nocinfos.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>
+

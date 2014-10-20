@@ -1,0 +1,87 @@
+<form id="pagerForm" action="{% url equipment_searchback %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url equipment_searchback %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+				机架编号：<input type="text" name="query" value="{{ query }}" />
+			</li>	  
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="7%" align="center">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="15%" orderField="rackid" class="asc">机架编号</th>
+			{% else %}
+				<th width="15%" orderField="rackid" class="desc">机架编号</th>
+			{% endifequal %}
+				<th width="15%">机架状态</th>
+				<th width="15%">机架总空间(U)</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="20%" orderField="left_space" class="asc">机架剩余空间(U)</th>
+			{% else %}
+				<th width="20%" orderField="left_space" class="desc">机架剩余空间(U)</th>
+			{% endifequal %}
+				<th width="10%" >查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for rack in racks.object_list %}
+           <tr>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ rack.rackid }}</td>
+           <td>
+           		{% for key,value in rack_status_dict.items %}
+					{% ifequal rack.status key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>{{ rack.space }}</td>
+           <td>{{ rack.left_space }}</td>
+           <td>
+				<a class="btnSelect" href="javascript:$.bringBackT({rackid:'{{ rack.rackid }}', left_space:'{{ rack.left_space }}'})" title="查找带回">选择</a>
+		   </td>
+           </tr>
+           {% endfor %}
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="dialogPageBreak({numPerPage:this.value})">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ racks.paginator.count }}条</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ racks.paginator.count }}" numPerPage="{{ racks.paginator.per_page }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>
+</div>

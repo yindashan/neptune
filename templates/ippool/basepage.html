@@ -1,0 +1,115 @@
+<form id="pagerForm" action="{% url ips_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="ipaddress" value=""/>
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url ips_index %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						IP地址：<input type="text" name="query" value="{{ query }}" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+			<!--
+				<li><a class="add" href="{% url ips_add %}" target="dialog" mask="true" width="800" height="600" title="添加IP地址" rel="addreource"><span>新增</span></a></li>
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url ips_selecteddelete %}" class="delete"><span>批量删除</span></a></li>             
+			-->
+			</ul>
+		</div>
+
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+			<tr>
+				<th width="3%">				
+				<input type="checkbox" group="ids" class="checkboxCtrl">				
+				</th>
+				<th width="5%">序号</th>
+				<th width="12%">IP地址</th>
+			{% for authority in request.session.authority_list_modulefield %}
+			{% ifequal 'ippoolipMask' authority %}
+				<th width="12%">子网掩码</th>
+	        {% endifequal %}
+	        {% endfor %}
+				<th width="12%">IP地址类型</th>
+				<th width="12%">使用状态</th>
+				<th width="12%">所属机房</th>
+				<th width="16%">备注</th>
+				<!--
+				<th width="16%">操作</th>
+				-->
+			</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'ippoolselect' request.session.authority_list_button %}
+		   {% for ip in ips.object_list %}
+           <tr target="sid_group" rel="{{ ip.id }}">
+           <td><input name="ids" value="{{ ip.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ ip.ipAddress }}</td>
+        {% for authority in request.session.authority_list_modulefield %}
+		{% ifequal 'ippoolipMask' authority %}
+           <td>{{ ip.ipMask }}</td>
+        {% endifequal %}
+        {% endfor %}
+           <td>
+           		{% for key,value in ip_type_dict.items %}
+					{% ifequal ip.ipType key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>
+           		{% for key,value in ip_status_dict.items %}
+					{% ifequal ip.status key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>{{ ip.noc.nocname}}</td>
+           <td>{{ ip.desc }}</td>
+           <!--
+           <td>
+              <a class="edit" href="{% url ips_edit ip.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource"><span>编辑</span></a>
+              <a class="delete" href="{% url ips_delete ip.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+           </td>
+           -->
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ ips.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ ips.paginator.count }}" numPerPage="{{ ips.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>

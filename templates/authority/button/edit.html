@@ -1,0 +1,38 @@
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url authority_edit_button button.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="buttonindex"/>
+		<div class="pageFormContent" layoutH="58">
+		
+			<dl class="nowrap">
+				<dt>关联模块：</dt>
+				<dd>
+					<input size="30" name="org.module_name" type="text" readonly="readonly" value="{{ button.module.module_name }}"/>
+				</dd>
+			</dl>
+		
+			<div class="unit">
+				<label>功能按钮名称：</label>
+				<input type="text" class="required" size="30"  name="button_name" value="{{ button.button_name }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>功能按钮类型：</label>
+				<input type="text" class="required" size="30"  name="button_type" value="{{ button.button_type }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>功能按钮顺序：</label>
+				<input type="text" class="required digits" size="30"  name="order" value="{{ button.order }}" />
+			</div>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

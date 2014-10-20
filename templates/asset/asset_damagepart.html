@@ -1,0 +1,25 @@
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url asset_asset_damagepart asset.id %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="assetindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>报损选项：</label>
+				<label class="radioButton"><input type="checkbox" name="ids" value="1" />主机</label>
+				<label class="radioButton"><input type="checkbox" name="ids" value="2" />显示器</label>
+			</div>
+			
+		</div>
+		<div class="formBar">
+			<label style="float:left"><input type="checkbox" class="checkboxCtrl" group="ids" />全选</label>
+			<ul>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="checkboxCtrl" group="ids" selectType="invert">反选</button></div></div></li>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

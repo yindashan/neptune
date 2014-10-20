@@ -1,0 +1,129 @@
+<div class="accordion" fillSpace="sidebar">
+	<div class="accordionHeader">
+		<h2><span>Folder</span>系统管理</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree treeFolder expand">
+			
+			{% ifsplitcontain 'saltshell,simpleshell,compoundshell,filemanager,packagemanager' request.session.authority_list_module %}
+			<li><a>Salt管理</a>
+				<ul>
+					{% ifcontain 'saltshell' request.session.authority_list_module %}
+					<li><a href="{% url djangosalt_salt_shell %}" target="navTab"  rel="djangosalt_salt_shell" title="Salt脚本执行" >Salt脚本执行</a></li>
+					{% endifcontain %}
+					{% ifcontain 'simpleshell' request.session.authority_list_module %}
+					<li><a href="{% url djangosalt_simple_shell %}" target="navTab"  rel="djangosalt_simple_shell" title="简单脚本执行" >简单脚本执行</a></li>
+					{% endifcontain %}
+					{% ifcontain 'compoundshell' request.session.authority_list_module %}
+					<li><a href="{% url djangosalt_compound_shell %}" target="navTab"  rel="djangosalt_compound_shell" title="复杂脚本执行" >复杂脚本执行</a></li>
+					{% endifcontain %}
+					{% ifcontain 'filemanager' request.session.authority_list_module %}
+					<li><a href="{% url djangosalt_file_manager %}" target="navTab"  rel="djangosalt_file_manager" title="配置文件管理" >配置文件管理</a></li>
+					{% endifcontain %}
+					{% ifcontain 'packagemanager' request.session.authority_list_module %}
+					<li><a href="{% url djangosalt_package_manager %}" target="navTab"  rel="djangosalt_package_manager" title="软件包管理" >软件包管理</a></li>
+					{% endifcontain %}
+				</ul>
+			</li>
+			{% endifsplitcontain %}
+			
+			{% ifcontain 'server' request.session.authority_list_module %}
+			<li><a>服务器管理</a>
+				<ul>
+					<li><a href="{% url server_index %}" target="navTab" rel="serverindex" title="服务器管理" >服务器管理</a></li>
+				</ul>
+			</li>
+			{% endifcontain %}
+			
+			{% ifcontain 'softform' request.session.authority_list_module %}
+			<li><a>基础应用模板管理</a>
+				<ul>
+					<li><a href="{% url softform_index %}" target="navTab" rel="softformindex" title="基础应用模板管理" >基础应用模板管理</a></li>
+				</ul>
+			</li>
+			{% endifcontain %}
+			
+			{% ifcontain 'apppackage' request.session.authority_list_module %}
+			<li><a>应用软件包管理</a>
+				<ul>
+					<li><a href="{% url apppackage_index %}" target="navTab" rel="apppackageindex" title="应用软件包管理" >应用软件包管理</a></li>
+				</ul>
+			</li>
+			{% endifcontain %}
+			
+			{% ifsplitcontain 'action,actiongroup' request.session.authority_list_module %}
+			<li><a>操作流程管理</a>
+				<ul>
+					{% ifcontain 'action' request.session.authority_list_module %}
+					<li><a href="{% url action_index %}" target="navTab" rel="actionindex" title="操作模板管理" >操作模板管理</a></li>
+					{% endifcontain %}
+					{% ifcontain 'actiongroup' request.session.authority_list_module %}
+					<li><a href="{% url actiongroup_index %}" target="navTab" rel="actiongroupindex" title="操作组管理" >操作组管理</a></li>
+					{% endifcontain %}
+				</ul>
+			</li>
+			{% endifsplitcontain %}
+		
+			{% ifsplitcontain 'schedule,applyonline' request.session.authority_list_module %}
+			<li><a>上线计划管理</a>
+				<ul>
+					{% ifcontain 'schedule' request.session.authority_list_module %}
+					<li><a href="{% url schedule_index %}" target="navTab"  rel="scheduleindex" title="上线计划管理" >上线计划管理</a></li>
+					{% endifcontain %}
+					{% ifcontain 'applyonline' request.session.authority_list_module %}
+					<li><a href="{% url applyonline_index %}" target="navTab"  rel="applyonlineindex" title="服务上线申请" >服务上线申请</a></li>
+					{% endifcontain %}
+				</ul>
+			</li>
+			{% endifsplitcontain %}
+			
+			{% ifcontain 'organization' request.session.authority_list_module %}
+			<li><a>组织结构管理</a>
+				<ul>
+					<li><a href="{% url organization_index %}" target="navTab"  rel="organizationindex" title="组织机构管理" >组织机构管理</a></li>
+				</ul>
+			</li>
+			{% endifcontain %}
+			
+			{% ifcontain 'dynamicconf' request.session.authority_list_module %}
+			<li><a>动态配置管理</a>
+				<ul>
+					<li><a href="{% url dynamicconf_index_ldapconf %}" target="navTab"  rel="ldapconfindex" title="LDAP配置管理" >LDAP配置管理</a></li>
+				</ul>
+			</li>
+			{% endifcontain %}
+			
+			{% ifcontain 'account' request.session.authority_list_module %}
+			<li><a>帐号管理</a>
+				<ul>
+					{% ifcontain 'accountsuperuser' request.session.authority_list_button %}
+						<li><a href="{% url accounts_index %}" target="navTab" rel="accountindex" title="用户管理">用户管理</a></li>
+					{% else %}
+						<li><a href="{% url accounts_info user.id %}" target="navTab" rel="accountindex" title="用户信息">用户信息</a></li>
+					{% endifcontain %}
+				</ul>
+			</li>
+			{% endifcontain %}
+			
+			{% ifcontain 'authority' request.session.authority_list_module %}
+			<li><a>权限管理</a>
+				<ul>
+					<li><a href="{% url authority_index_role %}" target="navTab" rel="roleindex" title="角色管理">角色管理</a></li>
+					<li><a href="{% url authority_index_module %}" target="navTab" rel="moduleindex" title="模块管理">模块管理</a></li>
+					<li><a href="{% url authority_index_button %}" target="navTab" rel="buttonindex" title="功能按钮">功能按钮</a></li>
+					<li><a href="{% url authority_index_modulefield %}" target="navTab" rel="modulefieldindex" title="模块字段">模块字段</a></li>
+				</ul>
+			</li>
+			{% endifcontain %}
+			
+			{% ifcontain 'log' request.session.authority_list_module %}
+			<li><a>日志管理</a>
+				<ul>
+					<li><a href="{% url log_index %}" target="navTab" rel="logindex" title="日志管理">日志管理</a></li>
+				</ul>
+			</li>
+			{% endifcontain %}
+					
+		</ul>
+	</div>
+</div>

@@ -1,0 +1,456 @@
+{% load static %}
+{% load common_tags %}
+<h2 class="contentTitle">主要功能模块</h2>
+<div class="pageContent" layoutH="42">
+
+{%ifcontain 'server' request.session.authority_list_module %}
+	<div style="width:32%;border:1px solid #B8D0D6;margin:5px;float:left;min-height:180px;background-color:#e4f5ff;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>
+					<table width="300" height="100" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td rowspan="2" valign="bottom">
+								<div align="right">
+									<a href="{% url server_index %}" target="navTab" rel="serverindex" title="服务器管理">
+										<span><img src="{% get_static_prefix %}img/main/asset64.png"  style="cursor: pointer;" width="64" height="64" border="0"></span>
+									</a>
+								</div>
+							</td>
+							<td valign="bottom">
+								{% ifcontain 'serveradd' request.session.authority_list_button %}
+								<div align="left">
+									<a href="{% url server_add %}" target="dialog" mask="true" width="800" height="600" title="添加服务器" rel="addreource">
+										<span><img src="{% get_static_prefix %}img/main/plus16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;添加</span>
+									</a>
+								</div>
+								{% endifcontain %}
+								<div align="left">
+									<a href="{% url server_index %}" target="navTab" rel="serverindex" title="服务器管理">
+										<span><img src="{% get_static_prefix %}img/main/search16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;查询</span>
+									</a>
+								</div>
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				
+					<table width="100%" border="0" cellspacing="3" cellpadding="3">
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-family:Arial;font-size:20px;font-weight:border;padding-left:35px;">服务器管理</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-top:3px;">
+								<span style="font-family:Arial;font-size:14px;font-weight:border;padding-left:35px;">维护服务器信息</span>
+							</td>
+						</tr>
+					</table>
+					
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+{% endifcontain %}
+
+{%ifcontain 'softform' request.session.authority_list_module %}
+	<div style="width:32%;border:1px solid #B8D0D6;margin:5px;float:left;min-height:180px;background-color:#e4f5ff;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>
+					<table width="300" height="100" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td rowspan="2" valign="bottom">
+								<div align="right">
+									<a href="{% url softform_index %}" target="navTab" rel="softformindex" title="基础应用模板管理">
+										<span><img src="{% get_static_prefix %}img/main/service64.png"  style="cursor: pointer;" width="64" height="64" border="0"></span>
+									</a>
+								</div>
+							</td>
+							<td valign="bottom">
+								{% ifcontain 'softformadd' request.session.authority_list_button %}
+								<div align="left">
+									<a href="{% url softform_add %}" target="dialog" mask="true" width="800" height="600" title="添加基础应用模板" rel="addreource">
+										<span><img src="{% get_static_prefix %}img/main/plus16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;添加</span>
+									</a>
+								</div>
+								{% endifcontain %}
+								<div align="left">
+									<a href="{% url softform_index %}" target="navTab" rel="softformindex" title="基础应用模板管理">
+										<span><img src="{% get_static_prefix %}img/main/search16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;查询</span>
+									</a>
+								</div>
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				
+					<table width="100%" border="0" cellspacing="3" cellpadding="3">
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-family:Arial;font-size:20px;font-weight:border;padding-left:35px;">基础应用模板管理</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-top:3px;">
+								<span style="font-family:Arial;font-size:14px;font-weight:border;padding-left:35px;">维护基础应用模板信息</span>
+							</td>
+						</tr>
+					</table>
+					
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+{% endifcontain %}
+
+
+{%ifcontain 'apppackage' request.session.authority_list_module %}
+	<div style="width:32%;border:1px solid #B8D0D6;margin:5px;float:left;min-height:180px;background-color:#e4f5ff;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>
+					<table width="300" height="100" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td rowspan="2" valign="bottom">
+								<div align="right">
+									<a href="{% url apppackage_index %}" target="navTab" rel="apppackageindex" title="应用软件包管理">
+										<span><img src="{% get_static_prefix %}img/main/isp64.png"  style="cursor: pointer;" width="64" height="64" border="0"></span>
+									</a>
+								</div>
+							</td>
+							<td valign="bottom">
+								{% ifcontain 'apppackageadd' request.session.authority_list_button %}
+								<div align="left">
+									<a href="{% url apppackage_add %}" target="dialog" mask="true" width="800" height="600" title="添加应用软件包" rel="addreource">
+										<span><img src="{% get_static_prefix %}img/main/plus16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;添加</span>
+									</a>
+								</div>
+								{% endifcontain %}
+								<div align="left">
+									<a href="{% url apppackage_index %}" target="navTab" rel="apppackageindex" title="应用软件包管理">
+										<span><img src="{% get_static_prefix %}img/main/search16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;查询</span>
+									</a>
+								</div>
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				
+					<table width="100%" border="0" cellspacing="3" cellpadding="3">
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-family:Arial;font-size:20px;font-weight:border;padding-left:35px;">应用软件包管理</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-top:3px;">
+								<span style="font-family:Arial;font-size:14px;font-weight:border;padding-left:35px;">维护应用软件包信息</span>
+							</td>
+						</tr>
+					</table>
+					
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+{% endifcontain %}
+
+
+{%ifcontain 'action' request.session.authority_list_module %}
+	<div style="width:32%;border:1px solid #B8D0D6;margin:5px;float:left;min-height:180px;background-color:#e4f5ff;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>
+					<table width="300" height="100" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td rowspan="2" valign="bottom">
+								<div align="right">
+									<a href="{% url action_index %}" target="navTab" rel="actionindex" title="操作模板管理">
+										<span><img src="{% get_static_prefix %}img/main/servicegrp64.png"  style="cursor: pointer;" width="64" height="64" border="0"></span>
+									</a>
+								</div>
+							</td>
+							<td valign="bottom">
+								{% ifcontain 'actionadd' request.session.authority_list_button %}
+								<div align="left">
+									<a href="{% url action_add %}" target="dialog" mask="true" width="800" height="600" title="添加操作模板信息" rel="addreource">
+										<span><img src="{% get_static_prefix %}img/main/plus16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;添加</span>
+									</a>
+								</div>
+								{% endifcontain %}
+								<div align="left">
+									<a href="{% url action_index %}" target="navTab" rel="actionindex" title="操作模板管理">
+										<span><img src="{% get_static_prefix %}img/main/search16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;查询</span>
+									</a>
+								</div>
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				
+					<table width="100%" border="0" cellspacing="3" cellpadding="3">
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-family:Arial;font-size:20px;font-weight:border;padding-left:35px;">操作模板管理</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-top:3px;">
+								<span style="font-family:Arial;font-size:14px;font-weight:border;padding-left:35px;">维护操作模板信息</span>
+							</td>
+						</tr>
+					</table>
+					
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+{% endifcontain %}
+
+
+{%ifcontain 'schedule' request.session.authority_list_module %}
+	<div style="width:32%;border:1px solid #B8D0D6;margin:5px;float:left;min-height:180px;background-color:#e4f5ff;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>
+					<table width="300" height="100" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td rowspan="2" valign="bottom">
+								<div align="right">
+									<a href="{% url schedule_index %}" target="navTab" rel="scheduleindex" title="上线计划管理">
+										<span><img src="{% get_static_prefix %}img/main/schedule64.png"  style="cursor: pointer;" width="64" height="64" border="0"></span>
+									</a>
+								</div>
+							</td>
+							<td valign="bottom">
+								{% ifcontain 'scheduleadd' request.session.authority_list_button %}
+								<div align="left">
+									<a href="{% url schedule_add %}" target="dialog" mask="true" width="800" height="600" title="添加上线计划信息" rel="addreource">
+										<span><img src="{% get_static_prefix %}img/main/plus16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;添加</span>
+									</a>
+								</div>
+								{% endifcontain %}
+								<div align="left">
+									<a href="{% url schedule_index %}" target="navTab" rel="scheduleindex" title="上线计划管理">
+										<span><img src="{% get_static_prefix %}img/main/search16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;查询</span>
+									</a>
+								</div>
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				
+					<table width="100%" border="0" cellspacing="3" cellpadding="3">
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-family:Arial;font-size:20px;font-weight:border;padding-left:35px;">上线计划管理</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-top:3px;">
+								<span style="font-family:Arial;font-size:14px;font-weight:border;padding-left:35px;">维护上线计划信息</span>
+							</td>
+						</tr>
+					</table>
+					
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+{% endifcontain %}
+
+
+
+{%ifcontain 'account' request.session.authority_list_module %}
+	<div style="width:32%;border:1px solid #B8D0D6;margin:5px;float:left;min-height:180px;background-color:#e4f5ff;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>
+					<table width="300" height="100" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td rowspan="2" valign="bottom">
+								<div align="right">
+									{% ifcontain 'accountsuperuser' request.session.authority_list_button %}
+										<a href="{% url accounts_index %}" target="navTab" rel="accountindex" title="用户管理">
+											<span><img src="{% get_static_prefix %}img/main/users64.png"  style="cursor: pointer;" width="64" height="64" border="0"></span>
+										</a>
+									{% else %}
+										<a href="{% url accounts_info request.user.id %}" target="navTab" rel="accountindex" title="用户信息">
+											<span><img src="{% get_static_prefix %}img/main/user64.png"  style="cursor: pointer;" width="64" height="64" border="0"></span>
+										</a>
+									{% endifcontain %}
+								</div>
+							</td>
+							<td valign="bottom">
+								<div align="left">
+									{% ifcontain 'accountsuperuser' request.session.authority_list_button %}
+										<a href="{% url accounts_register %}" target="dialog" mask="true" width="800" height="600" title="添加用户" rel="addreource">
+											<span><img src="{% get_static_prefix %}img/main/plus16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;添加</span>
+										</a>
+									{% endifcontain %}
+								</div>
+								<div align="left">
+									{% ifcontain 'accountsuperuser' request.session.authority_list_button %}
+										<a href="{% url accounts_index %}" target="navTab" rel="accountindex" title="查询用户">
+											<span><img src="{% get_static_prefix %}img/main/search16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;查询</span>
+										</a>
+									{% else %}
+										<a href="{% url accounts_info request.user.id %}" target="navTab" rel="accountindex" title="查询用户">
+											<span><img src="{% get_static_prefix %}img/main/search16.png"  style="cursor: pointer;" width="16" height="16" border="0">&nbsp;查询</span>
+										</a>
+									{% endifcontain %}
+								</div>
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				
+					<table width="100%" border="0" cellspacing="3" cellpadding="3">
+						<tr>
+							<td>
+								&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-family:Arial;font-size:20px;font-weight:border;padding-left:35px;">
+									{% ifcontain 'accountsuperuser' request.session.authority_list_button %}
+										帐号管理
+									{% else %}
+										用户信息
+									{% endifcontain %}
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-top:3px;">
+								<span style="font-family:Arial;font-size:14px;font-weight:border;padding-left:35px;">维护登录该系统的用户信息</span>
+							</td>
+						</tr>
+					</table>
+					
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+{% endifcontain %}
+
+
+</div>

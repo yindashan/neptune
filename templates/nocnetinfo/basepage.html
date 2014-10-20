@@ -1,0 +1,155 @@
+<form id="pagerForm" action="{% url nocnetinfo_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url nocnetinfo_index %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						机房编号：<input type="text" name="nocid" value="{{ nocid }}" />&nbsp;&nbsp;&nbsp;
+						起始IP：<input type="text" name="query" value="{{ query }}" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+			{% for authority in request.session.authority_list_button %}
+				{% ifequal 'nocnetinfoadd' authority %}
+				<li><a class="add" href="{% url nocnetinfo_add %}" target="dialog" mask="true" width="720" height="400" title="添加机房网络" rel="addreource"><span>新增</span></a></li>
+				{% endifequal %}
+				{% ifequal 'nocnetinfodelete' authority %}
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url nocnetinfo_selecteddelete %}" class="delete"><span>批量删除</span></a></li>             
+				{% endifequal %}
+				{% ifequal 'nocnetinfoimport' authority %}
+                <li class="line">line</li>
+           	  	<li><a class="icon" href="{% url nocnetinfo_uploadfile %}" target="dialog" mask="true" width="500" height="300" title="导入csv文件" rel="uploadfileresource"><span>导入CSV文件</span></a></li>
+				{% endifequal %}
+				{% ifequal 'nocnetinfoexport' authority %}
+                <li><a class="icon" href="{% url nocnetinfo_downloadfile %}" target="dwzExport" targetType="navTab" title="确定要导出这些记录吗？"><span>导出CSV文件</span></a></li>
+				{% endifequal %}
+            {% endfor %}
+			</ul>
+		</div>
+
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+			<tr>
+				<th width="3%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="3%">序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th width="12%" orderField="nocinfo__nocid" class="asc">机房编号</th>
+			{% else %}
+				<th width="12%" orderField="nocinfo__nocid" class="desc">机房编号</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="8%" orderField="nocinfo__isp__ispName" class="asc">运营商名称</th>
+			{% else %}
+				<th width="8%" orderField="nocinfo__isp__ispName" class="desc">运营商名称</th>
+			{% endifequal %}
+			{% ifequal orderDirection 'asc' %}
+				<th width="6%" orderField="nocinfo__city" class="asc">城市</th>
+			{% else %}
+				<th width="6%" orderField="nocinfo__city" class="desc">城市</th>
+			{% endifequal %}
+				<th width="9%">起始IP</th>
+				<th width="9%">截止IP</th>
+				<th width="5%">IP类型</th>
+			{% for authority in request.session.authority_list_modulefield %}
+			{% ifequal 'nocnetinfoip_mark' authority %}
+				<th width="10%">子网掩码</th>
+	        {% endifequal %}
+			{% ifequal 'nocnetinfogateway' authority %}
+				<th width="9%">默认网关</th>
+	        {% endifequal %}
+			{% ifequal 'nocnetinfoldns1' authority %}
+				<th width="9%">本地DNS1</th>
+	        {% endifequal %}
+			{% ifequal 'nocnetinfoldns2' authority %}
+				<th width="9%">本地DNS2</th>
+	        {% endifequal %}
+			{% endfor %}
+				<th width="12%">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'nocnetinfoselect' request.session.authority_list_button %}
+		   {% for nocnetinfo in nocnetinfos.object_list %}
+           <tr target="sid_group" rel="{{ nocnetinfo.id }}">
+           <td><input name="ids" value="{{ nocnetinfo.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td><a href="{% url nocinfo_relate_nocnetinfoORrack_link_nocinfo nocnetinfo.nocinfo.id %}" target="navTab" rel="nocinfoindex" title="机房管理" >{{ nocnetinfo.nocinfo.nocid }}</a></td>
+           <td>{{ nocnetinfo.nocinfo.isp.ispName }}</td>
+           <td>{{ nocnetinfo.nocinfo.city }}</td>
+           <td>{{ nocnetinfo.ip_start }}</td>
+           <td>{{ nocnetinfo.ip_end }}</td>
+           <td>
+           		{% for key,value in ip_type_dict.items %}
+					{% ifequal nocnetinfo.ipType key %}
+						{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+        {% for authority in request.session.authority_list_modulefield %}
+		{% ifequal 'nocnetinfoip_mark' authority %}
+			<td>{{ nocnetinfo.ip_mark }}</td>
+        {% endifequal %}
+		{% ifequal 'nocnetinfogateway' authority %}
+        	<td>{{ nocnetinfo.gateway }}</td>
+        {% endifequal %}
+		{% ifequal 'nocnetinfoldns1' authority %}
+        	<td>{{ nocnetinfo.ldns1 }}</td>
+        {% endifequal %}
+		{% ifequal 'nocnetinfoldns2' authority %}
+        	<td>{{ nocnetinfo.ldns2 }}</td>
+        {% endifequal %}
+		{% endfor %}
+           <td>
+           {% for authority in request.session.authority_list_button %}
+	           {% ifequal 'nocnetinfoedit' authority %}
+	              <a class="btnedit" href="{% url nocnetinfo_edit nocnetinfo.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+	           {% endifequal %}
+	           {% ifequal 'nocnetinfodelete' authority %}
+	              <a class="btndelete" href="{% url nocnetinfo_delete nocnetinfo.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+	           {% endifequal %}
+           {% endfor %}
+           </td>
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ nocnetinfos.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ nocnetinfos.paginator.count }}" numPerPage="{{ nocnetinfos.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>
+

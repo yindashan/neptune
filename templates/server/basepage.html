@@ -1,0 +1,174 @@
+<form id="pagerForm" action="{% url server_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url server_index %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td style="padding-right:1px;">
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						机房编号：<input type="text" size="10" name="nocid" value="{{ nocid }}" />&nbsp;&nbsp;
+						资产编号：<input type="text" size="10" name="query" value="{{ query }}" />&nbsp;&nbsp;
+						SaltID：<input type="text" size="10" name="saltid" value="{{ saltid }}" />&nbsp;&nbsp;
+						内网IP：<input type="text" size="10" name="in_ip" value="{{ in_ip }}" />&nbsp;&nbsp;
+						服务名称：<input type="text" size="10" name="service_name" value="{{ service_name }}" />&nbsp;&nbsp;
+						salt状态：
+					</td>
+					<td style="padding-left:1px;">
+						<select name="salt_status" class="required combox" >
+							{% for key,value in salt_status_dict.items %}
+								{% ifequal salt_status key %}
+									<option value="{{ key }}" selected="selected">{{ value }}</option>
+								{% else %}
+									<option value="{{ key }}">{{ value }}</option>
+								{% endifequal %}
+							{% endfor %}
+						</select>
+					</td>
+					<!-- 
+					<td>
+						日期范围：
+						<input type="text" size="9" value="{{ dateStart }}" readonly="readonly" class="date" name="dateStart" />
+						<span class="limit">-</span>
+						<input type="text" size="9" value="{{ dateEnd }}" readonly="readonly" class="date" name="dateEnd" />
+					</td>
+					 -->
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+			{% ifcontain 'serveradd' request.session.authority_list_button %}
+				<li><a class="add" href="{% url server_add %}" target="dialog" mask="true" width="800" height="600" title="添加服务器" rel="addreource"><span>新增</span></a></li>
+			{% endifcontain %}
+			{% ifcontain 'serverdelete' request.session.authority_list_button %}
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url server_selecteddelete %}" class="delete"><span>批量删除</span></a></li>             
+			{% endifcontain %}
+                <!-- 
+				<li><a class="add" href="{% url server_role %}" target="dialog" mask="true" width="800" height="600" title="角色左右选择" rel="rolereource"><span>角色左右选择</span></a></li>
+				<li class="line">line</li>
+           	  	<li><a class="icon" href="{% url upload_file %}" target="dialog" mask="true" width="500" height="300" title="导入Excel文件" rel="uploadfileresource"><span>上传</span></a></li>
+                <li><a class="icon" href="{% url download_file %}" target="dwzExport" targetType="navTab" title="确定要导出这些记录吗？"><span>下载</span></a></li>
+                 -->
+			</ul>
+		</div>
+
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+			<tr>
+				<th><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th>序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="nocid" class="asc">机房编号</th>
+			{% else %}
+				<th orderField="nocid" class="desc">机房编号</th>
+			{% endifequal %}
+				<th>机房名称</th>
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="elementid" class="asc">资产编号</th>
+			{% else %}
+				<th orderField="elementid" class="desc">资产编号</th>
+			{% endifequal %}
+				<th>SaltID</th>
+				<th>内网IP</th>
+				<th>外网IP</th>
+				<th>管理帐号</th>
+				<th>管理密码</th>
+				<th>管理端口</th>
+				<th>基础应用</th>
+				<th>服务名称</th>
+				<th>Salt状态</th>
+				<th>代理</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'serverselect' request.session.authority_list_button %}
+		   {% for server in servers.object_list %}
+           <tr target="sid_group" rel="{{ server.id }}">
+           <td><input name="ids" value="{{ server.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ server.nocid }}</td>
+           <td>{{ server.nocname }}</td>
+           <td>{{ server.elementid }}</td>
+           <td>{{ server.saltid }}</td>
+           <td>{{ server.in_ip }}</td>
+           <td>{{ server.out_ip }}</td>
+           <td>{{ server.manage_account }}</td>
+           <td>{{ server.manage_password }}</td>
+           <td>
+           	{% if server.manage_port %}
+	           {{ server.manage_port }}
+           	{% endif %}
+           </td>
+           <td>
+           		{{ server.softforms.all|join:',' }}
+           </td>
+           <td>{{ server.service_name }}</td>
+           <td>
+           		{% for key,value in salt_status_dict.items %}
+					{% ifequal server.salt_status key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>{{ server.agent_server.saltid }}</td>
+           <td>
+           {% ifcontain 'serveredit' request.session.authority_list_button %}
+              <a class="btnedit" href="{% url server_edit server.id %}" target="dialog" mask="true"  width="800" height="600" rel="edit" title="编辑"><span>编辑</span></a>
+           {% endifcontain %}
+           {% ifcontain 'serversetup' request.session.authority_list_button %}
+              <a class="btndeployfailure" href="{% url server_setup server.id %}" target="ajaxTodo" rel="setup" title="您确定要执行安装salt-minion操作吗？"><span>安装</span></a>
+           {% endifcontain %}
+           {% ifcontain 'serverstart' request.session.authority_list_button %}
+              <a class="btntransfer" href="{% url server_start server.id %}" target="ajaxTodo" rel="start" title="您确定要执行启动salt-minion操作吗？"><span>启动</span></a>
+           {% endifcontain %}
+           {% ifcontain 'serverstop' request.session.authority_list_button %}
+              <a class="btndamage" href="{% url server_stop server.id %}" target="ajaxTodo" rel="stop" title="您确定要执行关闭salt-minion操作吗？"><span>关闭</span></a>
+           {% endifcontain %}
+           {% ifcontain 'serverrestart' request.session.authority_list_button %}
+              <a class="btndistributelend" href="{% url server_restart server.id %}" target="ajaxTodo" rel="restart" title="您确定要执行重启salt-minion操作吗？"><span>重启</span></a>
+           {% endifcontain %}
+           {% ifcontain 'serverdelete' request.session.authority_list_button %}
+              <a class="btndelete" href="{% url server_delete server.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+           {% endifcontain %}
+           </td>
+           
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ servers.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ servers.paginator.count }}" numPerPage="{{ servers.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>
+

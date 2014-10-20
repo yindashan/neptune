@@ -1,0 +1,87 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#nocid").autocomplete("{% url nocinfo_autocomplete %}", {
+		minChars: 0,
+		//width: 180,
+		max: 10,
+		//autoFill: true,
+		matchContains: true,
+		//multiple: true,
+		//multipleSeparator: ",",
+		scroll: true,
+		scrollHeight: 300
+	}).result(function(event, data, formatted){
+		//$.ajaxSettings.global = true;
+	});
+	
+	$("#nocid").focus(function(){
+		$.ajaxSettings.global = false;
+	});
+	$("#nocid").blur(function(){
+		$.ajaxSettings.global = true;
+	});
+	
+});
+</script>
+
+<div class="page">
+	<div class="pageContent">
+	{% load static %}
+	<form method="post" action="{% url nocnetinfo_add %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="nocnetinfoindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<dl class="nowrap">
+				<dt>机房：</dt>
+				<dd>
+					<input name="org.city" type="hidden" readonly="readonly" />
+					<input size="30" id="nocid" name="org.nocid" type="text" />
+					<a class="btnLook" href="{% url nocnetinfo_searchback %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(查询关联的机房)</span>
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>起始IP：</label>
+				<input type="text" class="required" size="30"  name="ip_start" value="" />
+			</div>
+			<div class="unit">
+				<label>截止IP：</label>
+				<input type="text" class="required" size="30"  name="ip_end" value="" />
+			</div>
+			<div class="unit">
+				<label>IP类型：</label>
+				<select name="iptype" class="required combox" >
+					{% for key,value in ip_type_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="unit">
+				<label>子网掩码：</label>
+				<input type="text" class="required" size="30"  name="ip_mark" value="" />
+			</div>
+			<div class="unit">
+				<label>默认网关：</label>
+				<input type="text" size="30"  name="gateway" value="" />
+			</div>
+			<div class="unit">
+				<label>本地DNS1：</label>
+				<input type="text" class="required" size="30"  name="ldns1" value="" />
+			</div>
+			<div class="unit">
+				<label>本地DNS2：</label>
+				<input type="text" size="30"  name="ldns2" value="" />
+			</div>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

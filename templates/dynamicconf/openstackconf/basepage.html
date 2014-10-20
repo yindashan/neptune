@@ -1,0 +1,79 @@
+<script type="text/javascript">
+	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+  	
+</script>
+{% if openstackconf %}
+<div class="pageContent" style="border-left:1px #B8D0D6 solid;border-right:1px #B8D0D6 solid;background-color:white">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="edit" href="{% url dynamicconf_edit_openstackconf openstackconf.id %}" target="dialog" mask="true" width="800" height="600" title="添加" rel="addreource"><span>修改</span></a></li>
+			<li><a class="delete" href="{% url dynamicconf_delete_openstackconf openstackconf.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a></li>    
+		</ul>
+	</div>
+	<div class="pageFormContent" layoutH="75">
+		<p>
+			<label>用户名：</label>
+			<input type="text" readonly="readonly" size="30"  name="username" value="{{ openstackconf.username }}" />
+		</p>
+		<p>
+			<label>密码：</label>
+			<input type="text" readonly="readonly" size="30"  name="password" value="{{ openstackconf.password }}" />
+		</p>
+		<p>
+			<label>tenant_name：</label>
+			<input type="text" readonly="readonly" size="30"  name="tenant_name" value="{{ openstackconf.tenant_name }}" />
+		</p>
+		<p>
+			<label>auth_url：</label>
+			<input type="text" readonly="readonly" size="30"  name="auth_url" value="{{ openstackconf.auth_url }}" />
+		</p>
+		<p>
+			<label>computer_api_version：</label>
+			<input type="text" readonly="readonly" size="30"  name="computer_api_version" value="{{ openstackconf.computer_api_version }}" />
+		</p>
+	</div>
+	
+	<div class="panelBar">
+	</div>
+	
+</div>
+{% else %}
+
+<div class="pageContent" style="border-left:1px #B8D0D6 solid;border-right:1px #B8D0D6 solid;background-color:white">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="{% url dynamicconf_add_openstackconf %}" target="dialog" mask="true" width="800" height="600" title="添加" rel="addreource"><span>新增</span></a></li>
+		</ul>
+	</div>
+	<div class="pageFormContent" layoutH="75">
+		<p>
+			<label>用户名：</label>
+			<input type="text" readonly="readonly" size="30"  name="username" value="" />
+		</p>
+		<p>
+			<label>密码：</label>
+			<input type="text" readonly="readonly" size="30"  name="password" value="" />
+		</p>
+		<p>
+			<label>tenant_name：</label>
+			<input type="text" readonly="readonly" size="30"  name="tenant_name" value="" />
+		</p>
+		<p>
+			<label>auth_url：</label>
+			<input type="text" readonly="readonly" size="30"  name="auth_url" value="" />
+		</p>
+		<p>
+			<label>computer_api_version：</label>
+			<input type="text" readonly="readonly" size="30"  name="computer_api_version" value="" />
+		</p>
+	</div>
+	
+	<div class="panelBar">
+	</div>
+	
+</div>
+
+
+{% endif %}

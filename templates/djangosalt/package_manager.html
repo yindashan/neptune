@@ -1,0 +1,121 @@
+<script language="Javascript" type="text/javascript">
+	
+	var editor_result = CodeMirror.fromTextArea(document.getElementById("package_result"), {
+		lineNumbers: true,
+        theme: "ambiance"
+	});
+	
+	function subForm(){
+		var global_rel = "package_manager";
+	    var global_url = "{% url djangosalt_package_manager %}";
+		//获取pagerForm参数
+		var $panel = $("#" + global_rel)
+		var $pagerForm = $("#pagerForm", $panel);
+		var target = $("#package_target").val();
+		var down_type = $("#package_down_type").val();
+		var down_path = $("#package_down_path").val();
+		var pathname = $("#package_pathname").val();
+		if(target == "") {
+  			alertMsg.info('目标主机不能为空！');
+  			return false;
+  		}
+		if(down_path == "") {
+  			alertMsg.info('文件获取链接不能为空！');
+  			return false;
+  		}
+		if(pathname == "") {
+  			alertMsg.info('文件保存路径不能为空！');
+  			return false;
+  		}
+  		
+		$panel.ajaxUrl({
+			type:"POST", url:global_url, data:{"target":target, "down_type":down_type, "down_path":down_path, "pathname":pathname}, callback:function(resultdata){
+				navTab._loadUrlCallback($panel);
+				document.getElementById('package_manager_result').style.display="block";
+				editor_result.setValue(resultdata['result']);
+			}
+		});
+	}
+	
+	function removeAll() {
+  		$("#package_target").val(""); //清空
+  		$("#package_in_ip").val("");
+  		$("#package_down_path").val("");
+  		$("#package_pathname").val("");
+  		return false;
+  	}
+  	
+	
+</script>
+
+
+<div class="page">
+	<div class="pageContent">
+	<form id="pagerForm" rel="package_manager" method="post" action="{% url djangosalt_package_manager %}" class="pageForm required-validate" 
+		onsubmit="return navTabSearch(this);">
+		<input type="hidden" name="navTabId" value="djangosalt_package_manager"/>
+		<div style="display:block; overflow:auto; padding:0px; position:relative;" layoutH="0">
+		
+		  <div class="content">
+			  <!--右边开始-->
+			  <div class="main_right">
+				  <!--one-->
+				  <div class="rightcon_title">目标主机</div>
+				  <div class="rightcon_mid">
+				      <p class="pheight1">
+				      	<label class="label5">目标主机：</label>
+				      	<input size="30" id="package_in_ip" name="org.in_ip" type="hidden" />
+				      	<input type="text" class="style5" name="org.saltid" id="package_target" value="{{ target }}" readonly="readonly" /><span class="tips"></span>
+				      	<a class="btnLook" href="{% url djangosalt_searchback %}" target="dialog" mask="true" width="700" height="500" title="查找带回" lookupGroup="org">查找带回</a>
+				      </p>
+				  </div>
+				  <div class="rightcon_mid">
+				      <p class="pheight1">
+				      	<label class="label5">文件获取方式：</label>
+				      	<select id="package_down_type" name="down_type" class="required combox" >
+							<option value="0">http</option>
+							<option value="1">ftp</option>
+							<option value="2">svn</option>
+						</select>
+				      </p>
+				  </div>
+				  <div class="rightcon_mid">
+				      <p class="pheight1">
+				      	<label class="label5">文件获取链接：</label>
+				      	<input type="text" class="style5" name="down_path" id="package_down_path" value="{{ down_path }}" /><span class="tips"></span>
+				      	<p class="light pheight">例如：http://10.2.161.14/src/tomcat6.0.20-zhijian.tar.gz</p>
+				      </p>
+				  </div>
+				  <div class="rightcon_mid">
+				      <p class="pheight1"><label class="label5">文件保存路径：</label><input type="text" class="style5" name="package_pathname" id="package_pathname" value="{{ package_pathname }}" /><span class="tips"></span></p>
+				      <p class="light pheight">软件包保存在服务器上的位置，请输入绝对路径(最后带上/)，例如："/var/www/html/"。</p>
+				  </div>
+				  <div class="rightcon_bottom"></div>
+				  <!--one-->
+				  <!--two-->
+				  <div>
+				  	<input type="button" class="enter specibut" id="scriptconfirm" value="确认执行" onclick="javascript: subForm();" />
+				  	<input type="button" class="enter specibut" id="scriptconfirm" value="清空重输" onclick="javascript: removeAll();" />
+				  </div>
+				  <!--two-->
+				  
+				  <!--three-->
+				  <div id="package_manager_result" style="display:none;">
+				  <div class="rightcon_title">执行结果</div>
+				  <div class="rightcon_mid">
+					   <div style="margin-left:0px;">
+					       <textarea style="width:600px;height:400px;" class="textarea1" cols="5" id="package_result" name="result">{{ result }}</textarea>
+					   </div>
+				  </div>
+				  <div class="rightcon_bottom"></div>
+				  </div>
+				  <!--three-->
+			  </div>
+		  <!--右边结束-->
+		  </div>
+		  
+		</div>
+	</form>
+	</div>
+</div>
+

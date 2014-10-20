@@ -1,0 +1,46 @@
+<style type="text/css">
+.bs{border:1px #B8D0D6 solid}
+</style>
+<div class="page">
+	<div class="pageContent" >
+	
+	<form method="post" action="{% url schedule_log schedule.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="scheduleindex"/>		
+		<div class="pageFormContent" layoutH="58" id="schedulelog">	
+			
+			<div class="unit">
+				<label>上线计划单号：</label>
+				<input type="text" size="30" value="{{ schedule.schedule_id }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>服务名称：</label>
+				<input type="text" size="30" value="{{ schedule.service_name }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>日志名称：</label>
+				<input type="text" size="30" value="{{ name }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>记录时间：</label>
+				<input type="text" class="date" size="30" format="yyyy-MM-dd HH:mm:ss" value='{{ schedule_log.create_time|date:"Y-m-d H:i:s" }}' readonly="readonly" yearstart="-10" yearend="20" />
+			</div>
+			<div class="unit">
+				<label>执行日志：</label>
+				<textarea rows="20" cols="57" readonly="true">{{ log }}</textarea>
+			</div>				
+			
+		</div>				
+		<div class="formBar">
+			<ul>
+				{% ifnotequal schedule_log.pre_id 0 %}
+					<li><a class="btnbookpre" href="{% url schedule_pre_next_log schedule_log.pre_id  %}" target="dialog" mask="true"  width="800" height="600" rel="schedulelog" title="日志信息"><span>查看上一次日志信息</span></a></li>
+				{% endifnotequal %}
+				{% ifnotequal schedule_log.next_id 0 %}
+					<li><a class="btnbooknext" href="{% url schedule_pre_next_log schedule_log.next_id  %}" target="dialog" mask="true"  width="800" height="600" rel="schedulelog" title="日志信息"><span>查看下一次日志信息</span></a></li>
+				{% endifnotequal %}
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	</div>
+</div>

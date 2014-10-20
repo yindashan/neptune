@@ -1,0 +1,75 @@
+<script type="text/javascript">
+  	$(document).ready(function() {
+		$("#serverid").autocomplete("{% url equipment_autocomplete %}", {
+			minChars: 0,
+			//width: 180,
+			max: 10,
+			//autoFill: true,
+			matchContains: true,
+			//multiple: true,
+			//multipleSeparator: ",",
+			scroll: true,
+			scrollHeight: 300
+		}).result(function(event, data, formatted){
+			//$.ajaxSettings.global = true;
+		});
+		
+		$("#serverid").focus(function(){
+			$.ajaxSettings.global = false;
+		});
+		$("#serverid").blur(function(){
+			$.ajaxSettings.global = true;
+		});
+		
+	});
+</script>
+
+<div class="page">
+	<div class="pageContent">
+	{% load static %}
+	<form method="post" action="{% url serverconf_add_netcard %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogTabAjaxDone)">
+		<input type="hidden" name="navTabId" value="jbsxBox_netcard"/>
+		<div class="pageFormContent" layoutH="58">
+			<dl class="nowrap">
+				<dt>设备：</dt>
+				<dd>
+					<input name="org.sequence" type="hidden" readonly="readonly" />
+					<input size="30" id="serverid" name="org.elementid" type="text" value="{{ elementid }}" />
+					<a class="btnLook" href="{% url serverconf_searchback %}" target="dialog" mask="true" width="650" height="400" title="查找带回" lookupGroup="org">查找带回</a>
+					<span class="info">(查询关联的设备)</span>
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>NetCard编号：</label>
+				<input type="text" class="" size="30"  name="netcardid" value="" />
+			</div>
+			<div class="unit">
+				<label>制造商：</label>
+				<input type="text" class="" size="30"  name="manufacture" value="" />
+			</div>
+			<div class="unit">
+				<label>网卡类型：</label>
+				<input type="text" class="" size="30"  name="netcard_type" value="" />
+			</div>
+			<div class="unit">
+				<label>Mac地址：</label>
+				<input type="text" class="" size="30"  name="mac_address" value="" />
+			</div>
+			<div class="unit">
+				<label>型号：</label>
+				<input type="text" class="" size="30"  name="model" value="" />
+			</div>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

@@ -1,0 +1,87 @@
+<script type="text/javascript">
+	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+  	
+</script>
+{% if ldapconf %}
+<div class="pageContent" style="border-left:1px #B8D0D6 solid;border-right:1px #B8D0D6 solid;background-color:white">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="edit" href="{% url dynamicconf_edit_ldapconf ldapconf.id %}" target="dialog" mask="true" width="800" height="600" title="添加" rel="addreource"><span>修改</span></a></li>
+			<li><a class="delete" href="{% url dynamicconf_delete_ldapconf ldapconf.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a></li>    
+		</ul>
+	</div>
+	<div class="pageFormContent" layoutH="75">
+		<p>
+			<label>Server：</label>
+			<input type="text" readonly="readonly" size="30"  name="server" value="{{ ldapconf.server }}" />
+		</p>
+		<p>
+			<label>Base DN：</label>
+			<input type="text" readonly="readonly" size="30"  name="base_dn" value="{{ ldapconf.base_dn }}" />
+		</p>
+		<p>
+			<label>域名：</label>
+			<input type="text" readonly="readonly" size="30"  name="domainname" value="{{ ldapconf.domainname }}" />
+		</p>
+		<p>
+			<label>登录名：</label>
+			<input type="text" readonly="readonly" size="30"  name="loginname" value="{{ ldapconf.loginname }}" />
+		</p>
+		<p>
+			<label>用户名：</label>
+			<input type="text" readonly="readonly" size="30"  name="username" value="{{ ldapconf.username }}" />
+		</p>
+		<p>
+			<label>密码：</label>
+			<input type="text" readonly="readonly" size="30"  name="password" value="{{ ldapconf.password }}" />
+		</p>
+	</div>
+	
+	<div class="panelBar">
+	</div>
+	
+</div>
+{% else %}
+
+<div class="pageContent" style="border-left:1px #B8D0D6 solid;border-right:1px #B8D0D6 solid;background-color:white">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="{% url dynamicconf_add_ldapconf %}" target="dialog" mask="true" width="800" height="600" title="添加" rel="addreource"><span>新增</span></a></li>
+		</ul>
+	</div>
+	<div class="pageFormContent" layoutH="75">
+		<p>
+			<label>Server：</label>
+			<input type="text" readonly="readonly" size="30"  name="server" value="" />
+		</p>
+		<p>
+			<label>Base DN：</label>
+			<input type="text" readonly="readonly" size="30"  name="base_dn" value="" />
+		</p>
+		<p>
+			<label>域名：</label>
+			<input type="text" readonly="readonly" size="30"  name="domainname" value="" />
+		</p>
+		<p>
+			<label>登录名：</label>
+			<input type="text" readonly="readonly" size="30"  name="loginname" value="" />
+		</p>
+		<p>
+			<label>用户名：</label>
+			<input type="text" readonly="readonly" size="30"  name="username" value="" />
+		</p>
+		<p>
+			<label>密码：</label>
+			<input type="text" readonly="readonly" size="30"  name="password" value="" />
+		</p>
+	</div>
+	
+	<div class="panelBar">
+	</div>
+	
+</div>
+
+
+{% endif %}

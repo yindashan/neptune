@@ -1,0 +1,43 @@
+<div class="page">
+	<div class="pageContent">
+	{% load static %}
+	<form method="post" action="{% url serverconf_edit_managecard managecard.id %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogTabAjaxDone)">
+		<input type="hidden" name="navTabId" value="jbsxBox_managecard"/>
+		<div class="pageFormContent" layoutH="58">
+			<dl class="nowrap">
+				<dt>设备：</dt>
+				<dd>
+					<input name="org.sequence" type="hidden" readonly="readonly" />
+					<input class="required" size="30" name="org.elementid" type="text" readonly="readonly"  value="{{ managecard.equipment }}" />
+				</dd>
+			</dl>
+			<div class="unit">
+				<label>远程管理卡编号：</label>
+				<input type="text" class="" size="30"  name="managecardid" value="{{ managecard.managecardid }}" />
+			</div>
+			<div class="unit">
+				<label>制造商：</label>
+				<input type="text" class="" size="30"  name="manufacture" value="{{ managecard.manufacture }}" />
+			</div>
+			<div class="unit">
+				<label>型号：</label>
+				<input type="text" class="" size="30"  name="model" value="{{ managecard.model }}" />
+			</div>
+			<div class="unit">
+				<label>远程管理卡条码：</label>
+				<input type="text" class="" size="30"  name="managecard_no" value="{{ managecard.managecard_no }}" />
+			</div>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

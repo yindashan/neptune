@@ -1,0 +1,35 @@
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url log_add %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">{% csrf_token %}
+		<input type="hidden" name="navTabId" value="logindex"/>
+		<div class="pageFormContent" layoutH="58">
+
+			<div class="unit">
+				<label>用户名称：</label>
+				<input type="text" class="required" size="30"  name="username" value="" />
+			</div>
+			<div class="unit">
+				<label>操作记录：</label>
+				<input type="text" size="30" name="content" value="" />
+			</div>
+			<div class="unit">
+				<label>日志级别：</label>
+				<select name="level" class="required combox" >
+					{% for key,value in log_level_dict.items %}
+						<option value="{{ key }}">{{ value }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

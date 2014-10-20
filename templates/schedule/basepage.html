@@ -1,0 +1,137 @@
+<form id="pagerForm" action="{% url schedule_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">	
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url schedule_index %}" method="post">	
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						上线计划单号：<input type="text" name="schedule_id" value="{{ schedule_id }}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						服务名称：<input type="text" name="service_name" value="{{ service_name }}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						状态：
+					</td>
+					<td style="padding-left:1px;">
+						<select name="executive_state" class="required combox" >
+							{% for key,value in executive_state_dict.items %}
+								{% ifequal executive_state key %}
+									<option value="{{ key }}" selected="selected">{{ value }}</option>
+								{% else %}
+									<option value="{{ key }}">{{ value }}</option>
+								{% endifequal %}
+							{% endfor %}
+						</select>
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+	
+	<div class="pageContent">			
+		<div class="panelBar">		
+			<ul class="toolBar">
+			{% ifcontain 'scheduleadd' request.session.authority_list_button %}
+				<li><a class="add" href="{% url schedule_add %}" target="dialog" mask="true" width="800" height="600" title="新增上线计划" rel="addreource"><span>新增</span></a></li>
+			{% endifcontain %}
+			{% ifcontain 'scheduledelete' request.session.authority_list_button %}
+	            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url schedule_selecteddelete %}" class="delete"><span>批量删除</span></a></li>             
+			{% endifcontain %}
+			</ul>
+		</div>
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+				<tr>
+					<th width="2%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="3%">序号</th>
+				{% ifequal orderDirection 'asc' %}
+					<th width="10%" orderField="schedule_id" class="asc">上线计划单号</th>
+				{% else %}
+					<th width="10%" orderField="schedule_id" class="desc">上线计划单号</th>
+				{% endifequal %}
+				{% ifequal orderDirection 'asc' %}
+					<th width="10%" orderField="schedule_id" class="asc">服务名称</th>
+				{% else %}
+					<th width="10%" orderField="schedule_id" class="desc">服务名称</th>
+				{% endifequal %}				
+
+					<th width="12%">创建时间</th>
+					<th width="12%">开始时间</th>
+					<th width="12%">结束时间</th>	
+					<th width="7%">状态</th>									
+					<th width="8%">研发部门</th>
+					<th width="5%">联系人</th>
+					<th width="5%">操作人员</th>					
+					<th width="10%">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'scheduleselect' request.session.authority_list_button %}
+			   {% for schedule in schedules.object_list %}
+	           <tr target="sid_group" rel="{{ schedule.id }}">
+	           <td><input name="ids" value="{{ schedule.id }}" type="checkbox"></td>
+	           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+	           <td>{{ schedule.schedule_id }}</td>
+	           <td>{{ schedule.service_name }}</td>
+	           <td>{{ schedule.create_time|date:"Y-m-d H:i:s" }}</td>
+	           <td>{{ schedule.start_time|date:"Y-m-d H:i:s" }}</td>
+	           <td>{{ schedule.end_time|date:"Y-m-d H:i:s" }}</td>
+		       <td>
+		           {% for key,value in executive_state_dict.items %}
+		           	{% ifequal schedule.executive_state key %}
+		           		{{value}}
+		           	{% endifequal %}
+		           {% endfor%}
+		       </td>
+	           <td>{{ schedule.department_dep }}</td>
+	           <td>{{ schedule.contact }}</td>
+	           <td>{{ schedule.user_name }}</td>
+	           <td>
+	           	{% ifcontain 'scheduleexecute' request.session.authority_list_button %}
+	           		<a class="btntransfer" href="{% url schedule_go schedule.id %}" target="dialog" mask="true"  width="800" height="600" rel="schedulego" title="执行"><span>确认执行</span></a>
+	           	{% endifcontain %}
+	           	{% ifcontain 'scheduleselect' request.session.authority_list_button %}
+	           		<a class="btnappviewdetail" href="{% url schedule_log schedule.id %}" target="dialog" mask="true"  width="800" height="600" rel="schedulelog" title="日志信息"><span>查看日志信息</span></a>
+	           		<a class="btnselect" href="{% url schedule_detail schedule.id %}" target="dialog" mask="true"  width="800" height="600" rel="detail" title="详细信息"><span>查看详细信息</span></a>
+	           	{% endifcontain %}
+	           	{% ifcontain 'scheduleedit' request.session.authority_list_button %}
+	           		<a class="btnedit" href="{% url schedule_edit schedule.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+	           	{% endifcontain %}
+	           	{% ifcontain 'scheduledelete' request.session.authority_list_button %}
+		            <a class="btndelete" href="{% url schedule_delete schedule.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+	           	{% endifcontain %}
+	           </td>
+	           </tr>
+	           {% endfor %}
+	    {% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+					<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+						{% include "common/select.html" %}
+					</select>
+				<span>条,共{{ schedules.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ schedules.paginator.count }}" numPerPage="{{ schedules.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+	</div>
+</div>	
+
+

@@ -1,0 +1,95 @@
+<form id="pagerForm" action="{% url schedule_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">	
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url actiongroup_index %}" method="post">		
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						名称：<input type="text" name="name" value="{{ name }}" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+	
+	<div class="pageContent">			
+		<div class="panelBar">		
+			<ul class="toolBar">
+			{% ifcontain 'actiongroupadd' request.session.authority_list_button %}
+				<li><a class="add" href="{% url actiongroup_add %}" target="dialog" mask="true" width="800" height="600" title="新增操作组" rel="addreource"><span>新增</span></a></li>
+			{% endifcontain %}
+			{% ifcontain 'actiongroupdelete' request.session.authority_list_button %}
+	            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url actiongroup_selecteddelete %}" class="delete"><span>批量删除</span></a></li>             
+			{% endifcontain %}
+			</ul>
+		</div>
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+				<tr>
+					<th width="5%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+					<th width="8%">序号</th>
+				{% ifequal orderDirection 'asc' %}
+					<th width="20%" orderField="type" class="asc">名称</th>
+				{% else %}
+					<th width="20%" orderField="type" class="desc">名称</th>
+				{% endifequal %}
+					<th width="15%">说明</th>
+					<th width="15%">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'actiongroupselect' request.session.authority_list_button %}
+			   {% for actiongroup in actiongroups.object_list %}
+	           <tr target="sid_group" rel="{{ actiongroup.id }}">
+	           <td><input name="ids" value="{{ actiongroup.id }}" type="checkbox"></td>
+	           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+	           <td>{{ actiongroup.name }}</td>
+	           <td>{{ actiongroup.desc }}</td>
+	           <td>
+	           	{% ifcontain 'actiongroupselect' request.session.authority_list_button %}
+	           		<a class="btnselect" href="{% url actiongroup_detail actiongroup.id %}" target="dialog" mask="true"  width="800" height="600" rel="detail" title="详细信息"><span>查看详细信息</span></a>
+	           	{% endifcontain %}
+	           	{% ifcontain 'actiongroupedit' request.session.authority_list_button %}
+	           		<a class="btnedit" href="{% url actiongroup_edit actiongroup.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+	           	{% endifcontain %}
+	           	{% ifcontain 'actiongroupdelete' request.session.authority_list_button %}
+		            <a class="btndelete" href="{% url actiongroup_delete actiongroup.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+	           	{% endifcontain %}
+	           </td>
+	           </tr>
+	           {% endfor %}
+	    {% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+					<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+						{% include "common/select.html" %}
+					</select>
+				<span>条,共{{ actiongroups.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ actiongroups.paginator.count }}" numPerPage="{{ actiongroups.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+	</div>
+</div>	
+
+

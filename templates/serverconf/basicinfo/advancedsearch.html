@@ -1,0 +1,47 @@
+<div class="pageContent">
+	<form method="post" action="{% url serverconf_search_test 8 %}" class="pageForm" onsubmit="return divSearch(this, 'jbsxBox_basicinfo');">
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>基本信息编号：</label>
+				<input type="text" size="30" name="q" />
+			</div>
+			<div class="divider">divider</div>
+			<div class="unit">
+				<label>OS类型：</label>
+				<input type="text" size="30" name="os_type"/>
+				<span class="inputInfo">操作系统类型</span>
+			</div>
+			<div class="unit">
+				<label>OS位数：</label>
+				<input type="text" size="30" name="os_byte" />
+				<span class="inputInfo">操作系统位数</span>
+			</div>
+			<div class="unit">
+				<label>OS版本：</label>
+				<input type="text" size="30" name="os_version" />
+				<span class="inputInfo">操作系统版本</span>
+			</div>
+			<div class="unit">
+				<label>CPU：</label>
+				<input type="text" class="required" size="30" name="left_cpu" />
+				<span class="inputInfo">大于等于</span>
+			</div>
+			<div class="unit">
+				<label>内存：</label>
+				<input class="digits" type="text" size="30" name="left_memory" />
+				<span class="inputInfo">大于等于</span>
+			</div>
+			<div class="unit">
+				<label>硬盘：</label>
+				<input class="digits" type="text" size="30" name="left_disk" />
+				<span class="inputInfo">大于等于</span>
+			</div>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">开始检索</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="reset">清空重输</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+</div>

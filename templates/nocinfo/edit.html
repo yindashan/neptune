@@ -1,0 +1,67 @@
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url nocinfo_edit nocinfo.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="nocinfoindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>机房编号：</label>
+				<input type="text" class="required" size="30"  name="nocid" value="{{ nocinfo.nocid }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>机房名称：</label>
+				<input type="text" class="required" size="30"  name="nocname" value="{{ nocinfo.nocname }}" />
+			</div>
+			<div class="unit">
+				<label>机房所在城市：</label>
+				<input type="text" size="30"  name="city" value="{{ nocinfo.city }}" />
+			</div>
+			<div class="unit">
+				<label>机房状态：</label>
+				<select name="status" class="required combox" >
+					{% for key,value in nocinfo_status_dict.items %}
+						{% ifequal nocinfo.status key %}
+							<option value="{{ key }}" selected="selected">{{ value }}</option>
+						{% else %}
+							<option value="{{ key }}">{{ value }}</option>
+						{% endifequal %}
+					{% endfor %}
+				</select>
+			</div>
+			
+			<dl class="nowrap">
+				<dt>运营商：</dt>
+				<dd>
+					<input size="30" name="org.ispName" type="text" readonly="readonly" value="{{ nocinfo.isp.ispName }}"/>
+				</dd>
+			</dl>
+			
+			<div class="unit">
+				<label>机房地址：</label>
+				<input type="text" size="30"  name="address" value="{{ nocinfo.address }}" />
+			</div>
+			<div class="unit">
+				<label>机房联系人：</label>
+				<input type="text" size="30"  name="noc_username" value="{{ nocinfo.noc_username }}" />
+			</div>
+			<div class="unit">
+				<label>联系方式：</label>
+				<input type="text" class="phone" size="30"  name="phone" value="{{ nocinfo.phone }}" />
+			</div>
+            <div class="unit">
+				<label>备注：</label>
+				<textarea name="desc" rows="3" cols="57">{{ nocinfo.desc }}</textarea>
+			</div>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

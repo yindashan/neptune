@@ -1,0 +1,140 @@
+<script type="text/javascript">
+	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+  	
+	function navTabAjaxDone(json) {
+		dialogAjaxDone(json);
+		if (json.statusCode == DWZ.statusCode.ok){
+			var $panel = $("#jbsxBox_memory")
+			var $pagerForm = $("#pagerForm", $panel);
+			var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+			var url = "{% url serverconf_search_test 2 %}";
+			$panel.ajaxUrl({
+				type:"POST", url:url, data:args, callback:function(){
+					navTab._loadUrlCallback($panel);
+				}
+			});
+		}
+	}
+  	
+	function dialogTabAjaxDone(json) {
+		dialogAjaxDone(json);
+		if (json.statusCode == DWZ.statusCode.ok){
+			var $panel = $("#jbsxBox_memory")
+			var $pagerForm = $("#pagerForm", $panel);
+			var args = $pagerForm.size()>0 ? $pagerForm.serializeArray() : {}
+			var url = "{% url serverconf_search_test 2 %}";
+			$panel.ajaxUrl({
+				type:"POST", url:url, data:args, callback:function(){
+					navTab._loadUrlCallback($panel);
+				}
+			});
+		}
+	}
+	function customGetIds(name) {
+		var ids = "";
+		$("[name='" + name + "']").each(function(i) {
+			if ($(this).attr('checked')) {
+				var val = $(this).val();
+				ids += i == 0 ? val : val + ",";
+			}
+		});
+		return ids.substr(0, ids.length - 1);
+	}
+</script>
+
+<form id="pagerForm" onsubmit="return divSearch(this, 'jbsxBox_memory');" action="{% url serverconf_search_test 2 %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="nocid" value=""/>
+</form>
+
+
+<div class="pageHeader" style="border:1px #B8D0D6 solid">
+	<form rel="pagerForm" onsubmit="return divSearch(this, 'jbsxBox_memory');" action="{% url serverconf_search_test 2 %}" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+					Memory编号：<input type="text" name="query" value="{{ query }}" />
+				</td>
+				<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+
+<div class="pageContent" style="border-left:1px #B8D0D6 solid;border-right:1px #B8D0D6 solid">
+<div class="panelBar">
+		<ul class="toolBar">
+		{% for authority in request.session.authority_list_button %}
+			{% ifequal 'serverconfadd' authority %}
+			<li><a class="add" href="{% url serverconf_add_memory %}" target="dialog" mask="true" width="800" height="600" title="添加" rel="addreource"><span>新增</span></a></li>
+			{% endifequal %}
+			{% ifequal 'serverconfdelete' authority %}
+            <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url serverconf_selecteddelete_memory %}" class="delete"><span>批量删除</span></a></li>             
+			{% endifequal %}
+		{% endfor %}
+		</ul>
+	</div>
+	<table class="table" width="99%" layoutH="260" rel="jbsxBox_cpu">
+		<thead>
+			<tr>
+				<th width="2%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="6%">序号</th>
+				<th width="10%">资产编号</th>
+				<th width="10%">Memory编号</th>
+				<th width="15%">制造商</th>
+				<th width="15%">Memory型号</th>
+				<th width="10%">容量(GB)</th>
+				<th width="10%">数量</th>
+				<th width="15%">操作</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+		{% ifcontain 'serverconfselect' request.session.authority_list_button %}
+		   {% for memory in memorys.object_list %}
+           <tr target="sid_group" rel="{{ memory.id }}">
+           <td><input name="ids" value="{{ memory.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td><a href="{% url equipment_relate_serverconf_link_equipment memory.equipment.id %}" target="navTab" rel="equipmentindex" title="设备管理" >{{ memory.equipment.elementid }}</a></td>
+           <td>{{ memory.memoryid }}</td>
+           <td>{{ memory.manufacture }}</td>
+           <td>{{ memory.model }}</td>
+           <td>{{ memory.size }}</td>
+           <td>{{ memory.count }}</td>
+           <td>
+           {% for authority in request.session.authority_list_button %}
+	           {% ifequal 'serverconfedit' authority %}
+	              <a class="btnedit" href="{% url serverconf_edit_memory memory.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+	           {% endifequal %}
+	           {% ifequal 'serverconfdelete' authority %}
+	              <a class="btndelete" href="{% url serverconf_delete_memory memory.id %}" callback="dialogTabAjaxDone" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+	           {% endifequal %}
+           {% endfor %}
+           </td>
+           </tr>
+           {% endfor %}
+		{% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+		</tbody>
+		
+	</table>
+	
+	<div class="panelBar">
+		<div class="pages">
+			<span>每页显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value}, 'jbsxBox_memory')">
+			{% include "common/select.html" %}
+			</select>
+			<span>条,共{{ memorys.paginator.count }}条</span>
+		</div>
+		<div class="pagination" rel="jbsxBox_memory" targetType="navTab" totalCount="{{ memorys.paginator.count }}" numPerPage="{{ memorys.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+</div>

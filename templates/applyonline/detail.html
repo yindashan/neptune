@@ -1,0 +1,190 @@
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url applyonline_detail applyonline.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="applyonlineindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>申请单号：</label>
+				<input type="text" class="" size="30" name="applyid" value="{{ applyonline.applyid }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>服务名称：</label>
+				<input type="text" class="" size="30"  name="service_name" value="{{ applyonline.service_name }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>服务域名：</label>
+				<input type="text" class="" size="30" name="service_domainname" value="{{ applyonline.service_domainname }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>版本号：</label>
+				<input type="text" class="" size="30" name="version" value="{{ applyonline.version }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>申请人：</label>
+				<input type="text" class="" size="30" name="apply_user" value="{{ applyonline.apply_user }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>申请时间：</label>
+				<input type="text" name="apply_time" class="date" size="30" format="yyyy-MM-dd" readonly="readonly" value='{{ applyonline.apply_time|date:"Y-m-d" }}' yearstart="-10" yearend="20"/>
+			</div>
+			<div class="unit">
+				<label>优先级：</label>
+				<input type="radio" name="priority" value="0" {% ifequal applyonline.priority 0 %} checked="checked" {% endifequal %} />紧急
+				<input type="radio" name="priority" value="1" {% ifequal applyonline.priority 1 %} checked="checked" {% endifequal %} />一般
+			</div>
+			<div class="unit">
+				<label>更新文件名：</label>
+				<input type="text" class="" size="30" name="file_name" value="{{ applyonline.file_name }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>更新文件下载链接：</label>
+				<input type="text" class="" size="30" name="file_url" value="{{ applyonline.file_url }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>计划上线时间：</label>
+				<input type="text" name="online_time" class="date" size="30" format="yyyy-MM-dd" readonly="readonly" value='{{ applyonline.online_time|date:"Y-m-d" }}' yearstart="-10" yearend="20"/>
+			</div>
+			<div class="unit">
+				<label>相关研发人员：</label>
+				<input type="text" class="" size="30" name="develop_user" value="{{ applyonline.develop_user }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>相关测试人员：</label>
+				<input type="text" class="" size="30" name="test_user" value="{{ applyonline.test_user }}" readonly="readonly" />
+			</div>
+			<div class="unit">
+				<label>相关运维人员：</label>
+				<input type="text" class="" size="30" name="operate_user" value="{{ applyonline.operate_user }}" readonly="readonly" />
+			</div>
+			
+			<div class="unit">
+				<label>申请单状态：</label>
+           		{% for key,value in applyonline_status_dict.items %}
+					{% ifequal applyonline.status key %}
+						<input type="text" size="30"  name="status" value={{ value }} readonly="readonly" />
+					{% endifequal %}
+				{% endfor %}
+			</div>
+			
+			
+			<div class="unit">
+				<label>系统测试：</label>
+				<input type="radio" name="is_system_test" value="0" {% ifequal applyonline.is_system_test 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_system_test" value="1" {% ifequal applyonline.is_system_test 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>功能测试：</label>
+				<input type="radio" name="is_function_test" value="0" {% ifequal applyonline.is_function_test 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_function_test" value="1" {% ifequal applyonline.is_function_test 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>性能测试：</label>
+				<input type="radio" name="is_capability_test" value="0" {% ifequal applyonline.is_capability_test 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_capability_test" value="1" {% ifequal applyonline.is_capability_test 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>压力测试：</label>
+				<input type="radio" name="is_pressure_test" value="0" {% ifequal applyonline.is_pressure_test 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_pressure_test" value="1" {% ifequal applyonline.is_pressure_test 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>UI测试：</label>
+				<input type="radio" name="is_ui_test" value="0" {% ifequal applyonline.is_ui_test 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_ui_test" value="1" {% ifequal applyonline.is_ui_test 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>专项测试：</label>
+				<input type="radio" name="is_special_test" value="0" {% ifequal applyonline.is_special_test 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_special_test" value="1" {% ifequal applyonline.is_special_test 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>用户接受测试(UAT)：</label>
+				<input type="radio" name="is_uat_test" value="0" {% ifequal applyonline.is_uat_test 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_uat_test" value="1" {% ifequal applyonline.is_uat_test 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>稳定性测试：</label>
+				<input type="radio" name="is_stability_test" value="0" {% ifequal applyonline.is_stability_test 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_stability_test" value="1" {% ifequal applyonline.is_stability_test 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>版本控制：</label>
+				<input type="radio" name="is_version_control" value="0" {% ifequal applyonline.is_version_control 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_version_control" value="1" {% ifequal applyonline.is_version_control 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>培训完成：</label>
+				<input type="radio" name="is_train_complete" value="0" {% ifequal applyonline.is_train_complete 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_train_complete" value="1" {% ifequal applyonline.is_train_complete 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>数据转换完成：</label>
+				<input type="radio" name="is_datatransfer_complete" value="0" {% ifequal applyonline.is_datatransfer_complete 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_datatransfer_complete" value="1" {% ifequal applyonline.is_datatransfer_complete 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>文档完整：</label>
+				<input type="radio" name="is_document_complete" value="0" {% ifequal applyonline.is_document_complete 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_document_complete" value="1" {% ifequal applyonline.is_document_complete 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>环境符合要求：</label>
+				<input type="radio" name="is_environment_complete" value="0" {% ifequal applyonline.is_environment_complete 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_environment_complete" value="1" {% ifequal applyonline.is_environment_complete 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>是否有回退计划：</label>
+				<input type="radio" name="is_backup_plan" value="0" {% ifequal applyonline.is_backup_plan 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_backup_plan" value="1" {% ifequal applyonline.is_backup_plan 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>系统参数配置完成：</label>
+				<input type="radio" name="is_paramconf_complete" value="0" {% ifequal applyonline.is_paramconf_complete 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_paramconf_complete" value="1" {% ifequal applyonline.is_paramconf_complete 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>可否上线：</label>
+				<input type="radio" name="is_can_online" value="0" {% ifequal applyonline.is_can_online 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_can_online" value="1" {% ifequal applyonline.is_can_online 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			<div class="unit">
+				<label>健康检查url是否变更：</label>
+				<input type="radio" name="is_check_url" value="0" {% ifequal applyonline.is_check_url 0 %} checked="checked" {% endifequal %} />是
+				<input type="radio" name="is_check_url" value="1" {% ifequal applyonline.is_check_url 1 %} checked="checked" {% endifequal %} />否
+			</div>
+			
+			<div class="unit">
+				<label>新健康检查url：</label>
+				<input type="text" class="" size="30" name="check_url" value="{{ applyonline.check_url }}" readonly="readonly" />
+			</div>
+			
+			
+			
+			<div class="unit">
+				<label>部署步骤：</label>
+				<textarea name="deploy_step" rows="5" cols="57" readonly="readonly" >{{ applyonline.deploy_step }}</textarea>
+			</div>
+			<div class="unit">
+				<label>回滚方案：</label>
+				<textarea name="backup_method" rows="5" cols="57" readonly="readonly" >{{ applyonline.backup_method }}</textarea>
+			</div>
+			<div class="unit">
+				<label>更新验证：</label>
+				<textarea name="update_check" rows="5" cols="57" readonly="readonly" >{{ applyonline.update_check }}</textarea>
+			</div>
+			<div class="unit">
+				<label>申请上线备注：</label>
+				<textarea name="applyonline_desc" rows="5" cols="57" readonly="readonly" >{{ applyonline.applyonline_desc }}</textarea>
+			</div>
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

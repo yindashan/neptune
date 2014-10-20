@@ -1,0 +1,55 @@
+<div class="pageContent" style="border-left:1px #B8D0D6 solid;border-right:1px #B8D0D6 solid;background-color:white">
+	<div class="panelBar">
+		<ul class="toolBar">
+		{% ifcontain 'accountedit' request.session.authority_list_button %}
+			<li><a class="edit" href="{% url accounts_edit user.id %}" target="dialog" mask="true" width="800" height="600" title="修改" rel="editreource"><span>修改</span></a></li>
+		{% endifcontain %}
+		</ul>
+	</div>
+	<div class="pageFormContent" layoutH="74">
+			<p>
+				<label>用户编号：</label>
+				<input type="text" readonly="readonly" size="30"  name="id" value="{{ user.id }}" readonly="readonly" />
+			</p>
+			<p>
+				<label>用户名称：</label>
+				<input type="text" readonly="readonly" size="30"  name="username" value="{{ user.username }}" />
+			</p>
+			<p>
+				<label>电子邮箱：</label>
+				<input type="text" readonly="readonly" size="30"  name="email" value="{{ user.email }}" />
+			</p>
+			<p>
+				<label>用户角色：</label>
+				<input size="30" name="org.role_name" id="role_name" type="text" readonly="readonly" value="{{ user.role_set.all|join:',' }}" />
+			</p>
+			<p>
+				<label>部门：</label>
+				<input type="text" readonly="readonly" size="30"  name="department" value="{{ user.userprofile.department }}" />
+			</p>
+			<p>
+				<label>联系方式：</label>
+				<input type="text" readonly="readonly" size="30"  name="phone" value="{{ user.userprofile.phone }}" />
+			</p>
+			<p>
+				<label>创建时间：</label>
+				<input type="text" readonly="readonly" size="30"  name="date_joined" value="{{ user.date_joined|date:'Y-m-d H:i:s' }}" />
+			</p>
+			<p>
+				<label>最后一次登录时间：</label>
+				<input type="text" readonly="readonly" size="30"  name="last_login" value="{{ user.last_login|date:'Y-m-d H:i:s' }}" />
+			</p>
+		</div>
+	
+	<div class="panelBar">
+	</div>
+	
+</div>
+
+
+
+
+
+
+
+

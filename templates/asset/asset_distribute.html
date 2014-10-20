@@ -1,0 +1,50 @@
+<div class="page">
+	<div class="pageContent">
+	<form method="post" action="{% url asset_asset_distribute asset.id %}" class="pageForm required-validate" 
+		onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="navTabId" value="assetindex"/>
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>使用人：</label>
+				<input type="text" size="30" class="required" name="username" value="{{ asset.username }}" />
+			</div>
+			<dl class="nowrap">
+				<dt>使用部门：</dt>
+				<dd>
+					<textarea size="30" readonly="readonly" id="department_code" name="org3.department_code" rows="3" cols="27" lookupGroup="org" >{{ asset.departmentcode.department_code }}-{{ asset.departmentcode.business_group }}-{{ asset.departmentcode.division }}-{{ asset.departmentcode.department }}-{{ asset.departmentcode.sub_sector}}</textarea>					
+					<a class="btnLook" href="{% url asset_searchback_departmentcode %}" target="dialog" mask="true" width="600" height="400" title="查找带回" lookupGroup="org3">查找带回</a>
+					<span class="info">(查询关联的部门代码)</span>
+				</dd>
+			</dl>			
+			
+			<div class="unit">
+				<label>出库单号：</label>
+				<input type="text" size="30"  name="out_storage_no" value="" />
+			</div>
+			<div class="unit">
+				<label>出库日期：</label>
+				<input type="text" name="out_storage_date" class="required date" size="30" format="yyyy-MM-dd" value='' readonly="true" yearstart="-10" yearend="20" />
+				<a class="inputDateButton" href="javascript:;">选择</a>
+				<span class="info">yyyy-MM-dd</span>
+			</div>
+			<!-- 
+			<div class="unit">
+				<label>调配日期：</label>
+				<input type="text" name="lend_start_date" class="required date" size="30" format="yyyy-MM-dd" value='' readonly="true" yearstart="-10" yearend="20" />
+				<a class="inputDateButton" href="javascript:;">选择</a>
+				<span class="info">yyyy-MM-dd</span>
+			</div>
+			 -->
+			
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>

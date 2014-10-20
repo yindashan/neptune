@@ -1,0 +1,134 @@
+<form id="pagerForm" action="{% url server_searchback %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+<div class="pageHeader">
+	<form rel="pagerForm" method="post" action="{% url server_searchback %}" onsubmit="return dwzSearch(this, 'dialog');">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td style="padding-right:1px;">
+					<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+					<input type="hidden" name="pageNum" value="{{ currentPage }}" />
+					机房编号：<input type="text" name="nocid" value="{{ nocid }}" />&nbsp;&nbsp;
+					资产编号：<input type="text" name="elementid" value="{{ elementid }}" />&nbsp;&nbsp;
+					内网IP：<input type="text" name="in_ip" value="{{ in_ip }}" />
+				</td>
+			</tr>
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+
+	<table class="table" layoutH="118" targetType="dialog" width="100%">
+		<thead>
+			<tr>
+				<th width="15%">机房编号</th>
+				<th width="20%">机房名称</th>
+				<th width="20%">资产编号</th>
+				<th width="15%">内网IP</th>
+				<th width="12%">服务器类型</th>
+				<th width="10%" >查找带回</th>
+			</tr>
+		</thead>
+		<tbody>
+		   {% for result in result_json.results %}
+				{% if result.basicinfo %}
+					<tr>
+						<td>
+							{{ result.basicinfo.nocid }}
+						</td>
+						<td>
+							{{ result.basicinfo.nocname }}
+						</td>
+						<td>
+							{{ result.basicinfo.elementid }}
+						</td>
+						<td>
+							{{ result.basicinfo.in_ip }}
+						</td>
+						<td>
+							物理机
+						</td>
+						<td>
+							<a class="btnSelect" href="javascript:$.bringBackT({
+							nocid:'{{ result.basicinfo.nocid }}', 
+							nocname:'{{ result.basicinfo.nocname }}', 
+							elementid:'{{ result.basicinfo.elementid }}',
+							in_ip:'{{ result.basicinfo.in_ip }}',
+							out_ip:'{{ result.basicinfo.out_ip }}',
+							manage_account:'{{ result.basicinfo.manage_account }}',
+							manage_password:'{{ result.basicinfo.manage_password }}',
+							manage_port:'{{ result.basicinfo.manage_port }}',
+							virtual_flag:'{{ 1 }}'
+							})" title="查找带回">选择</a>
+					    </td>
+					</tr>
+				{% endif %}
+				
+				{% if result.virtualmachines %}
+					{% for virtual in result.virtualmachines %}
+						<tr>
+							<td>
+								{{ virtual.nocid }}
+							</td>
+							<td>
+								{{ virtual.nocname }}
+							</td>
+							<td>
+								{{ virtual.elementid }}
+							</td>
+							<td>
+								{{ virtual.in_ip }}
+							</td>
+							<td>
+								虚拟机
+							</td>
+							<td>
+							<a class="btnSelect" href="javascript:$.bringBackT({
+								nocid:'{{ virtual.nocid }}', 
+								nocname:'{{ virtual.nocname }}', 
+								elementid:'{{ virtual.elementid }}',
+								in_ip:'{{ virtual.in_ip }}',
+								out_ip:'{{ virtual.out_ip }}',
+								manage_account:'{{ virtual.manage_account }}',
+								manage_password:'{{ virtual.manage_password }}',
+								manage_port:'{{ virtual.manage_port }}',
+								virtual_flag:'{{ 0 }}'
+								})" title="查找带回">选择</a>
+						    </td>
+						</tr>
+					{% endfor %}
+				{% endif %}
+				
+           {% endfor %}
+		</tbody>
+	</table>
+	
+	
+	<div class="panelBar">
+		<div class="pages">
+			<span>共{{ result_json.count }}条&nbsp;&nbsp;{{ currentPage }}/{{ totalpage }}</span>
+		</div>
+		<div class="pagination" targetType="dialog" totalCount="{{ result_json.count }}" numPerPage="{{ numPerPage }}" pageNumShown="5" currentPage="{{ currentPage }}"></div>
+	</div>
+	
+	
+</div>
+</div>

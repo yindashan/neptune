@@ -1,0 +1,122 @@
+<form id="pagerForm" action="{% url apppackage_index %}" method="post">
+	<input type="hidden" name="pageNum" value="{{ currentPage }}"/>
+	<input type="hidden" name="numPerPage" value="{{ numPerPage }}"/>
+	<input type="hidden" name="orderField" value="{{ orderField }}" />
+	<input type="hidden" name="orderDirection" value="{{ orderDirection }}" />
+</form>
+
+<script type="text/javascript">
+  	if(typeof(dwzinit)=='undefined') {
+		self.location="/"
+  	}
+</script>
+
+<div class="page">
+	<div class="pageHeader">
+		<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="{% url apppackage_index %}" method="post">
+		<div class="searchBar">
+			<table class="searchContent">
+				<tr>
+					<td>
+						<input type="hidden" name="numPerPage" value="{{ numPerPage }}" />
+						应用包名：<input type="text" name="package_name" value="{{ package_name }}" />
+					</td>
+					<td><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></td>
+				</tr>
+			</table>
+		</div>
+		</form>
+	</div>
+
+	<div class="pageContent">
+		<div class="panelBar">		
+			<ul class="toolBar">
+			{% ifcontain 'apppackageadd' request.session.authority_list_button %}
+				<li><a class="add" href="{% url apppackage_add %}" target="dialog" mask="true" width="800" height="600" title="新增应用" rel="addreource"><span>新增</span></a></li>
+			{% endifcontain %}
+			{% ifcontain 'apppackagedelete' request.session.authority_list_button %}
+                <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="{% url apppackage_selecteddelete %}" class="delete"><span>批量删除</span></a></li>             
+			{% endifcontain %}
+			</ul>
+		</div>
+
+		<table class="table" width="100%" layoutH="116">
+			<thead>
+			<tr>
+				<th><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th>序号</th>
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="package_name" class="asc">应用包名</th>
+			{% else %}
+				<th orderField="package_name" class="desc">应用包名</th>
+			{% endifequal %}
+			
+				<th>下载方式</th>
+				
+			{% ifequal orderDirection 'asc' %}
+				<th orderField="down_path" class="asc">下载路径</th>
+			{% else %}
+				<th orderField="down_path" class="desc">下载路径</th>
+			{% endifequal %}
+			
+				<th>用户名</th>
+				<th>部署目录</th>
+				<th>应用包状态</th>
+				<th>说明</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+		{% ifcontain 'apppackageselect' request.session.authority_list_button %}
+		   {% for apppackage in apppackages.object_list %}
+           <tr target="sid_group" rel="{{ apppackage.id }}">
+           <td><input name="ids" value="{{ apppackage.id }}" type="checkbox"></td>
+           <td>{{ numPerPage|append:currentPage|calculatelinenum:forloop.counter }}</td>
+           <td>{{ apppackage.package_name }}</td>
+           <td>
+           		{% for key,value in down_type_dict.items %}
+					{% ifequal apppackage.down_type key %}
+							{{ value }}
+					{% endifequal %}
+				{% endfor %}
+           </td>
+           <td>{{ apppackage.down_path }}</td>
+           <td>{{ apppackage.username }}</td>
+           <td>{{ apppackage.package_path }}</td>
+           <td>
+           		{% ifequal apppackage.status 1 %}
+           			有效
+           		{% else %}
+					无效
+				{% endifequal %}
+           </td>
+           <td>{{ apppackage.desc }}</td>
+           <td>
+           	{% ifcontain 'apppackageedit' request.session.authority_list_button %}
+           		<a class="btnedit" href="{% url apppackage_edit apppackage.id %}" target="dialog" mask="true"  width="800" height="600" rel="editresource" title="编辑"><span>编辑</span></a>
+           	{% endifcontain %}
+           	{% ifcontain 'apppackagedelete' request.session.authority_list_button %}
+	            <a class="btndelete" href="{% url apppackage_delete apppackage.id %}" target="ajaxTodo"  rel="deleteres" title="您确定要删除该项吗？"><span>删除</span></a>
+           	{% endifcontain %}
+           </td>
+           </tr>
+           {% endfor %}
+        {% else %}
+		   <tr><td align="center"><div>无查询权限</div></td></tr>
+		{% endifcontain %}
+			</tbody>
+		</table>
+		<div class="panelBar">
+			<div class="pages">
+				<span>每页显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+				{% include "common/select.html" %}
+				</select>
+				<span>条,共{{ apppackages.paginator.count }}条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="{{ apppackages.paginator.count }}" numPerPage="{{ apppackages.paginator.per_page }}" pageNumShown="10" currentPage="{{ currentPage }}"></div>
+		</div>
+		
+	</div>
+</div>
+

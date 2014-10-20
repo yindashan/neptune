@@ -1,0 +1,59 @@
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="{% url apppackage_edit apppackage.id %}" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">{% csrf_token %}
+		<input type="hidden" name="navTabId" value="apppackageindex"/>
+		<div class="pageFormContent" layoutH="58">
+			
+			<div class="unit">
+				<label>文件获取方式：</label>
+				<select name="down_type" class="required combox" >
+					{% for key,value in down_type_dict.items %}
+						{% ifequal apppackage.down_type key %}
+							<option value="{{ key }}" selected="selected">{{ value }}</option>
+						{% else %}
+							<option value="{{ key }}">{{ value }}</option>
+						{% endifequal %}
+					{% endfor %}
+				</select>
+			</div>
+			
+			<div id="package_down_path" class="unit" {% ifequal apppackage.down_type 3 %} style="display:none;" {% endifequal %}>
+				<label>文件获取链接：</label>
+				<input type="text" class="" size="30" name="down_path" value="{{ apppackage.down_path }}" />
+				<span class="info">(例如:http://10.2.161.14/src/tomcat6.0.20-zhijian.tar.gz)</span>
+			</div>
+			<div id="package_file" class="unit" {% ifnotequal apppackage.down_type 3 %} style="display:none;" {% endifnotequal %}>
+				<label>请选择上传文件：</label>
+				<input name="file" type="file" />
+			</div>
+			
+			<div class="unit">
+				<label>用户名：</label>
+				<input type="text" size="30" name="username" value="{{ apppackage.username }}" />
+			</div>
+            <div class="unit">
+				<label>密码：</label>
+				<input type="text" size="30" name="password" value="" />
+			</div>
+			
+			<div class="unit">
+				<label>文件保存路径：</label>
+				<input type="text" class="required" size="30" name="package_path" value="{{ apppackage.package_path }}" />
+				<span class="info">(请输入绝对路径,最后带上/，例如："/var/www/html/"。)</span>
+			</div>
+			<div class="unit">
+				<label>说明：</label>
+				<input type="text" size="30" name="desc" value="{{ apppackage.desc }}" />
+			</div>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	</div>
+</div>
